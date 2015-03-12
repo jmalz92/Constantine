@@ -8,19 +8,12 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Constantine.Screens;
+using GameEngineLibrary;
 
 namespace Constantine
 {
-    public enum GameState
-    {
-        Splash,
-        Menu,
-        Playing,
-        GameOver,
-        End
-    }
-
-
+    
     /// <summary>
     /// This is the main type for your game
     /// </summary>
@@ -31,22 +24,32 @@ namespace Constantine
         const int SCREEN_HEIGHT = 768;
 
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-        Texture2D splashScreen;
-        Texture2D menuScreen;
+        public SpriteBatch SpriteBatch;
 
-        Song menuMusic;
-        bool isMusicPlaying;
+        public SplashScreen _splashScreen;
+        public MenuScreen _menuScreen;
+        public GameScreen _gameScreen;
+        public GameStateHandler _stateHandler;
 
-        public GameState CurrentGameState { get; set; }
-        
+        public readonly Rectangle ScreenBounds;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
             graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
-            
+
+            ScreenBounds = new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
             Content.RootDirectory = "Content";
+
+            Components.Add(new InputHandler(this));
+            _stateHandler = new GameStateHandler(this);
+            Components.Add(_stateHandler);
+
+            _splashScreen = new SplashScreen(this, _stateHandler);
+            _menuScreen = new MenuScreen(this, _stateHandler);
+            _gameScreen = new GameScreen(this, _stateHandler);
+
+            _stateHandler.ChangeState(_splashScreen);
         }
 
         /// <summary>
@@ -58,8 +61,7 @@ namespace Constantine
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            Window.Title = "Constantine V. 0.01";
-            isMusicPlaying = false;
+            Window.Title = "Constantine V. 0.1";
             this.IsMouseVisible = true;
 
             base.Initialize();
@@ -72,16 +74,7 @@ namespace Constantine
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            splashScreen = this.Content.Load<Texture2D>(@"Assets/Images/splash");
-            menuScreen = this.Content.Load<Texture2D>(@"Assets/Images/menu");
-
-            menuMusic = this.Content.Load<Song>(@"Assets/Sounds/Dystopia");
-            MediaPlayer.IsRepeating = true;
-
-            CurrentGameState = GameState.Splash;
-
-            // TODO: use this.Content to load your game content here
+            SpriteBatch = new SpriteBatch(GraphicsDevice);
         }
 
         /// <summary>
@@ -104,25 +97,6 @@ namespace Constantine
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
-            // TODO: Add your update logic here
-            switch (CurrentGameState)
-            {
-                case GameState.Splash:
-                    if (gameTime.TotalGameTime.TotalSeconds > 2)
-                    {
-                        CurrentGameState = GameState.Menu;
-                    }
-                    break;
-                case GameState.Menu:
-                    if (!isMusicPlaying)
-                    {
-                        MediaPlayer.Play(menuMusic);
-                        isMusicPlaying = true;
-                    }
-                    break;
-                    
-            }
-
             base.Update(gameTime);
         }
 
@@ -134,20 +108,7 @@ namespace Constantine
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
-            spriteBatch.Begin();
-            switch (CurrentGameState)
-            {
-                case GameState.Splash:
-                    spriteBatch.Draw(splashScreen, Vector2.Zero, Color.White);
-                    break;
-                case GameState.Menu:
-                    spriteBatch.Draw(menuScreen, Vector2.Zero, Color.White);
-                    break;
-            }
             base.Draw(gameTime);
-
-            spriteBatch.End();
         }
     }
 }

@@ -5,7 +5,9 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Constantine", "Constantine\Constantine\Constantine.csproj", "{C22B32D1-5CBA-4DA9-92C4-47BF0458BAB0}"
 EndProject
-Project("{96E2B04D-8817-42C6-938A-82C39BA4D311}") = "ConstantineContent", "Constantine\ConstantineContent\ConstantineContent.contentproj", "{7D180B67-94EE-4197-AE4E-89880AADDD95}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConstantineContent", "Constantine\ConstantineContent\ConstantineContent.contentproj", "{7D180B67-94EE-4197-AE4E-89880AADDD95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngineLibrary", "GameEngineLibrary\GameEngineLibrary.csproj", "{0D3F34F5-A2AC-4B87-A321-0818DD67AA6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +21,10 @@ Global
 		{C22B32D1-5CBA-4DA9-92C4-47BF0458BAB0}.Release|x86.Build.0 = Release|x86
 		{7D180B67-94EE-4197-AE4E-89880AADDD95}.Debug|x86.ActiveCfg = Debug|x86
 		{7D180B67-94EE-4197-AE4E-89880AADDD95}.Release|x86.ActiveCfg = Release|x86
+		{0D3F34F5-A2AC-4B87-A321-0818DD67AA6F}.Debug|x86.ActiveCfg = Debug|x86
+		{0D3F34F5-A2AC-4B87-A321-0818DD67AA6F}.Debug|x86.Build.0 = Debug|x86
+		{0D3F34F5-A2AC-4B87-A321-0818DD67AA6F}.Release|x86.ActiveCfg = Release|x86
+		{0D3F34F5-A2AC-4B87-A321-0818DD67AA6F}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

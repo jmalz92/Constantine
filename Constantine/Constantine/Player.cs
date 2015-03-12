@@ -3,20 +3,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
+using GameEngineLibrary;
+
 namespace Constantine
 {
-    class Player
+    public class Player
     {
-        private int _health;
-        private int attack;
-        private int _armor;
-        private int _level;
-        private int _currentXP;
-        private int _xpToNextLevel;
 
-        public Player()
+        #region Field Region
+        Camera camera;
+        Game1 gameRef;
+        #endregion
+
+        #region Property Region
+        public Camera Camera
         {
-
+            get { return camera; }
+            set { camera = value; }
         }
+        #endregion
+
+        #region Constructor Region
+        public Player(Game game)
+        {
+            gameRef = (Game1)game;
+            camera = new Camera(gameRef.ScreenBounds);
+        }
+        #endregion
+
+        #region Method Region
+        public void Update(GameTime gameTime)
+        {
+            camera.Update(gameTime);
+        }
+
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+        }
+        #endregion
     }
 }
