@@ -5,7 +5,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Media;using GameEngineLibrary;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Input;using GameEngineLibrary;
 
 namespace Constantine.Screens
 {
@@ -44,7 +45,7 @@ namespace Constantine.Screens
                 isMusicPlaying = true;
                 MediaPlayer.Play(menuMusic);
             }
-            if (InputHandler.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Enter))
+            if (InputHandler.KeyPressed(Keys.Enter) || InputHandler.ButtonDown(Buttons.Start, PlayerIndex.One))
             {
                 GameRef._stateHandler.PushState(GameRef._gameScreen);
             }

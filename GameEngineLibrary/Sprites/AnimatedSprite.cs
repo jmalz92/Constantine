@@ -21,7 +21,7 @@ namespace GameEngineLibrary.Sprites
         Texture2D texture;
         Vector2 position;
         Vector2 velocity;
-        float speed = 200.0f;
+        float speed = 2.0f;
 
         #endregion
 
@@ -100,7 +100,8 @@ namespace GameEngineLibrary.Sprites
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Camera camera)
         {
-            spriteBatch.Draw(texture, position - camera.Position, animations[currentAnimation].CurrentFrameRect,  Color.White);
+            spriteBatch.Draw(texture, position - camera.Position, animations[currentAnimation].CurrentFrameRect,  Color.White);
+
         }
 
         public void LockToMap()

@@ -21,6 +21,9 @@ namespace GameEngineLibrary
         static KeyboardState _keyboardState;
         static KeyboardState _lastKeyboardState;
 
+        static GamePadState[] gamePadStates;
+        static GamePadState[] lastGamePadStates;
+
         public static KeyboardState KeyboardState
         {
             get { return _keyboardState; }
@@ -30,6 +33,16 @@ namespace GameEngineLibrary
         {
             get { return _lastKeyboardState; }
         }
+
+        public static GamePadState[] GamePadStates
+        {
+            get { return gamePadStates; }
+        }
+
+        public static GamePadState[] LastGamePadStates
+        {
+            get { return lastGamePadStates; }
+        }
         #endregion
 
         #region Constructor(s)
@@ -37,6 +50,11 @@ namespace GameEngineLibrary
             : base(game)
         {
             _keyboardState = Keyboard.GetState();
+
+            gamePadStates = new GamePadState[Enum.GetValues(typeof(PlayerIndex)).Length];
+
+            foreach (PlayerIndex index in Enum.GetValues(typeof(PlayerIndex)))
+                gamePadStates[(int)index] = GamePad.GetState(index);
         }
         #endregion
 
@@ -59,11 +77,15 @@ namespace GameEngineLibrary
             _lastKeyboardState = _keyboardState;
             _keyboardState = Keyboard.GetState();
 
+            lastGamePadStates = (GamePadState[])gamePadStates.Clone();
+            foreach (PlayerIndex index in Enum.GetValues(typeof(PlayerIndex)))
+                gamePadStates[(int)index] = GamePad.GetState(index);
+
             base.Update(gameTime);
         }
         #endregion
 
-        #region Keyboard Methods
+        #region Keyboard/Game Pad Methods
 
         public static void Flush()
         {
@@ -87,9 +109,25 @@ namespace GameEngineLibrary
             return _keyboardState.IsKeyDown(key);
         }
 
+
+        public static bool ButtonReleased(Buttons button, PlayerIndex index)
+        {
+            return gamePadStates[(int)index].IsButtonUp(button) &&
+                lastGamePadStates[(int)index].IsButtonDown(button);
+        }
+
+        public static bool ButtonPressed(Buttons button, PlayerIndex index)
+        {
+            return gamePadStates[(int)index].IsButtonDown(button) &&
+                lastGamePadStates[(int)index].IsButtonUp(button);
+        }
+
+        public static bool ButtonDown(Buttons button, PlayerIndex index)
+        {
+            return gamePadStates[(int)index].IsButtonDown(button);
+        }
+
         #endregion
 
-
-        //TODO: Add gamepad functionality
     }
 }

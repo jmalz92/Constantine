@@ -111,22 +111,22 @@ namespace Constantine.Screens
         private void AnimateSprite()
         {
             Vector2 motion = new Vector2();
-            if (InputHandler.KeyDown(Keys.W))
+            if (InputHandler.KeyDown(Keys.W) || InputHandler.ButtonDown(Buttons.LeftThumbstickUp, PlayerIndex.One))
             {
                 _sprite.CurrentAnimation = AnimationKey.Up;
                 motion.Y = -1;
             }
-            else if (InputHandler.KeyDown(Keys.S))
+            else if (InputHandler.KeyDown(Keys.S) || InputHandler.ButtonDown(Buttons.LeftThumbstickDown, PlayerIndex.One))
             {
                 _sprite.CurrentAnimation = AnimationKey.Down;
                 motion.Y = 1;
             }
-            if (InputHandler.KeyDown(Keys.A))
+            if (InputHandler.KeyDown(Keys.A) || InputHandler.ButtonDown(Buttons.LeftThumbstickLeft, PlayerIndex.One))
             {
                 _sprite.CurrentAnimation = AnimationKey.Left;
                 motion.X = -1;
             }
-            else if (InputHandler.KeyDown(Keys.D))
+            else if (InputHandler.KeyDown(Keys.D) || InputHandler.ButtonDown(Buttons.LeftThumbstickRight, PlayerIndex.One))
             {
                 _sprite.CurrentAnimation = AnimationKey.Right;
                 motion.X = 1;

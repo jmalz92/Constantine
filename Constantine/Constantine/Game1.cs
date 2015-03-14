@@ -31,7 +31,8 @@ namespace Constantine
         public GameScreen _gameScreen;
         public GameStateHandler _stateHandler;
 
-        public readonly Rectangle ScreenBounds;
+        public readonly Rectangle ScreenBounds;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
