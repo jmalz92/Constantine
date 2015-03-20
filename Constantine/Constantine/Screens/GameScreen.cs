@@ -76,7 +76,8 @@ namespace Constantine.Screens
                 Tile tile = new Tile(index, 0);
                 splatter.SetTile(x, y, tile);
             }
-            _map.AddLayer(splatter);
+            _map.AddLayer(splatter);
+
 
             
         }
@@ -101,7 +102,8 @@ namespace Constantine.Screens
                 Matrix.Identity);
 
             _map.Draw(GameRef.SpriteBatch, _player.Camera);
-            _sprite.Draw(gameTime, GameRef.SpriteBatch, _player.Camera);
+            _sprite.Draw(gameTime, GameRef.SpriteBatch, _player.Camera);
+
 
             base.Draw(gameTime);
 
@@ -142,7 +144,8 @@ namespace Constantine.Screens
             else
             {
                 _sprite.IsAnimating = false;
-            }
+            }
+
         }
     }
 }

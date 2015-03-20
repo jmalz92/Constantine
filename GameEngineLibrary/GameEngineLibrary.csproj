@@ -60,6 +60,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Camera.cs" />
+    <Compile Include="Controls\Control.cs" />
+    <Compile Include="Controls\ControlManager.cs" />
+    <Compile Include="Controls\Label.cs" />
+    <Compile Include="Controls\LinkLabel.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="GameStateHandler.cs" />
     <Compile Include="InputHandler.cs" />
