@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Media;
 using GameEngineLibrary;
 using GameEngineLibrary.TileEngine;
 using GameEngineLibrary.Sprites;
+using GameEngineLibrary.Controls;
 
 namespace Constantine.Screens
 {
@@ -20,6 +21,10 @@ namespace Constantine.Screens
         TileMap _map;
         Player _player;
         AnimatedSprite _sprite;
+
+        ScoreLabel _scoreLabel;
+
+        public int Difficulty { get; set; }
 
         public GameScreen(Game game, GameStateHandler handler)
             : base(game, handler)
@@ -49,34 +54,62 @@ namespace Constantine.Screens
             _sprite = new AnimatedSprite(spriteSheet, animations);
 
             base.LoadContent();
-            
-            Texture2D tilesetTexture = Game.Content.Load<Texture2D>(@"Tiles\tileset1");
-            _tileSet = new TileSet(tilesetTexture, 8, 8, 32, 32);
 
-            MapLayer layer = new MapLayer(40, 40);
+            _scoreLabel = new ScoreLabel();
+            _scoreLabel.Position = new Vector2(780, 10);
+            _scoreLabel.Text = "Score: 0";
 
-            for (int y = 0; y < layer.Height; y++)
+            ControlManager.Add(_scoreLabel);
+
+            if (Difficulty == 0)
             {
-                for (int x = 0; x < layer.Width; x++)
+                Texture2D tilesetTexture = Game.Content.Load<Texture2D>(@"Tiles\tileset1");
+                _tileSet = new TileSet(tilesetTexture, 8, 8, 32, 32);
+
+                MapLayer layer = new MapLayer(40, 40);
+
+                for (int y = 0; y < layer.Height; y++)
                 {
-                    Tile tile = new Tile(0, 0);
-                    layer.SetTile(x, y, tile);
+                    for (int x = 0; x < layer.Width; x++)
+                    {
+                        Tile tile = new Tile(0, 0);
+                        layer.SetTile(x, y, tile);
+                    }
                 }
+
+                _map = new TileMap(_tileSet, layer);
+
+                MapLayer splatter = new MapLayer(40, 40);
+                Random random = new Random();
+                for (int i = 0; i < 80; i++)
+                {
+                    int x = random.Next(0, 40);
+                    int y = random.Next(0, 40);
+                    int index = random.Next(2, 14);
+                    Tile tile = new Tile(index, 0);
+                    splatter.SetTile(x, y, tile);
+                }
+                _map.AddLayer(splatter);
             }
-
-            _map = new TileMap(_tileSet, layer);
-
-            MapLayer splatter = new MapLayer(40, 40);
-            Random random = new Random();
-            for (int i = 0; i < 80; i++)
+            else
             {
-                int x = random.Next(0, 40);
-                int y = random.Next(0, 40);
-                int index = random.Next(2, 14);
-                Tile tile = new Tile(index, 0);
-                splatter.SetTile(x, y, tile);
+                Texture2D tilesetTexture = Game.Content.Load<Texture2D>(@"Tiles\scorchedtiles");
+                _tileSet = new TileSet(tilesetTexture, 1, 1, 32, 32);
+
+                MapLayer layer = new MapLayer(40, 40);
+
+                for (int y = 0; y < layer.Height; y++)
+                {
+                    for (int x = 0; x < layer.Width; x++)
+                    {
+                        Tile tile = new Tile(0, 0);
+                        layer.SetTile(x, y, tile);
+                    }
+                }
+
+                _map = new TileMap(_tileSet, layer);
             }
-            _map.AddLayer(splatter);
+            
 
 
             
@@ -85,8 +118,13 @@ namespace Constantine.Screens
         {
             _player.Update(gameTime);
             _sprite.Update(gameTime);
-
             AnimateSprite();
+            ControlManager.Update(gameTime, PlayerIndex.One);
+
+            if (InputHandler.KeyDown(Keys.P))
+            {
+                _scoreLabel.UpdateScore(50);
+            }
 
             base.Update(gameTime);
         }
@@ -106,7 +144,7 @@ namespace Constantine.Screens
 
 
             base.Draw(gameTime);
-
+            ControlManager.Draw(GameRef.SpriteBatch);
             GameRef.SpriteBatch.End();
         }
 

@@ -87,6 +87,17 @@ namespace Constantine.Screens
 
         private void difficulty_Selected(object sender, EventArgs e)
         {
+            //Todo: clean up this logic
+            string difficulty = ((LinkLabel)sender).Text; 
+            if(difficulty.Contains("Easy")){
+                GameRef._gameScreen.Difficulty = 0;
+            }
+            if(difficulty.Contains("Normal")){
+                GameRef._gameScreen.Difficulty = 1;
+            }
+            if(difficulty.Contains("Hard")){
+                GameRef._gameScreen.Difficulty = 2;
+            }
             _stateHandler.PushState(GameRef._gameScreen);
         }
     }

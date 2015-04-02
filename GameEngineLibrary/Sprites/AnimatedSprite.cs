@@ -21,7 +21,7 @@ namespace GameEngineLibrary.Sprites
         Texture2D texture;
         Vector2 position;
         Vector2 velocity;
-        float speed = 2.0f;
+        float speed = 3.0f;
 
         #endregion
 

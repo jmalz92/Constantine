@@ -64,6 +64,7 @@
     <Compile Include="Controls\ControlManager.cs" />
     <Compile Include="Controls\Label.cs" />
     <Compile Include="Controls\LinkLabel.cs" />
+    <Compile Include="Controls\ScoreLabel.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="GameStateHandler.cs" />
     <Compile Include="InputHandler.cs" />
