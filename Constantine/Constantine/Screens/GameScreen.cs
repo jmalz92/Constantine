@@ -21,6 +21,7 @@ namespace Constantine.Screens
         TileMap _map;
         Player _player;
         AnimatedSprite _sprite;
+        HUD _hud;
 
         ScoreLabel _scoreLabel;
 
@@ -30,6 +31,7 @@ namespace Constantine.Screens
             : base(game, handler)
         {
             _player = new Player(game);
+            _hud = new HUD(100);
         }
 
         public override void Initialize()
@@ -58,6 +60,7 @@ namespace Constantine.Screens
             _scoreLabel = new ScoreLabel();
             _scoreLabel.Position = new Vector2(780, 10);
             _scoreLabel.Text = "Score: 0";
+            _hud.LoadContent(this.GraphicsDevice);
 
             ControlManager.Add(_scoreLabel);
 
@@ -125,6 +128,10 @@ namespace Constantine.Screens
             {
                 _scoreLabel.UpdateScore(50);
             }
+            if (InputHandler.KeyDown(Keys.C) && InputHandler.KeyDown(Keys.S))
+            {
+                GameRef._stateHandler.PushState(GameRef._cutScreen);
+            }
 
             base.Update(gameTime);
         }
@@ -141,7 +148,7 @@ namespace Constantine.Screens
 
             _map.Draw(GameRef.SpriteBatch, _player.Camera);
             _sprite.Draw(gameTime, GameRef.SpriteBatch, _player.Camera);
-
+            _hud.Draw(_player, GameRef.SpriteBatch);
 
             base.Draw(gameTime);
             ControlManager.Draw(GameRef.SpriteBatch);

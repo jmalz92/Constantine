@@ -27,7 +27,7 @@ namespace Constantine.Screens
         }
         protected override void LoadContent()
         {
-            spriteFont = Game.Content.Load<SpriteFont>("MySpriteFont");
+            spriteFont = Game.Content.Load<SpriteFont>(@"Fonts\MySpriteFont");
             base.LoadContent();
         }
         public override void Update(GameTime gameTime)
