@@ -36,6 +36,7 @@ namespace Constantine
 
         public Game1()
         {
+            //This is a jonathan comment
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
             graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
