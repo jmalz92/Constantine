@@ -19,7 +19,7 @@ namespace Constantine.Screens
         {
 
         }
-
+        //KJSHDJKAHDJKSAHDKJSAHDK
         public override void Initialize()
         {
             MediaPlayer.Stop();
