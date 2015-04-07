@@ -17,6 +17,7 @@ namespace Constantine
         #region Field Region
         Camera camera;
         Game1 gameRef;
+        int health = 100;
         #endregion
 
         #region Property Region
@@ -24,6 +25,14 @@ namespace Constantine
         {
             get { return camera; }
             set { camera = value; }
+        }
+        public int Health
+        {
+            get { return health; }
+            set
+            {
+                health = (int)MathHelper.Clamp(value, 0, 100);
+            }
         }
         #endregion
 
@@ -39,11 +48,23 @@ namespace Constantine
         public void Update(GameTime gameTime)
         {
             camera.Update(gameTime);
+            DoHealthUpdate();
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
         }
-        #endregion
+        #endregion
+        public void DoHealthUpdate()
+        {
+            if (InputHandler.KeyDown(Keys.H) && !InputHandler.LastKeyboardState.IsKeyDown(Keys.H))
+            {
+                this.Health += 5;
+            }
+            else if (InputHandler.KeyDown(Keys.K) && !InputHandler.LastKeyboardState.IsKeyDown(Keys.K))
+            {
+                this.Health -= 5;
+            }
+        }
     }
 }
