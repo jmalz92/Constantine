@@ -203,7 +203,7 @@ namespace Constantine.Screens
             int innerWidth = 200;
             int innerHeight = 30;
 
-            HealthBar healthBar = new HealthBar(_player.Health, (1024 / 2) - (width / 2), 0);
+            HealthBar healthBar = new HealthBar(_player.Health, 0, 0);
 
             //create the textures
             Texture2D healthTexture = new Texture2D(gd, innerWidth, innerHeight, false, SurfaceFormat.Color);
