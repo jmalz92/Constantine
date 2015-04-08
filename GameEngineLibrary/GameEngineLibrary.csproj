@@ -65,6 +65,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="Controls\Control.cs" />
     <Compile Include="Controls\ControlManager.cs" />
+    <Compile Include="Controls\HealthBar.cs" />
     <Compile Include="Controls\Label.cs" />
     <Compile Include="Controls\LinkLabel.cs" />
     <Compile Include="Controls\ProgressBar.cs" />

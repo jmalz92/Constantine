@@ -21,11 +21,12 @@ namespace Constantine.Screens
         TileMap _map;
         Player _player;
         PlayerSprite _sprite;
-        HUD _hud;
+        
 
         EnemySpriteFactory _enemySpriteFactory;
 
         ScoreLabel _scoreLabel;
+        HealthBar _healthBar;
 
         public int Difficulty { get; set; }
 
@@ -33,7 +34,6 @@ namespace Constantine.Screens
             : base(game, handler)
         {
             _player = new Player(game);
-            _hud = new HUD(100);
         }
 
         public override void Initialize()
@@ -65,11 +65,15 @@ namespace Constantine.Screens
             _scoreLabel = new ScoreLabel();
             _scoreLabel.Position = new Vector2(780, 10);
             _scoreLabel.Text = "Score: 0";
-            _hud.LoadContent(this.GraphicsDevice);
+            
 
             ControlManager.Add(_scoreLabel);
 
             //TODO: refactor code below into a level selection method
+
+            _healthBar = CreateHealthBar(this.GraphicsDevice);
+
+            ControlManager.Add(_healthBar);
 
             if (Difficulty == 0)
             {
@@ -131,11 +135,17 @@ namespace Constantine.Screens
             _enemySpriteFactory.Update(gameTime, _sprite);
             AnimateSprite();
             ControlManager.Update(gameTime, PlayerIndex.One);
+            _healthBar.UpdatePlayerHealth(_player.Health);
 
             if (InputHandler.KeyDown(Keys.P))
             {
                 _scoreLabel.UpdateScore(50);
             }
+            if (InputHandler.KeyPressed(Keys.Escape))
+            {
+                GameRef._stateHandler.PushState(GameRef._pauseScreen);
+            }
+            
 
             base.Update(gameTime);
         }
@@ -153,7 +163,7 @@ namespace Constantine.Screens
             _map.Draw(GameRef.SpriteBatch, _player.Camera);
             _sprite.Draw(gameTime, GameRef.SpriteBatch, _player.Camera);
             _enemySpriteFactory.Draw(gameTime,GameRef.SpriteBatch,_player.Camera);
-            _hud.Draw(_player, GameRef.SpriteBatch);
+            
 
             base.Draw(gameTime);
             ControlManager.Draw(GameRef.SpriteBatch);
@@ -196,6 +206,42 @@ namespace Constantine.Screens
                 _sprite.IsAnimating = false;
             }
 
+        }
+
+        public HealthBar CreateHealthBar(GraphicsDevice gd)
+        {
+            int width = 210;
+            int height = 42;
+            int innerWidth = 200;
+            int innerHeight = 30;
+
+            HealthBar healthBar = new HealthBar(_player.Health, 0, 0);
+
+            //create the textures
+            Texture2D healthTexture = new Texture2D(gd, innerWidth, innerHeight, false, SurfaceFormat.Color);
+            Texture2D borderTexture = new Texture2D(gd, width, height, false, SurfaceFormat.Color);
+
+            //create the outer portion of the textbar texture
+            Color[] backColor = new Color[width * height];
+            for (int i = 0; i < backColor.Length; i++)
+            {
+                backColor[i] = new Color(200, 100, 50);
+            }
+            borderTexture.SetData(backColor);
+
+            //create the inner portion of the textbar texture
+            Color[] textureColor = new Color[innerWidth * innerHeight];
+            for (int i = 0; i < textureColor.Length; i++)
+            {
+                textureColor[i] = new Color(255, 0, 0);
+            }
+            healthTexture.SetData(textureColor);
+
+            //set the textures in the health bar
+            healthBar.BorderTexture = borderTexture;
+            healthBar.HealthTexture = healthTexture;
+            //return newly created health bar
+            return healthBar;
         }
     }
 }
