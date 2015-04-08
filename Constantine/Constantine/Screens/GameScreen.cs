@@ -132,6 +132,10 @@ namespace Constantine.Screens
             {
                 _scoreLabel.UpdateScore(50);
             }
+            if (InputHandler.KeyPressed(Keys.Escape))
+            {
+                GameRef._stateHandler.PushState(GameRef._pauseScreen);
+            }
             if (InputHandler.KeyDown(Keys.C) && InputHandler.KeyDown(Keys.S))
             {
                 GameRef._stateHandler.PushState(GameRef._cutScreen);
