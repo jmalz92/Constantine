@@ -49,6 +49,9 @@
     <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86" />
     <Reference Include="mscorlib" />
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
@@ -64,13 +67,17 @@
     <Compile Include="Controls\ControlManager.cs" />
     <Compile Include="Controls\Label.cs" />
     <Compile Include="Controls\LinkLabel.cs" />
+    <Compile Include="Controls\ProgressBar.cs" />
     <Compile Include="Controls\ScoreLabel.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="GameStateHandler.cs" />
     <Compile Include="InputHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sprites\AnimatedSprite.cs" />
+    <Compile Include="Sprites\PlayerSprite.cs" />
     <Compile Include="Sprites\Animation.cs" />
+    <Compile Include="Sprites\EasyEnemy.cs" />
+    <Compile Include="Sprites\EnemySprite.cs" />
+    <Compile Include="Sprites\EnemySpriteFactory.cs" />
     <Compile Include="TileEngine\MapLayer.cs" />
     <Compile Include="TileEngine\Tile.cs" />
     <Compile Include="TileEngine\TileEngine.cs" />

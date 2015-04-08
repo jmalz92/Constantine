@@ -48,14 +48,16 @@ namespace Constantine
         public void Update(GameTime gameTime)
         {
             camera.Update(gameTime);
-            DoHealthUpdate();
+            UpdateHealth();
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
         }
         #endregion
-        public void DoHealthUpdate()
+
+        //Move to animated sprite class
+        public void UpdateHealth()
         {
             if (InputHandler.KeyDown(Keys.H) && !InputHandler.LastKeyboardState.IsKeyDown(Keys.H))
             {
@@ -65,6 +67,7 @@ namespace Constantine
             {
                 this.Health -= 5;
             }
+
         }
     }
 }

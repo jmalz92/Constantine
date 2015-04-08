@@ -20,8 +20,10 @@ namespace Constantine.Screens
         TileSet _tileSet;
         TileMap _map;
         Player _player;
-        AnimatedSprite _sprite;
+        PlayerSprite _sprite;
         HUD _hud;
+
+        EnemySpriteFactory _enemySpriteFactory;
 
         ScoreLabel _scoreLabel;
 
@@ -37,6 +39,7 @@ namespace Constantine.Screens
         public override void Initialize()
         {
             MediaPlayer.Stop(); //this needs to be refactored into a media handler class
+
             base.Initialize();
         }
 
@@ -53,7 +56,9 @@ namespace Constantine.Screens
             animations.Add(AnimationKey.Right, animation);
             animation = new Animation(4, 32, 48, 0, 144);
             animations.Add(AnimationKey.Up, animation);
-            _sprite = new AnimatedSprite(spriteSheet, animations);
+            _sprite = new PlayerSprite(spriteSheet, animations);
+
+            _enemySpriteFactory = new EnemySpriteFactory(GameRef);
 
             base.LoadContent();
 
@@ -63,6 +68,8 @@ namespace Constantine.Screens
             _hud.LoadContent(this.GraphicsDevice);
 
             ControlManager.Add(_scoreLabel);
+
+            //TODO: refactor code below into a level selection method
 
             if (Difficulty == 0)
             {
@@ -121,16 +128,13 @@ namespace Constantine.Screens
         {
             _player.Update(gameTime);
             _sprite.Update(gameTime);
+            _enemySpriteFactory.Update(gameTime, _sprite);
             AnimateSprite();
             ControlManager.Update(gameTime, PlayerIndex.One);
 
             if (InputHandler.KeyDown(Keys.P))
             {
                 _scoreLabel.UpdateScore(50);
-            }
-            if (InputHandler.KeyDown(Keys.C) && InputHandler.KeyDown(Keys.S))
-            {
-                GameRef._stateHandler.PushState(GameRef._cutScreen);
             }
 
             base.Update(gameTime);
@@ -148,6 +152,7 @@ namespace Constantine.Screens
 
             _map.Draw(GameRef.SpriteBatch, _player.Camera);
             _sprite.Draw(gameTime, GameRef.SpriteBatch, _player.Camera);
+            _enemySpriteFactory.Draw(gameTime,GameRef.SpriteBatch,_player.Camera);
             _hud.Draw(_player, GameRef.SpriteBatch);
 
             base.Draw(gameTime);

@@ -10,6 +10,7 @@ namespace Constantine
 {
     public class HUD
     {
+        //TODO:  Refactor this out and make it inherit from the control class
         Texture2D rectangleTextureFill;
         Texture2D rectangleOuter;
         int maxHealth;
@@ -42,8 +43,6 @@ namespace Constantine
 
         public void Draw(Player p, SpriteBatch sb)
         {
-
-
             sb.Draw(rectangleOuter, new Vector2(ScreenWidth - 220, ScreenHeight - 52), Color.White);
             Rectangle srect = new Rectangle(ScreenWidth - 210, ScreenHeight - 41, (int)(((double)p.Health / maxHealth) * 200), 30);
             Rectangle drect = new Rectangle(ScreenWidth - 210, ScreenHeight - 41, 200, 30);
