@@ -34,6 +34,9 @@ namespace GameEngineLibrary.Sprites
             set { currentAnimation = value; }
         }
 
+        //TODO: rethink collision
+        public bool IsColliding { get; set; }
+
         public bool IsAnimating
         {
             get { return isAnimating; }

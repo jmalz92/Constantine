@@ -60,7 +60,7 @@ namespace GameEngineLibrary.Sprites
 
         public virtual void Update(GameTime gameTime, Rectangle clientBounds)
         {
-            //TODO: 
+            //TODO: Change to animation class implementation
             // Update frame if time to do so based on framerate
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
             if (timeSinceLastFrame > millisecondsPerFrame)

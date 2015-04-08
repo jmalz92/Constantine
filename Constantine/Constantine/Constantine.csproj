@@ -77,6 +77,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Screens\DifficultyScreen.cs" />
+    <Compile Include="Screens\GameOverScreen.cs" />
     <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="Screens\GameStateBase.cs" />
     <Compile Include="Screens\MenuScreen.cs" />

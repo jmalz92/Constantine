@@ -22,8 +22,7 @@ namespace Constantine.Screens
         Player _player;
         PlayerSprite _sprite;
         
-
-        EnemySpriteFactory _enemySpriteFactory;
+        SpriteManager _spriteManager;
 
         ScoreLabel _scoreLabel;
         HealthBar _healthBar;
@@ -34,6 +33,7 @@ namespace Constantine.Screens
             : base(game, handler)
         {
             _player = new Player(game);
+            
         }
 
         public override void Initialize()
@@ -57,21 +57,22 @@ namespace Constantine.Screens
             animation = new Animation(4, 32, 48, 0, 144);
             animations.Add(AnimationKey.Up, animation);
             _sprite = new PlayerSprite(spriteSheet, animations);
+            _sprite.Position = new Vector2(250, 250);
 
-            _enemySpriteFactory = new EnemySpriteFactory(GameRef);
+            _spriteManager = new SpriteManager(GameRef);
 
             base.LoadContent();
 
             _scoreLabel = new ScoreLabel();
             _scoreLabel.Position = new Vector2(780, 10);
             _scoreLabel.Text = "Score: 0";
-            
 
+            _healthBar = CreateHealthBar(this.GraphicsDevice);
             ControlManager.Add(_scoreLabel);
 
             //TODO: refactor code below into a level selection method
 
-            _healthBar = CreateHealthBar(this.GraphicsDevice);
+            
 
             ControlManager.Add(_healthBar);
 
@@ -123,19 +124,22 @@ namespace Constantine.Screens
 
                 _map = new TileMap(_tileSet, layer);
             }
-            
-
-
-            
+             
         }
         public override void Update(GameTime gameTime)
         {
             _player.Update(gameTime);
             _sprite.Update(gameTime);
-            _enemySpriteFactory.Update(gameTime, _sprite);
+            _spriteManager.Update(gameTime, _sprite);
             AnimateSprite();
             ControlManager.Update(gameTime, PlayerIndex.One);
             _healthBar.UpdatePlayerHealth(_player.Health);
+
+            if (_sprite.IsColliding)
+            {
+                _player.Health -= 5;
+                _sprite.IsColliding = false;
+            }
 
             if (InputHandler.KeyDown(Keys.P))
             {
@@ -145,7 +149,11 @@ namespace Constantine.Screens
             {
                 GameRef._stateHandler.PushState(GameRef._pauseScreen);
             }
-            
+
+            if (_healthBar.IsEmpty)
+            {
+                GameRef._stateHandler.PushState(GameRef._gameOverScreen);
+            }
 
             base.Update(gameTime);
         }
@@ -162,7 +170,7 @@ namespace Constantine.Screens
 
             _map.Draw(GameRef.SpriteBatch, _player.Camera);
             _sprite.Draw(gameTime, GameRef.SpriteBatch, _player.Camera);
-            _enemySpriteFactory.Draw(gameTime,GameRef.SpriteBatch,_player.Camera);
+            _spriteManager.Draw(gameTime,GameRef.SpriteBatch,_player.Camera);
             
 
             base.Draw(gameTime);
@@ -208,6 +216,7 @@ namespace Constantine.Screens
 
         }
 
+        //Do not supply the graphics device as a parameter, bad practice
         public HealthBar CreateHealthBar(GraphicsDevice gd)
         {
             int width = 210;

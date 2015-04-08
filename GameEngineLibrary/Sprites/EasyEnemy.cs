@@ -9,6 +9,7 @@ namespace GameEngineLibrary.Sprites
 {
     class EasyEnemy : EnemySprite
     {
+
          // Sprite is automated. Direction is same as speed
         public override Vector2 direction
         {

@@ -17,10 +17,12 @@ namespace GameEngineLibrary.Controls
         Texture2D borderTexture;
         int maxHealth;
         int playerHealth;
+
         public int ChangeUpperHealth
         {
             set { maxHealth = value; }
         }
+
         public Texture2D HealthTexture
         {
             get { return healthTexture; }
@@ -31,7 +33,13 @@ namespace GameEngineLibrary.Controls
             get { return borderTexture; }
             set { borderTexture = value; }
         }
+
+        public bool IsEmpty
+        {
+            get { return playerHealth <= 0; }
+        }
         #endregion
+
         #region Constructor Region
         public HealthBar(int initialHealth, int posX, int posY)
         {
@@ -41,6 +49,7 @@ namespace GameEngineLibrary.Controls
             tabStop = false;
         }
         #endregion
+
         #region Method Region
         
         public void UpdatePlayerHealth(int pHealth)
@@ -51,9 +60,11 @@ namespace GameEngineLibrary.Controls
         public override void Update(GameTime gameTime)
         {
         }
+
         public override void HandleInput(PlayerIndex playerIndex)
         {
         }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(borderTexture, position, Color.White);
