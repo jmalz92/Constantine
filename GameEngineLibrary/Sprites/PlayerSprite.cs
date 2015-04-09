@@ -10,7 +10,7 @@ using GameEngineLibrary.TileEngine;
 
 namespace GameEngineLibrary.Sprites
 {
-    public class AnimatedSprite
+    public class PlayerSprite
     {
         #region Field Region
 
@@ -22,6 +22,7 @@ namespace GameEngineLibrary.Sprites
         Vector2 position;
         Vector2 velocity;
         float speed = 3.0f;
+        int collisionOffset = 10;
 
         #endregion
 
@@ -32,6 +33,9 @@ namespace GameEngineLibrary.Sprites
             get { return currentAnimation; }
             set { currentAnimation = value; }
         }
+
+        //TODO: rethink collision
+        public bool IsColliding { get; set; }
 
         public bool IsAnimating
         {
@@ -64,6 +68,18 @@ namespace GameEngineLibrary.Sprites
             }
         }
 
+        public Rectangle collisionRect
+        {
+            get
+            {
+                return new Rectangle(
+                    (int)position.X + collisionOffset,
+                    (int)position.Y + collisionOffset,
+                    Width - (collisionOffset * 2),
+                    Height - (collisionOffset * 2));
+            }
+        }
+
         public Vector2 Velocity
         {
             get { return velocity; }
@@ -79,7 +95,7 @@ namespace GameEngineLibrary.Sprites
 
         #region Constructor Region
 
-        public AnimatedSprite(Texture2D sprite, Dictionary<AnimationKey, Animation> animation)
+        public PlayerSprite(Texture2D sprite, Dictionary<AnimationKey, Animation> animation)
         {
             texture = sprite;
             animations = new Dictionary<AnimationKey, Animation>();

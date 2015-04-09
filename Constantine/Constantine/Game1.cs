@@ -30,8 +30,11 @@ namespace Constantine
         public MenuScreen _menuScreen;
         public GameScreen _gameScreen;
         public DifficultyScreen _difficultyScreen;
+        public PauseScreen _pauseScreen;
+        public GameOverScreen _gameOverScreen;
         public GameStateHandler _stateHandler;
-        public CutScreen _cutScreen;
+        
+        
 
         public readonly Rectangle ScreenBounds;
 
@@ -53,7 +56,9 @@ namespace Constantine
             _menuScreen = new MenuScreen(this, _stateHandler);
             _gameScreen = new GameScreen(this, _stateHandler);
             _difficultyScreen = new DifficultyScreen(this, _stateHandler);
-            _cutScreen = new CutScreen(this, _stateHandler);
+            
+            _pauseScreen = new PauseScreen(this, _stateHandler);
+            _gameOverScreen = new GameOverScreen(this, _stateHandler);
 
             _stateHandler.ChangeState(_splashScreen);
         }

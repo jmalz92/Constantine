@@ -17,7 +17,7 @@ namespace Constantine
         #region Field Region
         Camera camera;
         Game1 gameRef;
-        int health = 100;
+        int health;
         #endregion
 
         #region Property Region
@@ -41,6 +41,7 @@ namespace Constantine
         {
             gameRef = (Game1)game;
             camera = new Camera(gameRef.ScreenBounds);
+            health = 100;
         }
         #endregion
 
@@ -48,14 +49,16 @@ namespace Constantine
         public void Update(GameTime gameTime)
         {
             camera.Update(gameTime);
-            DoHealthUpdate();
+            UpdateHealth();
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
         }
         #endregion
-        public void DoHealthUpdate()
+
+        //Move to animated sprite class
+        public void UpdateHealth()
         {
             if (InputHandler.KeyDown(Keys.H) && !InputHandler.LastKeyboardState.IsKeyDown(Keys.H))
             {
@@ -65,6 +68,7 @@ namespace Constantine
             {
                 this.Health -= 5;
             }
+
         }
     }
 }

@@ -20,10 +20,12 @@ namespace Constantine.Screens
         TileSet _tileSet;
         TileMap _map;
         Player _player;
-        AnimatedSprite _sprite;
-        HUD _hud;
+        PlayerSprite _sprite;
+        
+        SpriteManager _spriteManager;
 
         ScoreLabel _scoreLabel;
+        HealthBar _healthBar;
 
         public int Difficulty { get; set; }
 
@@ -31,12 +33,13 @@ namespace Constantine.Screens
             : base(game, handler)
         {
             _player = new Player(game);
-            _hud = new HUD(100);
+            
         }
 
         public override void Initialize()
         {
             MediaPlayer.Stop(); //this needs to be refactored into a media handler class
+
             base.Initialize();
         }
 
@@ -53,16 +56,22 @@ namespace Constantine.Screens
             animations.Add(AnimationKey.Right, animation);
             animation = new Animation(4, 32, 48, 0, 144);
             animations.Add(AnimationKey.Up, animation);
-            _sprite = new AnimatedSprite(spriteSheet, animations);
+            _sprite = new PlayerSprite(spriteSheet, animations);
+            _sprite.Position = new Vector2(250, 250);
+
+            _spriteManager = new SpriteManager(GameRef);
 
             base.LoadContent();
 
-            _scoreLabel = new ScoreLabel();
-            _scoreLabel.Position = new Vector2(780, 10);
-            _scoreLabel.Text = "Score: 0";
-            _hud.LoadContent(this.GraphicsDevice);
-
+            _scoreLabel = new ScoreLabel(new Vector2(780, 10));
+            _healthBar = CreateHealthBar(this.GraphicsDevice);
             ControlManager.Add(_scoreLabel);
+
+            //TODO: refactor code below into a level selection method
+
+            
+
+            ControlManager.Add(_healthBar);
 
             if (Difficulty == 0)
             {
@@ -112,25 +121,35 @@ namespace Constantine.Screens
 
                 _map = new TileMap(_tileSet, layer);
             }
-            
-
-
-            
+             
         }
         public override void Update(GameTime gameTime)
         {
             _player.Update(gameTime);
             _sprite.Update(gameTime);
+            _spriteManager.Update(gameTime, _sprite);
             AnimateSprite();
             ControlManager.Update(gameTime, PlayerIndex.One);
+            _healthBar.UpdatePlayerHealth(_player.Health);
+
+            if (_sprite.IsColliding)
+            {
+                _player.Health -= 5;
+                _sprite.IsColliding = false;
+            }
 
             if (InputHandler.KeyDown(Keys.P))
             {
                 _scoreLabel.UpdateScore(50);
             }
-            if (InputHandler.KeyDown(Keys.C) && InputHandler.KeyDown(Keys.S))
+            if (InputHandler.KeyPressed(Keys.Escape))
             {
-                GameRef._stateHandler.PushState(GameRef._cutScreen);
+                GameRef._stateHandler.PushState(GameRef._pauseScreen);
+            }
+
+            if (_healthBar.IsEmpty)
+            {
+                GameRef._stateHandler.PushState(GameRef._gameOverScreen);
             }
 
             base.Update(gameTime);
@@ -148,7 +167,8 @@ namespace Constantine.Screens
 
             _map.Draw(GameRef.SpriteBatch, _player.Camera);
             _sprite.Draw(gameTime, GameRef.SpriteBatch, _player.Camera);
-            _hud.Draw(_player, GameRef.SpriteBatch);
+            _spriteManager.Draw(gameTime,GameRef.SpriteBatch,_player.Camera);
+            
 
             base.Draw(gameTime);
             ControlManager.Draw(GameRef.SpriteBatch);
@@ -191,6 +211,43 @@ namespace Constantine.Screens
                 _sprite.IsAnimating = false;
             }
 
+        }
+
+        //Do not supply the graphics device as a parameter, any other alternatives for health bars?
+        public HealthBar CreateHealthBar(GraphicsDevice gd)
+        {
+            int width = 210;
+            int height = 42;
+            int innerWidth = 200;
+            int innerHeight = 30;
+
+            HealthBar healthBar = new HealthBar(_player.Health, 0, 0);
+
+            //create the textures
+            Texture2D healthTexture = new Texture2D(gd, innerWidth, innerHeight, false, SurfaceFormat.Color);
+            Texture2D borderTexture = new Texture2D(gd, width, height, false, SurfaceFormat.Color);
+
+            //create the outer portion of the textbar texture
+            Color[] backColor = new Color[width * height];
+            for (int i = 0; i < backColor.Length; i++)
+            {
+                backColor[i] = new Color(200, 100, 50);
+            }
+            borderTexture.SetData(backColor);
+
+            //create the inner portion of the textbar texture
+            Color[] textureColor = new Color[innerWidth * innerHeight];
+            for (int i = 0; i < textureColor.Length; i++)
+            {
+                textureColor[i] = new Color(255, 0, 0);
+            }
+            healthTexture.SetData(textureColor);
+
+            //set the textures in the health bar
+            healthBar.BorderTexture = borderTexture;
+            healthBar.HealthTexture = healthTexture;
+            //return newly created health bar
+            return healthBar;
         }
     }
 }

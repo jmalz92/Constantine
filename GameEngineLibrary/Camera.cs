@@ -72,7 +72,7 @@ namespace GameEngineLibrary
             position.Y = MathHelper.Clamp(position.Y, 0, TileMap.HeightInPixels - viewportRectangle.Height);
         }
 
-        public void LockToSprite(AnimatedSprite sprite)
+        public void LockToSprite(PlayerSprite sprite)
         {
             position.X = sprite.Position.X + sprite.Width / 2
             - (viewportRectangle.Width / 2);
