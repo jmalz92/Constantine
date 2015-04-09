@@ -100,6 +100,7 @@ namespace Constantine.Screens
                 GameRef._gameScreen.Difficulty = difficulty;
 
                 _stateHandler.PopState();
+                _stateHandler.PushState(GameRef._gameScreen);
             }
             if(gameOverLabelText.Contains("Menu")){
                  GameRef._gameScreen = new GameScreen(GameRef, _stateHandler);

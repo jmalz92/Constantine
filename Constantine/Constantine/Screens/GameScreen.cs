@@ -63,10 +63,7 @@ namespace Constantine.Screens
 
             base.LoadContent();
 
-            _scoreLabel = new ScoreLabel();
-            _scoreLabel.Position = new Vector2(780, 10);
-            _scoreLabel.Text = "Score: 0";
-
+            _scoreLabel = new ScoreLabel(new Vector2(780, 10));
             _healthBar = CreateHealthBar(this.GraphicsDevice);
             ControlManager.Add(_scoreLabel);
 
@@ -216,7 +213,7 @@ namespace Constantine.Screens
 
         }
 
-        //Do not supply the graphics device as a parameter, bad practice
+        //Do not supply the graphics device as a parameter, any other alternatives for health bars?
         public HealthBar CreateHealthBar(GraphicsDevice gd)
         {
             int width = 210;

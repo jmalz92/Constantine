@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Microsoft.Xna.Framework;
+
 namespace GameEngineLibrary.Controls
 {
     public class ScoreLabel : Label
@@ -14,6 +16,18 @@ namespace GameEngineLibrary.Controls
         {
             score = 0;
             this.Text = "Score: 0";
+        }
+
+        public ScoreLabel(Vector2 position)
+        {
+            this.Position = position;
+            this.Text = "Score: 0";
+        }
+
+        public ScoreLabel(Vector2 position, string text)
+        {
+            this.Position = position;
+            this.Text = text;
         }
         #endregion
 

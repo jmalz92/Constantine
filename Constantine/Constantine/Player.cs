@@ -17,7 +17,7 @@ namespace Constantine
         #region Field Region
         Camera camera;
         Game1 gameRef;
-        int health = 100;
+        int health;
         #endregion
 
         #region Property Region
@@ -41,6 +41,7 @@ namespace Constantine
         {
             gameRef = (Game1)game;
             camera = new Camera(gameRef.ScreenBounds);
+            health = 100;
         }
         #endregion
 
