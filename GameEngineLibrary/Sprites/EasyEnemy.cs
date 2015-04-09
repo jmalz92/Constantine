@@ -9,34 +9,39 @@ namespace GameEngineLibrary.Sprites
 {
     class EasyEnemy : EnemySprite
     {
-
-         // Sprite is automated. Direction is same as speed
-        public override Vector2 direction
-        {
-            get { return speed; }
-        }
-
+        
         public EasyEnemy(Texture2D textureImage, Vector2 position, Point frameSize,
-            int collisionOffset, Point currentFrame, Point sheetSize, Vector2 speed, string collisionCueName)
+            int collisionOffset, Point currentFrame, Point sheetSize, float speed, string collisionCueName)
             : base(textureImage, position, frameSize, collisionOffset, currentFrame,
             sheetSize, speed, collisionCueName)
         {
         }
 
         public EasyEnemy(Texture2D textureImage, Vector2 position, Point frameSize,
-            int collisionOffset, Point currentFrame, Point sheetSize, Vector2 speed,
+            int collisionOffset, Point currentFrame, Point sheetSize, float speed,
             int millisecondsPerFrame, string collisionCueName)
             : base(textureImage, position, frameSize, collisionOffset, currentFrame,
             sheetSize, speed, millisecondsPerFrame, collisionCueName)
         {
         }
 
-        public override void Update(GameTime gameTime, Rectangle clientBounds)
+        protected override void MoveSprite(Vector2 playerPos)
+        {
+            Vector2 movement = new Vector2();
+
+            movement.X = playerPos.X - position.X;
+            movement.Y = playerPos.Y - position.Y;
+
+            movement.Normalize();
+            position += movement * speed;
+        }
+
+        public override void Update(GameTime gameTime, Rectangle clientBounds, PlayerSprite player)
         {
             // Move sprite based on direction
-            position += direction;
+            MoveSprite(player.Position);
 
-            base.Update(gameTime, clientBounds);
+            base.Update(gameTime, clientBounds, player);
         }
 
 

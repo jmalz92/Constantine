@@ -58,12 +58,12 @@ namespace GameEngineLibrary.Sprites
                     spriteList.Add(new EasyEnemy(
                     Game.Content.Load<Texture2D>(@"Images/zombie"),
                     new Vector2(0, rng.Next(1280)), new Point(32, 64), 10, new Point(0, 0),
-                    new Point(3, 4), new Vector2(1,0), "enemycollision"));
+                    new Point(3, 4), 2.0f, "enemycollision"));
 
                     spriteList.Add(new EasyEnemy(
                     Game.Content.Load<Texture2D>(@"Images/skeleton"),
                     new Vector2(1280, rng.Next(1280)), new Point(32, 64), 10, new Point(0, 0),
-                    new Point(3, 4), new Vector2(-1, 0), "enemycollision"));
+                    new Point(3, 4), 2.0f, "enemycollision"));
                 }
                 else
                 {
@@ -71,12 +71,12 @@ namespace GameEngineLibrary.Sprites
                     spriteList.Add(new EasyEnemy(
                     Game.Content.Load<Texture2D>(@"Images/zombie"),
                     new Vector2(rng.Next(1280), 0), new Point(32, 64), 10, new Point(0, 0),
-                    new Point(3, 4), new Vector2(0,1), "enemycollision"));
+                    new Point(3, 4), 1.0f, "enemycollision"));
 
                     spriteList.Add(new EasyEnemy(
                     Game.Content.Load<Texture2D>(@"Images/skeleton"),
                     new Vector2(rng.Next(1280), 1280), new Point(32, 64), 10, new Point(0,0),
-                    new Point(3, 4), new Vector2(0, -1), "enemycollision"));
+                    new Point(3, 4), 2.0f, "enemycollision"));
                 }
 
 
@@ -87,7 +87,7 @@ namespace GameEngineLibrary.Sprites
             // Update all sprites
             foreach (EnemySprite s in spriteList)
             {
-                s.Update(gameTime, Game.Window.ClientBounds);
+                s.Update(gameTime, Game.Window.ClientBounds, player);
 
                 
                 // Check for collisions and exit game if there is one

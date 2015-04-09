@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngineLibrary.Sprites
 {
-    abstract class EnemySprite
+    class EnemySprite
     {
          // Stuff needed to draw the sprite
         Texture2D textureImage;
@@ -25,26 +25,21 @@ namespace GameEngineLibrary.Sprites
         const int defaultMillisecondsPerFrame = 100;
 
         // Movement data
-        protected Vector2 speed;
+        protected float speed;
         protected Vector2 position;
-
-        // Abstract definition of direction property
-        public abstract Vector2 direction
-        {
-            get;
-        }
+        
 
         public string collisionCueName { get; private set; }
 
         public EnemySprite(Texture2D textureImage, Vector2 position, Point frameSize,
-        int collisionOffset, Point currentFrame, Point sheetSize, Vector2 speed, string collisionCueName)
+        int collisionOffset, Point currentFrame, Point sheetSize, float speed, string collisionCueName)
             : this(textureImage, position, frameSize, collisionOffset, currentFrame,
             sheetSize, speed, defaultMillisecondsPerFrame, collisionCueName)
         {
         }
 
         public EnemySprite(Texture2D textureImage, Vector2 position, Point frameSize,
-            int collisionOffset, Point currentFrame, Point sheetSize, Vector2 speed,
+            int collisionOffset, Point currentFrame, Point sheetSize, float speed,
             int millisecondsPerFrame, string collisionCueName)
         {
             this.textureImage = textureImage;
@@ -58,7 +53,7 @@ namespace GameEngineLibrary.Sprites
             this.millisecondsPerFrame = millisecondsPerFrame;
         }
 
-        public virtual void Update(GameTime gameTime, Rectangle clientBounds)
+        public virtual void Update(GameTime gameTime, Rectangle clientBounds, PlayerSprite player)
         {
             //TODO: Change to animation class implementation
             // Update frame if time to do so based on framerate
@@ -94,6 +89,10 @@ namespace GameEngineLibrary.Sprites
                 1f, SpriteEffects.None, 0);
         }
 
+        protected virtual void MoveSprite(Vector2 playerPos)
+        {
+        } 
+       
         // Gets the collision rect based on position, framesize and collision offset
         public Rectangle collisionRect
         {
