@@ -68,6 +68,10 @@ namespace Constantine.Screens
         {
             ControlManager.Update(gameTime, PlayerIndex.One);
 
+            if (InputHandler.KeyPressed(Keys.Escape) || InputHandler.ButtonPressed(Buttons.Start, PlayerIndex.One))
+            {
+                _stateHandler.PopState();
+            }
             base.Update(gameTime);
         }
 
