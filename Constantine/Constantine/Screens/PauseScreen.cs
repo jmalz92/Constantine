@@ -15,7 +15,7 @@ namespace Constantine.Screens
 {
     public class PauseScreen : GameStateBase
     {
-        
+        Texture2D _backgroundImage;
         LinkLabel _returnLabel;
         LinkLabel _mainMenuLabel;
         LinkLabel _exitLabel;
@@ -31,11 +31,12 @@ namespace Constantine.Screens
 
         protected override void LoadContent()
         {
-            
+            ContentManager Content = GameRef.Content;
+            _backgroundImage = Content.Load<Texture2D>(@"Images/Pause");
             base.LoadContent();
 
             _returnLabel = new LinkLabel();
-            _returnLabel.Position = new Vector2(400, 200);
+            _returnLabel.Position = new Vector2(425, 400);
             _returnLabel.Text = "Return to Game";
             _returnLabel.Color = Color.White;
             _returnLabel.TabStop = true;
@@ -43,19 +44,19 @@ namespace Constantine.Screens
             _returnLabel.Selected += new EventHandler(menuItem_Selected);
 
             _mainMenuLabel = new LinkLabel();
-            _mainMenuLabel.Position = new Vector2(400, 300);
+            _mainMenuLabel.Position = new Vector2(425, 500);
             _mainMenuLabel.Text = "Main Menu";
             _mainMenuLabel.Color = Color.White;
             _mainMenuLabel.TabStop = true;
-            _mainMenuLabel.HasFocus = true;
+            _mainMenuLabel.HasFocus = false;
             _mainMenuLabel.Selected += new EventHandler(menuItem_Selected);
 
             _exitLabel = new LinkLabel();
-            _exitLabel.Position = new Vector2(400, 400);
+            _exitLabel.Position = new Vector2(425, 600);
             _exitLabel.Text = "Exit Game";
             _exitLabel.Color = Color.White;
             _exitLabel.TabStop = true;
-            _exitLabel.HasFocus = true;
+            _exitLabel.HasFocus = false;
             _exitLabel.Selected += new EventHandler(menuItem_Selected);
 
             ControlManager.Add(_returnLabel);
@@ -74,6 +75,8 @@ namespace Constantine.Screens
         {
             GameRef.SpriteBatch.Begin();
             base.Draw(gameTime);
+
+            GameRef.SpriteBatch.Draw(_backgroundImage, GameRef.ScreenBounds, Color.White);
 
             ControlManager.Draw(GameRef.SpriteBatch);
             GameRef.SpriteBatch.End();

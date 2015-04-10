@@ -142,7 +142,7 @@ namespace Constantine.Screens
             {
                 _scoreLabel.UpdateScore(50);
             }
-            if (InputHandler.KeyPressed(Keys.Escape))
+            if (InputHandler.KeyPressed(Keys.Escape) || InputHandler.ButtonPressed(Buttons.Start, PlayerIndex.One))
             {
                 GameRef._stateHandler.PushState(GameRef._pauseScreen);
             }

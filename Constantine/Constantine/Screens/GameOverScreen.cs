@@ -19,7 +19,6 @@ namespace Constantine.Screens
         LinkLabel _playLabel;
         LinkLabel _mainMenuLabel;
         LinkLabel _exitLabel;
-        Label _gameOverLabel; //remove this for a game over background image
 
         public GameOverScreen(Game game, GameStateHandler handler)
             : base(game, handler)
@@ -33,16 +32,13 @@ namespace Constantine.Screens
 
         protected override void LoadContent()
         {
-           
+            ContentManager Content = GameRef.Content;
+            _backgroundImage = Content.Load<Texture2D>(@"Images/GameOver");
             base.LoadContent();
 
-            _gameOverLabel = new Label();
-            _gameOverLabel.Position = new Vector2(100, 200);
-            _gameOverLabel.Text = "GAME OVER";
-            _gameOverLabel.Color = Color.White;
 
             _playLabel = new LinkLabel();
-            _playLabel.Position = new Vector2(400, 200);
+            _playLabel.Position = new Vector2(425, 400);
             _playLabel.Text = "Play Again";
             _playLabel.Color = Color.White;
             _playLabel.TabStop = true;
@@ -50,22 +46,21 @@ namespace Constantine.Screens
             _playLabel.Selected += new EventHandler(gameOverItem_Selected);
 
             _mainMenuLabel = new LinkLabel();
-            _mainMenuLabel.Position = new Vector2(400, 300);
+            _mainMenuLabel.Position = new Vector2(425, 500);
             _mainMenuLabel.Text = "Main Menu";
             _mainMenuLabel.Color = Color.White;
             _mainMenuLabel.TabStop = true;
-            _mainMenuLabel.HasFocus = true;
+            _mainMenuLabel.HasFocus = false;
             _mainMenuLabel.Selected += new EventHandler(gameOverItem_Selected);
 
             _exitLabel = new LinkLabel();
-            _exitLabel.Position = new Vector2(400, 400);
+            _exitLabel.Position = new Vector2(425, 600);
             _exitLabel.Text = "Exit Game";
             _exitLabel.Color = Color.White;
             _exitLabel.TabStop = true;
-            _exitLabel.HasFocus = true;
+            _exitLabel.HasFocus = false;
             _exitLabel.Selected += new EventHandler(gameOverItem_Selected);
 
-            ControlManager.Add(_gameOverLabel);
             ControlManager.Add(_playLabel);
             ControlManager.Add(_mainMenuLabel);
             ControlManager.Add(_exitLabel);
@@ -84,6 +79,8 @@ namespace Constantine.Screens
         {
             GameRef.SpriteBatch.Begin();
             base.Draw(gameTime);
+
+            GameRef.SpriteBatch.Draw(_backgroundImage, GameRef.ScreenBounds, Color.White);
 
             ControlManager.Draw(GameRef.SpriteBatch);
             GameRef.SpriteBatch.End();

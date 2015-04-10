@@ -38,23 +38,23 @@ namespace Constantine.Screens
             base.LoadContent();
 
             _easyLabel = new LinkLabel();
-            _easyLabel.Position = new Vector2(500, 400);
+            _easyLabel.Position = new Vector2(450, 400);
             _easyLabel.Text = "Easy";
             _easyLabel.Color = Color.White;
             _easyLabel.TabStop = true;
-            _easyLabel.HasFocus = false;
+            _easyLabel.HasFocus = true;
             _easyLabel.Selected += new EventHandler(difficulty_Selected);
 
             _normalLabel = new LinkLabel();
-            _normalLabel.Position = new Vector2(500, 500);
+            _normalLabel.Position = new Vector2(450, 500);
             _normalLabel.Text = "Normal";
             _normalLabel.Color = Color.White;
             _normalLabel.TabStop = true;
-            _normalLabel.HasFocus = true;
+            _normalLabel.HasFocus = false;
             _normalLabel.Selected += new EventHandler(difficulty_Selected);
 
             _hardLabel = new LinkLabel();
-            _hardLabel.Position = new Vector2(500, 600);
+            _hardLabel.Position = new Vector2(450, 600);
             _hardLabel.Text = "Hard";
             _hardLabel.Color = Color.White;
             _hardLabel.TabStop = true;
