@@ -26,6 +26,7 @@ namespace Constantine.Screens
 
         ScoreLabel _scoreLabel;
         HealthBar _healthBar;
+        int _scoreTimer;
 
         public int Difficulty { get; set; }
 
@@ -33,7 +34,7 @@ namespace Constantine.Screens
             : base(game, handler)
         {
             _player = new Player(game);
-            
+            _scoreTimer = 0;
         }
 
         public override void Initialize()
@@ -138,10 +139,14 @@ namespace Constantine.Screens
                 _sprite.IsColliding = false;
             }
 
-            if (InputHandler.KeyDown(Keys.P))
+
+            _scoreTimer += gameTime.ElapsedGameTime.Milliseconds;
+            if (_scoreTimer >= 1000)
             {
-                _scoreLabel.UpdateScore(50);
+                _scoreLabel.UpdateScore(1);
+                _scoreTimer = 0;
             }
+
             if (InputHandler.KeyPressed(Keys.Escape) || InputHandler.ButtonPressed(Buttons.Start, PlayerIndex.One))
             {
                 GameRef._stateHandler.PushState(GameRef._pauseScreen);
@@ -154,6 +159,7 @@ namespace Constantine.Screens
 
             base.Update(gameTime);
         }
+
         public override void Draw(GameTime gameTime)
         {
             GameRef.SpriteBatch.Begin(
