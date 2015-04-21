@@ -13,7 +13,6 @@ namespace Constantine.Screens
 {
     public class MenuScreen : GameStateBase
     {
-        Texture2D _backgroundImage;
         LinkLabel _startLabel;
         Song menuMusic;
         bool isMusicPlaying;
@@ -32,8 +31,7 @@ namespace Constantine.Screens
         protected override void LoadContent()
         {
             ContentManager Content = GameRef.Content;
-            _backgroundImage = Content.Load<Texture2D>(@"Images/menu");
-
+            
             menuMusic = Content.Load<Song>(@"Sounds/Dystopia");
             MediaPlayer.IsRepeating = true;
 
@@ -50,7 +48,7 @@ namespace Constantine.Screens
         }
         public override void Update(GameTime gameTime)
         {
-            ControlManager.Update(gameTime, PlayerIndex.One);
+            ControlManager.Update(gameTime);
 
             base.Update(gameTime);
             if (!isMusicPlaying)
@@ -65,7 +63,7 @@ namespace Constantine.Screens
         {
             GameRef.SpriteBatch.Begin();
             base.Draw(gameTime);
-            GameRef.SpriteBatch.Draw(_backgroundImage, GameRef.ScreenBounds, Color.White);
+            GameRef.SpriteBatch.Draw(Assets.Menu, GameRef.ScreenBounds, Color.White);
 
             ControlManager.Draw(GameRef.SpriteBatch);
 

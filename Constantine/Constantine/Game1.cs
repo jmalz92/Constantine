@@ -72,7 +72,7 @@ namespace Constantine
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            Window.Title = "Constantine V. 0.1";
+            Window.Title = "Constantine Alpha Build";
             this.IsMouseVisible = true;
 
             base.Initialize();
@@ -84,6 +84,7 @@ namespace Constantine
         /// </summary>
         protected override void LoadContent()
         {
+            Assets.Load(Content);
             // Create a new SpriteBatch, which can be used to draw textures.
             SpriteBatch = new SpriteBatch(GraphicsDevice);
         }

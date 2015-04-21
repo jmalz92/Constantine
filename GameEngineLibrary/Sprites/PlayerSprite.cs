@@ -10,7 +10,7 @@ using GameEngineLibrary.TileEngine;
 
 namespace GameEngineLibrary.Sprites
 {
-    public class PlayerSprite
+    public class PlayerSprite : Sprite
     {
         #region Field Region
 
@@ -68,7 +68,7 @@ namespace GameEngineLibrary.Sprites
             }
         }
 
-        public Rectangle collisionRect
+        public override Rectangle CollisionRect
         {
             get
             {

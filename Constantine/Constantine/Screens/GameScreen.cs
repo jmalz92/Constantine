@@ -47,7 +47,6 @@ namespace Constantine.Screens
         protected override void LoadContent()
         {
 
-            Texture2D spriteSheet = Game.Content.Load<Texture2D>(@"Images\player_placeholder");
             Dictionary<AnimationKey, Animation> animations = new Dictionary<AnimationKey, Animation>();
             Animation animation = new Animation(4, 32, 48, 0, 0);
             animations.Add(AnimationKey.Down, animation);
@@ -57,10 +56,10 @@ namespace Constantine.Screens
             animations.Add(AnimationKey.Right, animation);
             animation = new Animation(4, 32, 48, 0, 144);
             animations.Add(AnimationKey.Up, animation);
-            _sprite = new PlayerSprite(spriteSheet, animations);
+            _sprite = new PlayerSprite(Assets.Player, animations);
             _sprite.Position = new Vector2(250, 250);
 
-            _spriteManager = new SpriteManager(GameRef);
+            _spriteManager = new SpriteManager();
 
             base.LoadContent();
 
@@ -128,9 +127,10 @@ namespace Constantine.Screens
         {
             _player.Update(gameTime);
             _sprite.Update(gameTime);
+            EnemyFactory.Update(gameTime, _spriteManager);
             _spriteManager.Update(gameTime, _sprite);
             AnimateSprite();
-            ControlManager.Update(gameTime, PlayerIndex.One);
+            ControlManager.Update(gameTime);
             _healthBar.UpdatePlayerHealth(_player.Health);
 
             if (_sprite.IsColliding)
@@ -147,7 +147,7 @@ namespace Constantine.Screens
                 _scoreTimer = 0;
             }
 
-            if (InputHandler.KeyPressed(Keys.Escape) || InputHandler.ButtonPressed(Buttons.Start, PlayerIndex.One))
+            if (InputHandler.KeyPressed(Keys.Escape) || InputHandler.ButtonPressed(Buttons.Start))
             {
                 GameRef._stateHandler.PushState(GameRef._pauseScreen);
             }
@@ -173,7 +173,7 @@ namespace Constantine.Screens
 
             _map.Draw(GameRef.SpriteBatch, _player.Camera);
             _sprite.Draw(gameTime, GameRef.SpriteBatch, _player.Camera);
-            _spriteManager.Draw(gameTime,GameRef.SpriteBatch,_player.Camera);
+            _spriteManager.Draw(gameTime, GameRef.SpriteBatch, _player.Camera);
             
 
             base.Draw(gameTime);
@@ -184,22 +184,22 @@ namespace Constantine.Screens
         private void AnimateSprite()
         {
             Vector2 motion = new Vector2();
-            if (InputHandler.KeyDown(Keys.W) || InputHandler.ButtonDown(Buttons.LeftThumbstickUp, PlayerIndex.One))
+            if (InputHandler.KeyDown(Keys.W) || InputHandler.ButtonDown(Buttons.LeftThumbstickUp))
             {
                 _sprite.CurrentAnimation = AnimationKey.Up;
                 motion.Y = -1;
             }
-            else if (InputHandler.KeyDown(Keys.S) || InputHandler.ButtonDown(Buttons.LeftThumbstickDown, PlayerIndex.One))
+            else if (InputHandler.KeyDown(Keys.S) || InputHandler.ButtonDown(Buttons.LeftThumbstickDown))
             {
                 _sprite.CurrentAnimation = AnimationKey.Down;
                 motion.Y = 1;
             }
-            if (InputHandler.KeyDown(Keys.A) || InputHandler.ButtonDown(Buttons.LeftThumbstickLeft, PlayerIndex.One))
+            if (InputHandler.KeyDown(Keys.A) || InputHandler.ButtonDown(Buttons.LeftThumbstickLeft))
             {
                 _sprite.CurrentAnimation = AnimationKey.Left;
                 motion.X = -1;
             }
-            else if (InputHandler.KeyDown(Keys.D) || InputHandler.ButtonDown(Buttons.LeftThumbstickRight, PlayerIndex.One))
+            else if (InputHandler.KeyDown(Keys.D) || InputHandler.ButtonDown(Buttons.LeftThumbstickRight))
             {
                 _sprite.CurrentAnimation = AnimationKey.Right;
                 motion.X = 1;
