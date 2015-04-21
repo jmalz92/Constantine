@@ -75,8 +75,8 @@ namespace GameEngineLibrary.Sprites
                 {
                     if (IsColliding(enemies[i], bullets[j]))
                     {
-                        //enemies[i].WasShot();
-                        //bullets[j].IsExpired = true;
+                        enemies[i].IsExpired = true;
+                        bullets[j].IsExpired = true;
                     }
                 }
 

@@ -56,7 +56,7 @@ namespace Constantine.Screens
             animations.Add(AnimationKey.Right, animation);
             animation = new Animation(4, 32, 48, 0, 144);
             animations.Add(AnimationKey.Up, animation);
-            _sprite = new PlayerSprite(Assets.Player, animations);
+            _sprite = new PlayerSprite(Assets.Player, Assets.Bullet, animations);
             _sprite.Position = new Vector2(250, 250);
 
             _spriteManager = new SpriteManager();
@@ -126,7 +126,7 @@ namespace Constantine.Screens
         public override void Update(GameTime gameTime)
         {
             _player.Update(gameTime);
-            _sprite.Update(gameTime);
+            _sprite.Update(gameTime, _spriteManager);
             EnemyFactory.Update(gameTime, _spriteManager);
             _spriteManager.Update(gameTime, _sprite);
             AnimateSprite();
