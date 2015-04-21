@@ -18,11 +18,27 @@ namespace GameEngineLibrary
     public class InputHandler : Microsoft.Xna.Framework.GameComponent
     {
         #region Fields/Properties
+        private static bool isAimingWithMouse = false;
+        private static MouseState _mouseState, _lastMouseState;
+
+
         static KeyboardState _keyboardState;
         static KeyboardState _lastKeyboardState;
 
-        static GamePadState[] gamePadStates;
-        static GamePadState[] lastGamePadStates;
+        static GamePadState _gamePadState;
+        static GamePadState _lastGamePadState;
+
+        public static Vector2 MousePosition { get { return new Vector2(_mouseState.X, _mouseState.Y); } }
+
+        public static MouseState MouseState
+        {
+            get { return _mouseState; }
+        }
+
+        public static MouseState LastMouseState
+        {
+            get { return _lastMouseState; }
+        }
 
         public static KeyboardState KeyboardState
         {
@@ -34,14 +50,14 @@ namespace GameEngineLibrary
             get { return _lastKeyboardState; }
         }
 
-        public static GamePadState[] GamePadStates
+        public static GamePadState GamePadState
         {
-            get { return gamePadStates; }
+            get { return _gamePadState; }
         }
 
-        public static GamePadState[] LastGamePadStates
+        public static GamePadState LastGamePadState
         {
-            get { return lastGamePadStates; }
+            get { return _lastGamePadState; }
         }
         #endregion
 
@@ -50,11 +66,11 @@ namespace GameEngineLibrary
             : base(game)
         {
             _keyboardState = Keyboard.GetState();
+            _mouseState = Mouse.GetState();
 
-            gamePadStates = new GamePadState[Enum.GetValues(typeof(PlayerIndex)).Length];
+            _gamePadState = GamePad.GetState(PlayerIndex.One);
 
-            foreach (PlayerIndex index in Enum.GetValues(typeof(PlayerIndex)))
-                gamePadStates[(int)index] = GamePad.GetState(index);
+            
         }
         #endregion
 
@@ -74,13 +90,21 @@ namespace GameEngineLibrary
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         public override void Update(GameTime gameTime)
         {
+            _lastMouseState = _mouseState;
+            _mouseState = Mouse.GetState();
+
             _lastKeyboardState = _keyboardState;
             _keyboardState = Keyboard.GetState();
 
-            lastGamePadStates = (GamePadState[])gamePadStates.Clone();
-            foreach (PlayerIndex index in Enum.GetValues(typeof(PlayerIndex)))
-                gamePadStates[(int)index] = GamePad.GetState(index);
+            _lastGamePadState = _gamePadState;
+            _gamePadState = GamePad.GetState(PlayerIndex.One);
 
+            // If the player pressed one of the arrow keys or is using a gamepad to aim, we want to disable mouse aiming. Otherwise,
+            // if the player moves the mouse, enable mouse aiming.
+            if (_gamePadState.ThumbSticks.Right != Vector2.Zero)
+                isAimingWithMouse = false;
+            else if (MousePosition != new Vector2(_lastMouseState.X, _lastMouseState.Y))
+                isAimingWithMouse = true;
             base.Update(gameTime);
         }
         #endregion
@@ -91,6 +115,29 @@ namespace GameEngineLibrary
         {
             _lastKeyboardState = _keyboardState;
         }
+
+        public static Vector2 GetAimDirection(Vector2 playerPosition) //change this to hide info about player?
+        {
+            Vector2 direction = Vector2.Zero;
+            if (isAimingWithMouse)
+            {
+                direction = MousePosition - playerPosition;
+            }
+            else
+            {
+                direction = _gamePadState.ThumbSticks.Right;
+                direction.Y *= -1;
+            }
+
+            
+            if (direction == Vector2.Zero)
+                return Vector2.Zero;
+            else
+                return Vector2.Normalize(direction);
+            
+        }
+
+
 
         public static bool KeyReleased(Keys key)
         {
@@ -110,21 +157,21 @@ namespace GameEngineLibrary
         }
 
 
-        public static bool ButtonReleased(Buttons button, PlayerIndex index)
+        public static bool ButtonReleased(Buttons button)
         {
-            return gamePadStates[(int)index].IsButtonUp(button) &&
-                lastGamePadStates[(int)index].IsButtonDown(button);
+            return _gamePadState.IsButtonUp(button) &&
+                _lastGamePadState.IsButtonDown(button);
         }
 
-        public static bool ButtonPressed(Buttons button, PlayerIndex index)
+        public static bool ButtonPressed(Buttons button)
         {
-            return gamePadStates[(int)index].IsButtonDown(button) &&
-                lastGamePadStates[(int)index].IsButtonUp(button);
+            return _gamePadState.IsButtonDown(button) &&
+                _lastGamePadState.IsButtonUp(button);
         }
 
-        public static bool ButtonDown(Buttons button, PlayerIndex index)
+        public static bool ButtonDown(Buttons button)
         {
-            return gamePadStates[(int)index].IsButtonDown(button);
+            return _gamePadState.IsButtonDown(button);
         }
 
         #endregion

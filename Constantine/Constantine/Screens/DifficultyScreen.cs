@@ -16,7 +16,6 @@ namespace Constantine.Screens
 {
     public class DifficultyScreen : GameStateBase
     {
-        Texture2D _backgroundImage;
         LinkLabel _easyLabel;
         LinkLabel _normalLabel;
         LinkLabel _hardLabel;
@@ -33,28 +32,26 @@ namespace Constantine.Screens
 
         protected override void LoadContent()
         {
-            ContentManager Content = GameRef.Content;
-            _backgroundImage = Content.Load<Texture2D>(@"Images/menu");
             base.LoadContent();
 
             _easyLabel = new LinkLabel();
-            _easyLabel.Position = new Vector2(500, 400);
+            _easyLabel.Position = new Vector2(450, 400);
             _easyLabel.Text = "Easy";
             _easyLabel.Color = Color.White;
             _easyLabel.TabStop = true;
-            _easyLabel.HasFocus = false;
+            _easyLabel.HasFocus = true;
             _easyLabel.Selected += new EventHandler(difficulty_Selected);
 
             _normalLabel = new LinkLabel();
-            _normalLabel.Position = new Vector2(500, 500);
+            _normalLabel.Position = new Vector2(450, 500);
             _normalLabel.Text = "Normal";
             _normalLabel.Color = Color.White;
             _normalLabel.TabStop = true;
-            _normalLabel.HasFocus = true;
+            _normalLabel.HasFocus = false;
             _normalLabel.Selected += new EventHandler(difficulty_Selected);
 
             _hardLabel = new LinkLabel();
-            _hardLabel.Position = new Vector2(500, 600);
+            _hardLabel.Position = new Vector2(450, 600);
             _hardLabel.Text = "Hard";
             _hardLabel.Color = Color.White;
             _hardLabel.TabStop = true;
@@ -70,7 +67,7 @@ namespace Constantine.Screens
         }
         public override void Update(GameTime gameTime)
         {
-            ControlManager.Update(gameTime, PlayerIndex.One);
+            ControlManager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -79,7 +76,7 @@ namespace Constantine.Screens
         {
             GameRef.SpriteBatch.Begin();
             base.Draw(gameTime);
-            GameRef.SpriteBatch.Draw(_backgroundImage, GameRef.ScreenBounds, Color.White);
+            GameRef.SpriteBatch.Draw(Assets.Menu, GameRef.ScreenBounds, Color.White);
 
             ControlManager.Draw(GameRef.SpriteBatch);
             GameRef.SpriteBatch.End();

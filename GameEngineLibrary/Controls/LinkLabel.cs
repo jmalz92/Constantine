@@ -48,13 +48,13 @@ namespace GameEngineLibrary.Controls
                 spriteBatch.DrawString(SpriteFont, Text, Position, Color);
         }
 
-        public override void HandleInput(PlayerIndex playerIndex)
+        public override void HandleInput()
         {
             if (!HasFocus)
                 return;
 
             if (InputHandler.KeyReleased(Keys.Enter) ||
-                InputHandler.ButtonReleased(Buttons.A, playerIndex))
+                InputHandler.ButtonReleased(Buttons.A))
                 base.OnSelected(null);
         }
 

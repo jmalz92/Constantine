@@ -13,102 +13,95 @@ using Microsoft.Xna.Framework.Media;
 
 namespace GameEngineLibrary.Sprites
 {
-    public class SpriteManager : DrawableGameComponent
+    public class SpriteManager
     {
-        Random rng = new Random();
+        List<Sprite> sprites = new List<Sprite>();
+        List<EnemySprite> enemies = new List<EnemySprite>();
+        List<BulletSprite> bullets = new List<BulletSprite>();
 
-        int elapsedMilliseconds;
-        bool spawnSideFlag = false;
+       
+        bool isUpdating = false;
+        List<Sprite> addedSprites = new List<Sprite>();
 
-
-        List<EnemySprite> spriteList = new List<EnemySprite>();
-
-        public SpriteManager(Game game)
-            : base(game)
+        public SpriteManager()
         {
-
-            elapsedMilliseconds = 0;
 
         }
 
-        /// <summary>
-        /// Allows the game component to perform any initialization it needs to before starting
-        /// to run.  This is where it can query for any required services and load content.
-        /// </summary>
-        public override void Initialize()
+        public void Add(Sprite sprite)
         {
-            // TODO: Add your initialization code here
-
-            base.Initialize();
+            if (!isUpdating)
+                AddSprite(sprite);
+            else
+                addedSprites.Add(sprite);
         }
 
-        /// <summary>
-        /// Allows the game component to update itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        private  void AddSprite(Sprite sprite)
+        {
+            sprites.Add(sprite);
+            if (sprite is BulletSprite)
+                bullets.Add(sprite as BulletSprite);
+            else if (sprite is EnemySprite)
+                enemies.Add(sprite as EnemySprite);
+            
+        }
+
         public void Update(GameTime gameTime, PlayerSprite player)
         {
-            elapsedMilliseconds += gameTime.ElapsedGameTime.Milliseconds;
+            isUpdating = true;
+            HandleCollisions(player);
 
-            if (elapsedMilliseconds >= 1000)
-            {
+            foreach (var sprite in sprites)
+                sprite.Update(gameTime, player.Position);
 
-                if (spawnSideFlag)
+            isUpdating = false;
+
+            foreach (var entity in addedSprites)
+                AddSprite(entity);
+
+            addedSprites.Clear();
+
+            sprites = sprites.Where(x => !x.IsExpired).ToList();
+            bullets = bullets.Where(x => !x.IsExpired).ToList();
+            enemies = enemies.Where(x => !x.IsExpired).ToList();
+        }
+
+        private void HandleCollisions(PlayerSprite player)
+        {
+            
+            // handle collisions between bullets and enemies
+            for (int i = 0; i < enemies.Count; i++)
+                for (int j = 0; j < bullets.Count; j++)
                 {
-                    spriteList.Add(new EasyEnemy(
-                    Game.Content.Load<Texture2D>(@"Images/zombie"),
-                    new Vector2(0, rng.Next(1280)), new Point(32, 64), 10, new Point(0, 0),
-                    new Point(3, 4), 2.0f, "enemycollision"));
-
-                    spriteList.Add(new EasyEnemy(
-                    Game.Content.Load<Texture2D>(@"Images/skeleton"),
-                    new Vector2(1280, rng.Next(1280)), new Point(32, 64), 10, new Point(0, 0),
-                    new Point(3, 4), 2.0f, "enemycollision"));
+                    if (IsColliding(enemies[i], bullets[j]))
+                    {
+                        enemies[i].IsExpired = true;
+                        bullets[j].IsExpired = true;
+                    }
                 }
-                else
-                {
-                   
-                    spriteList.Add(new EasyEnemy(
-                    Game.Content.Load<Texture2D>(@"Images/zombie"),
-                    new Vector2(rng.Next(1280), 0), new Point(32, 64), 10, new Point(0, 0),
-                    new Point(3, 4), 1.0f, "enemycollision"));
 
-                    spriteList.Add(new EasyEnemy(
-                    Game.Content.Load<Texture2D>(@"Images/skeleton"),
-                    new Vector2(rng.Next(1280), 1280), new Point(32, 64), 10, new Point(0,0),
-                    new Point(3, 4), 2.0f, "enemycollision"));
-                }
-
-
-                spawnSideFlag = !spawnSideFlag;
-                elapsedMilliseconds = 0;
-            }
-
-            // Update all sprites
-            foreach (EnemySprite s in spriteList)
+            // handle collisions between the player and enemies
+            for (int i = 0; i < enemies.Count; i++)
             {
-                s.Update(gameTime, Game.Window.ClientBounds, player);
-
-                
-                // Check for collisions and exit game if there is one
-                if (s.collisionRect.Intersects(player.collisionRect))
+                if (IsColliding(player, enemies[i]))
                 {
-                    //Possibly create a collision object to provide collision info on collision?
                     player.IsColliding = true;
-                    
                 }
-                
             }
 
+        }
+
+
+        private static bool IsColliding(Sprite a, Sprite b)
+        {
+            return !a.IsExpired && !b.IsExpired && a.CollisionRect.Intersects(b.CollisionRect);
            
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Camera camera)
         {
-            // Draw all sprites
-            foreach (EnemySprite s in spriteList)
-                s.Draw(gameTime, spriteBatch, camera);
-
+            foreach (var sprite in sprites)
+                sprite.Draw(gameTime, spriteBatch, camera);
         }
     }
 }
