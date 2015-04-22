@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 
 namespace GameEngineLibrary.Sprites
@@ -12,6 +13,7 @@ namespace GameEngineLibrary.Sprites
     {
          // Stuff needed to draw the sprite
         Texture2D textureImage;
+        SoundEffect _deathSound;
         protected Point frameSize;
         Point currentFrame;
         Point sheetSize;
@@ -31,18 +33,19 @@ namespace GameEngineLibrary.Sprites
 
         public string collisionCueName { get; private set; }
 
-        public EnemySprite(Texture2D textureImage, Vector2 position, Point frameSize,
+        public EnemySprite(Texture2D textureImage, SoundEffect deathSound,  Vector2 position, Point frameSize,
         int collisionOffset, Point currentFrame, Point sheetSize, float speed, string collisionCueName)
-            : this(textureImage, position, frameSize, collisionOffset, currentFrame,
+            : this(textureImage, deathSound, position, frameSize, collisionOffset, currentFrame,
             sheetSize, speed, defaultMillisecondsPerFrame, collisionCueName)
         {
         }
 
-        public EnemySprite(Texture2D textureImage, Vector2 position, Point frameSize,
+        public EnemySprite(Texture2D textureImage, SoundEffect deathSound, Vector2 position, Point frameSize,
             int collisionOffset, Point currentFrame, Point sheetSize, float speed,
             int millisecondsPerFrame, string collisionCueName)
         {
             this.textureImage = textureImage;
+            this._deathSound = deathSound;
             this.position = position;
             this.frameSize = frameSize;
             this.collisionOffset = collisionOffset;
@@ -53,7 +56,11 @@ namespace GameEngineLibrary.Sprites
             this.millisecondsPerFrame = millisecondsPerFrame;
         }
 
-
+        public void WasShot()
+        {
+            IsExpired = true;
+            _deathSound.Play();
+        }
 
         public virtual void Update(GameTime gameTime)
         {

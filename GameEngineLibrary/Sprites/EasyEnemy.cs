@@ -4,31 +4,33 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 
 namespace GameEngineLibrary.Sprites
 {
     public class EasyEnemy : EnemySprite
     {
         
-        public EasyEnemy(Texture2D textureImage, Vector2 position, Point frameSize,
+        public EasyEnemy(Texture2D textureImage, SoundEffect deathSound,  Vector2 position, Point frameSize,
             int collisionOffset, Point currentFrame, Point sheetSize, float speed, string collisionCueName)
-            : base(textureImage, position, frameSize, collisionOffset, currentFrame,
+            : base(textureImage, deathSound, position, frameSize, collisionOffset, currentFrame,
             sheetSize, speed, collisionCueName)
         {
         }
 
-        public EasyEnemy(Texture2D textureImage, Vector2 position, Point frameSize,
+        public EasyEnemy(Texture2D textureImage, SoundEffect deathSound, Vector2 position, Point frameSize,
             int collisionOffset, Point currentFrame, Point sheetSize, float speed,
             int millisecondsPerFrame, string collisionCueName)
-            : base(textureImage, position, frameSize, collisionOffset, currentFrame,
+            : base(textureImage, deathSound, position, frameSize, collisionOffset, currentFrame,
             sheetSize, speed, millisecondsPerFrame, collisionCueName)
         {
         }
 
-        public static EasyEnemy CreateEnemy(Texture2D textureImage, Vector2 position, Point frameSize,
+        //not very clean
+        public static EasyEnemy CreateEnemy(Texture2D textureImage, SoundEffect deathSound, Vector2 position, Point frameSize,
             int collisionOffset, Point currentFrame, Point sheetSize, float speed, string collisionCueName)
         {
-            return new EasyEnemy(textureImage, position, frameSize, collisionOffset, currentFrame, sheetSize, speed, collisionCueName);
+            return new EasyEnemy(textureImage, deathSound, position, frameSize, collisionOffset, currentFrame, sheetSize, speed, collisionCueName);
         }
 
         protected override void MoveSprite(Vector2 playerPos)

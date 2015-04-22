@@ -73,6 +73,12 @@ namespace Constantine.Screens
 
             ControlManager.Add(_healthBar);
 
+            SetMap();
+             
+        }
+
+        private void SetMap() 
+        { 
             if (Difficulty == 0)
             {
                 Texture2D tilesetTexture = Game.Content.Load<Texture2D>(@"Tiles\tileset1");
@@ -103,6 +109,24 @@ namespace Constantine.Screens
                 }
                 _map.AddLayer(splatter);
             }
+            else if (Difficulty == 1)
+            {
+                Texture2D tilesetTexture = Game.Content.Load<Texture2D>(@"Tiles\cavetiles");
+                _tileSet = new TileSet(tilesetTexture, 5, 5, 32, 32);
+
+                MapLayer layer = new MapLayer(40, 40);
+
+                for (int y = 0; y < layer.Height; y++)
+                {
+                    for (int x = 0; x < layer.Width; x++)
+                    {
+                        Tile tile = new Tile(3, 0);
+                        layer.SetTile(x, y, tile);
+                    }
+                }
+
+                _map = new TileMap(_tileSet, layer);
+            }
             else
             {
                 Texture2D tilesetTexture = Game.Content.Load<Texture2D>(@"Tiles\scorchedtiles");
@@ -121,8 +145,9 @@ namespace Constantine.Screens
 
                 _map = new TileMap(_tileSet, layer);
             }
-             
         }
+
+
         public override void Update(GameTime gameTime)
         {
             _player.Update(gameTime);
