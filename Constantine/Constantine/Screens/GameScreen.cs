@@ -29,7 +29,7 @@ namespace Constantine.Screens
         int _scoreTimer;
 
         public int Difficulty { get; set; }
-
+        
         public GameScreen(Game game, GameStateHandler handler)
             : base(game, handler)
         {
@@ -39,8 +39,8 @@ namespace Constantine.Screens
 
         public override void Initialize()
         {
-            MediaPlayer.Stop(); //this needs to be refactored into a media handler class, possibly if scope allows
-            MediaPlayer.Play(Audio.HardTrack);
+            MediaPlayer.Stop();
+            MediaPlayer.Play(Audio.HardTrack); //this is too loud currently
             base.Initialize();
         }
 

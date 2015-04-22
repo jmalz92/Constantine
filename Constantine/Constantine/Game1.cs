@@ -73,6 +73,7 @@ namespace Constantine
         {
             // TODO: Add your initialization logic here
             Window.Title = "Constantine Alpha Build";
+            MediaPlayer.Volume = .3f;
             this.IsMouseVisible = true;
 
             base.Initialize();

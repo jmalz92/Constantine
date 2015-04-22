@@ -12,6 +12,9 @@ namespace GameEngineLibrary.Sprites
     {
         private static Random rand = new Random();
         private Texture2D Image;
+        private float distance = 0;
+        private const int maxDistance = 400;
+
         public Vector2 Size
         {
             get
@@ -47,10 +50,10 @@ namespace GameEngineLibrary.Sprites
                 Orientation = (float)Math.Atan2(Velocity.Y, Velocity.X);;
 
             Position += Velocity;
+            distance += Velocity.Length();
 
-			// delete bullets that go off-screen
-            //if (!GameRoot.Viewport.Bounds.Contains(Position.ToPoint()))
-            //    IsExpired = true;
+            if (distance > maxDistance)
+                IsExpired = true;
 		}
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Camera camera)
