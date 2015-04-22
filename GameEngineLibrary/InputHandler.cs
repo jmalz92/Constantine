@@ -137,7 +137,10 @@ namespace GameEngineLibrary
             
         }
 
-
+        public static bool MouseDown(ButtonState state)
+        {
+            return state == ButtonState.Pressed;
+        }
 
         public static bool KeyReleased(Keys key)
         {

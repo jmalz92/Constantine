@@ -5,6 +5,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 using GameEngineLibrary.TileEngine;
 
@@ -119,7 +120,8 @@ namespace GameEngineLibrary.Sprites
 
             Vector2 aim = InputHandler.GetAimDirection(Position);
 
-            if (aim.LengthSquared() > 0 && cooldowmRemaining <= 0)
+            if (aim.LengthSquared() > 0 && cooldowmRemaining <= 0 && 
+                (InputHandler.MouseDown(InputHandler.MouseState.RightButton) || InputHandler.ButtonDown(Buttons.RightTrigger)))
             {
                 cooldowmRemaining = cooldownFrames;
                 float aimAngle = (float)Math.Atan2(aim.Y, aim.X);
