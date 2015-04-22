@@ -16,9 +16,15 @@ namespace Constantine
 
         public static SoundEffect Bullet { get; private set; }
 
+        public static Song HardTrack { get; private set; }
+        public static Song MenuTrack { get; private set; }
+
+
         public static void Load(ContentManager content)
         {
             Bullet = content.Load<SoundEffect>("Sounds/bullet");
+            HardTrack = content.Load<Song>("Sounds/HardTrack");
+            MenuTrack = content.Load<Song>("Sounds/Dystopia");
 
         }
     }

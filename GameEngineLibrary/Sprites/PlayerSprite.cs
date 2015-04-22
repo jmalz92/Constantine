@@ -139,7 +139,7 @@ namespace GameEngineLibrary.Sprites
                 offset = Vector2.Transform(new Vector2(35, 8), aimQuat);
                 manager.Add(new BulletSprite(_bullet, Position + offset, vel));
 
-                _bulletSound.Play(0.1f, 0, 0);
+                _bulletSound.Play();
             }
 
             if (cooldowmRemaining > 0)

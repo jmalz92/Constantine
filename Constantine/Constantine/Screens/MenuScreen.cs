@@ -14,7 +14,6 @@ namespace Constantine.Screens
     public class MenuScreen : GameStateBase
     {
         LinkLabel _startLabel;
-        Song menuMusic;
         bool isMusicPlaying;
 
         public MenuScreen(Game game, GameStateHandler handler)
@@ -30,9 +29,7 @@ namespace Constantine.Screens
 
         protected override void LoadContent()
         {
-            ContentManager Content = GameRef.Content;
-            
-            menuMusic = Content.Load<Song>(@"Sounds/Dystopia");
+           
             MediaPlayer.IsRepeating = true;
 
             base.LoadContent();
@@ -54,7 +51,7 @@ namespace Constantine.Screens
             if (!isMusicPlaying)
             {
                 isMusicPlaying = true;
-                MediaPlayer.Play(menuMusic);
+                MediaPlayer.Play(Audio.MenuTrack);
             }
             
         }

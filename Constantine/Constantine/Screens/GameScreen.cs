@@ -40,7 +40,7 @@ namespace Constantine.Screens
         public override void Initialize()
         {
             MediaPlayer.Stop(); //this needs to be refactored into a media handler class, possibly if scope allows
-
+            MediaPlayer.Play(Audio.HardTrack);
             base.Initialize();
         }
 
