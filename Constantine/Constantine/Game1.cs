@@ -85,6 +85,7 @@ namespace Constantine
         protected override void LoadContent()
         {
             Assets.Load(Content);
+            Audio.Load(Content);
             // Create a new SpriteBatch, which can be used to draw textures.
             SpriteBatch = new SpriteBatch(GraphicsDevice);
         }

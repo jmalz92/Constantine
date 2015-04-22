@@ -6,6 +6,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
 using GameEngineLibrary.TileEngine;
 
@@ -21,6 +22,7 @@ namespace GameEngineLibrary.Sprites
 
         Texture2D texture;
         Texture2D _bullet;
+        SoundEffect _bulletSound;
         Vector2 position;
         Vector2 velocity;
         float speed = 3.0f;
@@ -98,10 +100,11 @@ namespace GameEngineLibrary.Sprites
 
         #region Constructor Region
 
-        public PlayerSprite(Texture2D sprite, Texture2D bullet, Dictionary<AnimationKey, Animation> animation)
+        public PlayerSprite(Texture2D sprite, Texture2D bullet, SoundEffect bulletSound, Dictionary<AnimationKey, Animation> animation)
         {
             texture = sprite;
             _bullet = bullet;
+            _bulletSound = bulletSound;
             animations = new Dictionary<AnimationKey, Animation>();
 
             foreach (AnimationKey key in animation.Keys)
@@ -136,7 +139,7 @@ namespace GameEngineLibrary.Sprites
                 offset = Vector2.Transform(new Vector2(35, 8), aimQuat);
                 manager.Add(new BulletSprite(_bullet, Position + offset, vel));
 
-                //Sound.Shot.Play(0.2f, rand.NextFloat(-0.2f, 0.2f), 0);
+                _bulletSound.Play(0.1f, 0, 0);
             }
 
             if (cooldowmRemaining > 0)

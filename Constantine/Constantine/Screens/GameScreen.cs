@@ -39,7 +39,7 @@ namespace Constantine.Screens
 
         public override void Initialize()
         {
-            MediaPlayer.Stop(); //this needs to be refactored into a media handler class
+            MediaPlayer.Stop(); //this needs to be refactored into a media handler class, possibly if scope allows
 
             base.Initialize();
         }
@@ -56,7 +56,7 @@ namespace Constantine.Screens
             animations.Add(AnimationKey.Right, animation);
             animation = new Animation(4, 32, 48, 0, 144);
             animations.Add(AnimationKey.Up, animation);
-            _sprite = new PlayerSprite(Assets.Player, Assets.Bullet, animations);
+            _sprite = new PlayerSprite(Assets.Player, Assets.Bullet, Audio.Bullet, animations);
             _sprite.Position = new Vector2(250, 250);
 
             _spriteManager = new SpriteManager();
