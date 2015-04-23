@@ -26,6 +26,8 @@ namespace Constantine.Screens
 
         ScoreLabel _scoreLabel;
         HealthBar _healthBar;
+        PowerUpBar _powersBar;
+
         int _scoreTimer;
 
         public int Difficulty { get; set; }
@@ -65,10 +67,11 @@ namespace Constantine.Screens
 
             _scoreLabel = new ScoreLabel(new Vector2(780, 10));
             _healthBar = CreateHealthBar(this.GraphicsDevice);
+            _powersBar = CreatePowerUpBar(this.GraphicsDevice);
             ControlManager.Add(_scoreLabel);
 
             ControlManager.Add(_healthBar);
-
+            ControlManager.Add(_powersBar);
             SetMap();
              
         }
@@ -154,6 +157,7 @@ namespace Constantine.Screens
             AnimateSprite();
             ControlManager.Update(gameTime);
             _healthBar.UpdatePlayerHealth(_player.Health);
+            
 
             if (_sprite.IsColliding)
             {
@@ -175,6 +179,14 @@ namespace Constantine.Screens
             if (InputHandler.KeyPressed(Keys.Escape) || InputHandler.ButtonPressed(Buttons.Start))
             {
                 GameRef._stateHandler.PushState(GameRef._pauseScreen);
+            }
+            if (InputHandler.KeyPressed(Keys.OemOpenBrackets) && !InputHandler.LastKeyboardState.IsKeyDown(Keys.OemOpenBrackets))
+            {
+                _powersBar.IncreasePowerUpBar();
+            }
+            if (InputHandler.KeyPressed(Keys.OemCloseBrackets) && !InputHandler.LastKeyboardState.IsKeyDown(Keys.OemCloseBrackets))
+            {
+                _powersBar.DecreasePowerUpBar();
             }
 
             if (_healthBar.IsEmpty)
@@ -279,6 +291,42 @@ namespace Constantine.Screens
             healthBar.HealthTexture = healthTexture;
             //return newly created health bar
             return healthBar;
+        }
+
+        private PowerUpBar CreatePowerUpBar(GraphicsDevice gd)
+        {
+            int width = 210;
+            int height = 42;
+            int innerWidth = 200;
+            int innerHeight = 30;
+
+            PowerUpBar powerUpBar = new PowerUpBar(240, 0);
+
+            //create the textures
+            Texture2D powerUpTexture = new Texture2D(gd, innerWidth, innerHeight, false, SurfaceFormat.Color);
+            Texture2D borderTexture = new Texture2D(gd, width, height, false, SurfaceFormat.Color);
+
+            //create the outer portion of the textbar texture
+            Color[] backColor = new Color[width * height];
+            for (int i = 0; i < backColor.Length; i++)
+            {
+                backColor[i] = new Color(200, 0, 150);
+            }
+            borderTexture.SetData(backColor);
+
+            //create the inner portion of the textbar texture
+            Color[] textureColor = new Color[innerWidth * innerHeight];
+            for (int i = 0; i < textureColor.Length; i++)
+            {
+                textureColor[i] = new Color(0, 150, 255);
+            }
+            powerUpTexture.SetData(textureColor);
+
+            //set the textures in the health bar
+            powerUpBar.BorderTexture = borderTexture;
+            powerUpBar.PowerUpTexture = powerUpTexture;
+            //return newly created health bar
+            return powerUpBar;
         }
     }
 }

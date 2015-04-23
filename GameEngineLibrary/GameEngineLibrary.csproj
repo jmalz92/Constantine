@@ -68,7 +68,7 @@
     <Compile Include="Controls\HealthBar.cs" />
     <Compile Include="Controls\Label.cs" />
     <Compile Include="Controls\LinkLabel.cs" />
-    <Compile Include="Controls\PowerUp.cs" />
+    <Compile Include="Controls\PowerUpBar.cs" />
     <Compile Include="Controls\ProgressBar.cs" />
     <Compile Include="Controls\ScoreLabel.cs" />
     <Compile Include="GameState.cs" />
