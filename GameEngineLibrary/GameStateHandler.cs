@@ -23,7 +23,8 @@ namespace GameEngineLibrary
 
         const int startDrawOrder = 5000;
         const int drawOrderInc = 100;
-        int drawOrder;
+        int drawOrder;
+
 
         public GameState CurrentState
         {

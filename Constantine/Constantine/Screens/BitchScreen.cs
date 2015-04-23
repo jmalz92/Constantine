@@ -10,20 +10,20 @@ using Microsoft.Xna.Framework.Input;
 
 using GameEngineLibrary;
 using GameEngineLibrary.Controls;
-
 namespace Constantine.Screens
 {
-    public class MenuScreen : GameStateBase
+    public class BitchScreen : GameStateBase
     {
         Texture2D _backgroundImage;
         LinkLabel _startLabel;
-        Song menuMusic;
-        bool isMusicPlaying;
+        LinkLabel _constLabel;
+        //Song menuMusic;
+        //bool isMusicPlaying;
 
-        public MenuScreen(Game game, GameStateHandler handler)
+        public BitchScreen(Game game, GameStateHandler handler)
             : base(game, handler)
         {
-            isMusicPlaying = false;
+            //isMusicPlaying = false;
         }
 
         public override void Initialize()
@@ -34,33 +34,46 @@ namespace Constantine.Screens
         protected override void LoadContent()
         {
             ContentManager Content = GameRef.Content;
-            _backgroundImage = Content.Load<Texture2D>(@"Images/menu");
+            _backgroundImage = Content.Load<Texture2D>(@"Images/constantinexi");
 
-            menuMusic = Content.Load<Song>(@"Sounds/Dystopia");
             MediaPlayer.IsRepeating = true;
 
             base.LoadContent();
 
             _startLabel = new LinkLabel();
-            _startLabel.Position = new Vector2(350, 600);
-            _startLabel.Text = "Press ENTER to begin";
-            _startLabel.Color = Color.White;
-            _startLabel.TabStop = true;
+            _startLabel.Position = new Vector2(0, 0);
+            _startLabel.Text = "God has sent you to reclaim your kingdom, BITCH!";
+            _startLabel.Color = Color.Cornsilk;
+            _startLabel.SelectedColor = Color.Cornsilk;
+            _startLabel.TabStop = false;
             _startLabel.HasFocus = true;
+            _startLabel.SpriteFont = Content.Load<SpriteFont>(@"Fonts\BitchFont");
             _startLabel.Selected += new EventHandler(startLabel_Selected);
             ControlManager.Add(_startLabel);
 
+            _constLabel = new LinkLabel();
+            _constLabel.Position = new Vector2(0, 100);
+            _constLabel.Text = "BTW, your name is Constantine XI. Good luck. :)";
+            _constLabel.Color = Color.Cornsilk;
+            _constLabel.SelectedColor = Color.Cornsilk;
+            _constLabel.TabStop = false;
+            _constLabel.HasFocus = true;
+            _constLabel.SpriteFont = Content.Load<SpriteFont>(@"Fonts\BitchFont");
+            _constLabel.Selected += new EventHandler(constLabel_Selected);
+            ControlManager.Add(_constLabel);
+
+        }
+
+        private void constLabel_Selected(object sender, EventArgs e)
+        {
+            
         }
         public override void Update(GameTime gameTime)
         {
             ControlManager.Update(gameTime, PlayerIndex.One);
 
             base.Update(gameTime);
-            if (!isMusicPlaying)
-            {
-                isMusicPlaying = true;
-                MediaPlayer.Play(menuMusic);
-            }
+            
             
         }
 
@@ -77,7 +90,7 @@ namespace Constantine.Screens
 
         private void startLabel_Selected(object sender, EventArgs e)
         {
-            _stateHandler.PushState(GameRef._difficultyScreen);
+            _stateHandler.PushState(GameRef._gameScreen);
         }
 
     }

@@ -33,8 +33,8 @@ namespace Constantine
         public PauseScreen _pauseScreen;
         public GameOverScreen _gameOverScreen;
         public GameStateHandler _stateHandler;
-        
-        
+
+        public BitchScreen _bitchScreen;
 
         public readonly Rectangle ScreenBounds;
 
@@ -56,7 +56,9 @@ namespace Constantine
             _menuScreen = new MenuScreen(this, _stateHandler);
             _gameScreen = new GameScreen(this, _stateHandler);
             _difficultyScreen = new DifficultyScreen(this, _stateHandler);
-            
+
+            _bitchScreen = new BitchScreen(this, _stateHandler);
+
             _pauseScreen = new PauseScreen(this, _stateHandler);
             _gameOverScreen = new GameOverScreen(this, _stateHandler);
 
