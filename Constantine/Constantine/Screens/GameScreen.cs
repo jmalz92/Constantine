@@ -184,10 +184,6 @@ namespace Constantine.Screens
             {
                 _powersBar.IncreasePowerUpBar();
             }
-            if (InputHandler.KeyPressed(Keys.OemCloseBrackets) && !InputHandler.LastKeyboardState.IsKeyDown(Keys.OemCloseBrackets))
-            {
-                _powersBar.DecreasePowerUpBar();
-            }
 
             if (_healthBar.IsEmpty)
             {
