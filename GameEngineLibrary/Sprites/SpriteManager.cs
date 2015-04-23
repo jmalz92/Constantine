@@ -18,7 +18,7 @@ namespace GameEngineLibrary.Sprites
         List<Sprite> sprites = new List<Sprite>();
         List<EnemySprite> enemies = new List<EnemySprite>();
         List<BulletSprite> bullets = new List<BulletSprite>();
-
+        List<PowerUpSprite> powerups = new List<PowerUpSprite>();
        
         bool isUpdating = false;
         List<Sprite> addedSprites = new List<Sprite>();
@@ -43,6 +43,8 @@ namespace GameEngineLibrary.Sprites
                 bullets.Add(sprite as BulletSprite);
             else if (sprite is EnemySprite)
                 enemies.Add(sprite as EnemySprite);
+            else if (sprite is PowerUpSprite)
+                powerups.Add(sprite as PowerUpSprite);
             
         }
 
@@ -64,6 +66,7 @@ namespace GameEngineLibrary.Sprites
             sprites = sprites.Where(x => !x.IsExpired).ToList();
             bullets = bullets.Where(x => !x.IsExpired).ToList();
             enemies = enemies.Where(x => !x.IsExpired).ToList();
+            powerups = powerups.Where(x => !x.IsExpired).ToList();
         }
 
         private void HandleCollisions(PlayerSprite player)
@@ -85,17 +88,29 @@ namespace GameEngineLibrary.Sprites
             {
                 if (IsColliding(player, enemies[i]))
                 {
-                    player.IsColliding = true;
+                    if (player.IsTransformed)
+                        enemies[i].WasShot(player);
+                    
+                    else
+                        player.IsColliding = true;
+                }
+            }
+
+            // handle collisions between the player and powerups
+            for (int i = 0; i < powerups.Count; i++)
+            {
+                if (IsColliding(player, powerups[i]))
+                {
+                    powerups[i].IsExpired = true;
+                    player.ItemCount += 1;
                 }
             }
 
         }
 
-
         private static bool IsColliding(Sprite a, Sprite b)
         {
             return !a.IsExpired && !b.IsExpired && a.CollisionRect.Intersects(b.CollisionRect);
-           
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Camera camera)

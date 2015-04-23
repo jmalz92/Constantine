@@ -95,7 +95,7 @@ namespace Constantine.Screens
             if(difficulty.Contains("Hard")){
                 GameRef._gameScreen.Difficulty = 2;
             }
-            _stateHandler.PushState(GameRef._bitchScreen);
+            _stateHandler.PushState(GameRef._cutScreen);
         }
     }
 }

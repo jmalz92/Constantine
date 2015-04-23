@@ -72,13 +72,14 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets.cs" />
     <Compile Include="Audio.cs" />
     <Compile Include="EnemyFactory.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PowerUpFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="Screens\Assets.cs" />
     <Compile Include="Screens\CutScreen.cs" />
     <Compile Include="Screens\DifficultyScreen.cs" />
     <Compile Include="Screens\GameOverScreen.cs" />

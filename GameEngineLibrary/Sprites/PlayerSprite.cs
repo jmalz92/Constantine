@@ -30,6 +30,9 @@ namespace GameEngineLibrary.Sprites
         const int cooldownFrames = 6;
         int cooldowmRemaining = 0;
         int accumulatedPoints = 0;
+        bool isTransformed = false;
+        int itemCount = 0;
+        int elapsedUltimateTime = 0;
         #endregion
 
         #region Property Region
@@ -69,6 +72,18 @@ namespace GameEngineLibrary.Sprites
         {
             get { return accumulatedPoints; }
             set { accumulatedPoints = value; }
+        }
+
+        public int ItemCount
+        {
+            get { return itemCount; }
+            set { itemCount = value; }
+        }
+
+        public bool IsTransformed
+        {
+            get { return isTransformed; }
+            set { isTransformed = value; }
         }
 
         public Vector2 Position
@@ -151,6 +166,22 @@ namespace GameEngineLibrary.Sprites
 
             if (cooldowmRemaining > 0)
                 cooldowmRemaining--;
+
+            if (isTransformed)
+            {
+                elapsedUltimateTime += gameTime.ElapsedGameTime.Milliseconds;
+                if( elapsedUltimateTime >= 10000)
+                {
+                    isTransformed = false;
+                    elapsedUltimateTime = 0;
+                    itemCount = 0;
+                }
+            }
+
+            if (itemCount >= 3)
+                isTransformed = true;
+
+
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Camera camera)
