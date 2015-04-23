@@ -12,7 +12,7 @@ using GameEngineLibrary;
 using GameEngineLibrary.Controls;
 namespace Constantine.Screens
 {
-    public class BitchScreen : GameStateBase
+    public class CutScreen : GameStateBase
     {
         Texture2D _backgroundImage;
         LinkLabel _startLabel;
@@ -20,7 +20,7 @@ namespace Constantine.Screens
         //Song menuMusic;
         //bool isMusicPlaying;
 
-        public BitchScreen(Game game, GameStateHandler handler)
+        public CutScreen(Game game, GameStateHandler handler)
             : base(game, handler)
         {
             //isMusicPlaying = false;
@@ -42,23 +42,23 @@ namespace Constantine.Screens
 
             _startLabel = new LinkLabel();
             _startLabel.Position = new Vector2(0, 0);
-            _startLabel.Text = "God has sent you to reclaim your kingdom, BITCH!";
+            _startLabel.Text = "God has sent you to reclaim your kingdom!";
             _startLabel.Color = Color.Cornsilk;
             _startLabel.SelectedColor = Color.Cornsilk;
             _startLabel.TabStop = false;
             _startLabel.HasFocus = true;
-            _startLabel.SpriteFont = Content.Load<SpriteFont>(@"Fonts\BitchFont");
+            _startLabel.SpriteFont = Content.Load<SpriteFont>(@"Fonts\CutSceneFont");
             _startLabel.Selected += new EventHandler(startLabel_Selected);
             ControlManager.Add(_startLabel);
 
             _constLabel = new LinkLabel();
             _constLabel.Position = new Vector2(0, 100);
-            _constLabel.Text = "BTW, your name is Constantine XI. Good luck. :)";
+            _constLabel.Text = "Your name is Constantine XI. Good luck. :)";
             _constLabel.Color = Color.Cornsilk;
             _constLabel.SelectedColor = Color.Cornsilk;
             _constLabel.TabStop = false;
             _constLabel.HasFocus = true;
-            _constLabel.SpriteFont = Content.Load<SpriteFont>(@"Fonts\BitchFont");
+            _constLabel.SpriteFont = Content.Load<SpriteFont>(@"Fonts\CutSceneFont");
             _constLabel.Selected += new EventHandler(constLabel_Selected);
             ControlManager.Add(_constLabel);
 
@@ -70,7 +70,7 @@ namespace Constantine.Screens
         }
         public override void Update(GameTime gameTime)
         {
-            ControlManager.Update(gameTime, PlayerIndex.One);
+            ControlManager.Update(gameTime);
 
             base.Update(gameTime);
             
