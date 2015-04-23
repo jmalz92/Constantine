@@ -29,6 +29,7 @@ namespace GameEngineLibrary.Sprites
         int collisionOffset = 10;
         const int cooldownFrames = 6;
         int cooldowmRemaining = 0;
+        int accumulatedPoints = 0;
         #endregion
 
         #region Property Region
@@ -62,6 +63,12 @@ namespace GameEngineLibrary.Sprites
         {
             get { return speed; }
             set { speed = MathHelper.Clamp(speed, 1.0f, 400.0f); }
+        }
+
+        public int AccumulatedPoints
+        {
+            get { return accumulatedPoints; }
+            set { accumulatedPoints = value; }
         }
 
         public Vector2 Position

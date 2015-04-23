@@ -17,6 +17,8 @@ namespace GameEngineLibrary.Sprites
         protected Point frameSize;
         Point currentFrame;
         Point sheetSize;
+
+        const int POINT_AWARD = 5;
         
         // Collision data
         int collisionOffset;
@@ -30,7 +32,6 @@ namespace GameEngineLibrary.Sprites
         protected float speed;
         protected Vector2 position;
         
-
         public string collisionCueName { get; private set; }
 
         public EnemySprite(Texture2D textureImage, SoundEffect deathSound,  Vector2 position, Point frameSize,
@@ -56,10 +57,11 @@ namespace GameEngineLibrary.Sprites
             this.millisecondsPerFrame = millisecondsPerFrame;
         }
 
-        public void WasShot()
+        public void WasShot(PlayerSprite player)
         {
             IsExpired = true;
             _deathSound.Play();
+            player.AccumulatedPoints += POINT_AWARD;
         }
 
         public virtual void Update(GameTime gameTime)

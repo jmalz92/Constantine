@@ -40,7 +40,7 @@ namespace Constantine.Screens
         public override void Initialize()
         {
             MediaPlayer.Stop();
-            MediaPlayer.Play(Audio.HardTrack); //this is too loud currently
+            MediaPlayer.Play(Audio.HardTrack); 
             base.Initialize();
         }
 
@@ -66,10 +66,6 @@ namespace Constantine.Screens
             _scoreLabel = new ScoreLabel(new Vector2(780, 10));
             _healthBar = CreateHealthBar(this.GraphicsDevice);
             ControlManager.Add(_scoreLabel);
-
-            //TODO: refactor code below into a level selection method
-
-            
 
             ControlManager.Add(_healthBar);
 
@@ -171,6 +167,9 @@ namespace Constantine.Screens
                 _scoreLabel.UpdateScore(1);
                 _scoreTimer = 0;
             }
+
+            _scoreLabel.UpdateScore(_sprite.AccumulatedPoints);
+            _sprite.AccumulatedPoints = 0;
 
             if (InputHandler.KeyPressed(Keys.Escape) || InputHandler.ButtonPressed(Buttons.Start))
             {
