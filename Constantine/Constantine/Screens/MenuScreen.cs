@@ -6,18 +6,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
-using Microsoft.Xna.Framework.Input;
-
-using GameEngineLibrary;
+using Microsoft.Xna.Framework.Input;using GameEngineLibrary;
 using GameEngineLibrary.Controls;
 
 namespace Constantine.Screens
 {
     public class MenuScreen : GameStateBase
     {
-        Texture2D _backgroundImage;
         LinkLabel _startLabel;
-        Song menuMusic;
         bool isMusicPlaying;
 
         public MenuScreen(Game game, GameStateHandler handler)
@@ -33,10 +29,7 @@ namespace Constantine.Screens
 
         protected override void LoadContent()
         {
-            ContentManager Content = GameRef.Content;
-            _backgroundImage = Content.Load<Texture2D>(@"Images/menu");
-
-            menuMusic = Content.Load<Song>(@"Sounds/Dystopia");
+           
             MediaPlayer.IsRepeating = true;
 
             base.LoadContent();
@@ -48,18 +41,17 @@ namespace Constantine.Screens
             _startLabel.TabStop = true;
             _startLabel.HasFocus = true;
             _startLabel.Selected += new EventHandler(startLabel_Selected);
-            ControlManager.Add(_startLabel);
-
+            ControlManager.Add(_startLabel);
         }
         public override void Update(GameTime gameTime)
         {
-            ControlManager.Update(gameTime, PlayerIndex.One);
+            ControlManager.Update(gameTime);
 
             base.Update(gameTime);
             if (!isMusicPlaying)
             {
                 isMusicPlaying = true;
-                MediaPlayer.Play(menuMusic);
+                MediaPlayer.Play(Audio.MenuTrack);
             }
             
         }
@@ -68,7 +60,7 @@ namespace Constantine.Screens
         {
             GameRef.SpriteBatch.Begin();
             base.Draw(gameTime);
-            GameRef.SpriteBatch.Draw(_backgroundImage, GameRef.ScreenBounds, Color.White);
+            GameRef.SpriteBatch.Draw(Assets.Menu, GameRef.ScreenBounds, Color.White);
 
             ControlManager.Draw(GameRef.SpriteBatch);
 
@@ -78,7 +70,6 @@ namespace Constantine.Screens
         private void startLabel_Selected(object sender, EventArgs e)
         {
             _stateHandler.PushState(GameRef._difficultyScreen);
-        }
-
+        }
     }
 }

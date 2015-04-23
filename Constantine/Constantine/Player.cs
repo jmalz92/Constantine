@@ -14,13 +14,12 @@ namespace Constantine
     public class Player
     {
 
-        #region Field Region
         Camera camera;
         Game1 gameRef;
         int health;
-        #endregion
+        int elapsedTimed = 0;
+        int healthTimer = 1000;
 
-        #region Property Region
         public Camera Camera
         {
             get { return camera; }
@@ -34,41 +33,29 @@ namespace Constantine
                 health = (int)MathHelper.Clamp(value, 0, 100);
             }
         }
-        #endregion
 
-        #region Constructor Region
         public Player(Game game)
         {
             gameRef = (Game1)game;
             camera = new Camera(gameRef.ScreenBounds);
             health = 100;
         }
-        #endregion
 
-        #region Method Region
         public void Update(GameTime gameTime)
         {
+            elapsedTimed += gameTime.ElapsedGameTime.Milliseconds;
+            if (elapsedTimed >= healthTimer)
+            {
+                elapsedTimed = 0;
+                Health += 1;
+            }
             camera.Update(gameTime);
-            UpdateHealth();
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
         }
-        #endregion
 
-        //Move to animated sprite class
-        public void UpdateHealth()
-        {
-            if (InputHandler.KeyDown(Keys.H) && !InputHandler.LastKeyboardState.IsKeyDown(Keys.H))
-            {
-                this.Health += 5;
-            }
-            else if (InputHandler.KeyDown(Keys.K) && !InputHandler.LastKeyboardState.IsKeyDown(Keys.K))
-            {
-                this.Health -= 5;
-            }
-
-        }
+        
     }
 }

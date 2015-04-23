@@ -16,7 +16,6 @@ namespace Constantine.Screens
 {
     public class DifficultyScreen : GameStateBase
     {
-        Texture2D _backgroundImage;
         LinkLabel _easyLabel;
         LinkLabel _normalLabel;
         LinkLabel _hardLabel;
@@ -33,8 +32,6 @@ namespace Constantine.Screens
 
         protected override void LoadContent()
         {
-            ContentManager Content = GameRef.Content;
-            _backgroundImage = Content.Load<Texture2D>(@"Images/menu");
             base.LoadContent();
 
             _easyLabel = new LinkLabel();
@@ -70,7 +67,7 @@ namespace Constantine.Screens
         }
         public override void Update(GameTime gameTime)
         {
-            ControlManager.Update(gameTime, PlayerIndex.One);
+            ControlManager.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -79,7 +76,7 @@ namespace Constantine.Screens
         {
             GameRef.SpriteBatch.Begin();
             base.Draw(gameTime);
-            GameRef.SpriteBatch.Draw(_backgroundImage, GameRef.ScreenBounds, Color.White);
+            GameRef.SpriteBatch.Draw(Assets.Menu, GameRef.ScreenBounds, Color.White);
 
             ControlManager.Draw(GameRef.SpriteBatch);
             GameRef.SpriteBatch.End();

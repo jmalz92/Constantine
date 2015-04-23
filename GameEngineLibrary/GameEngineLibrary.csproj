@@ -80,7 +80,7 @@
     <Compile Include="Sprites\PlayerSprite.cs" />
     <Compile Include="Sprites\Animation.cs" />
     <Compile Include="Sprites\EasyEnemy.cs" />
-    <Compile Include="Sprites\EnemySpriteFactory.cs" />
+    <Compile Include="Sprites\Sprite.cs" />
     <Compile Include="Sprites\SpriteManager.cs" />
     <Compile Include="TileEngine\MapLayer.cs" />
     <Compile Include="TileEngine\Tile.cs" />

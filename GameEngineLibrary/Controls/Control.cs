@@ -130,7 +130,7 @@ namespace GameEngineLibrary.Controls
 
         public abstract void Update(GameTime gameTime);
         public abstract void Draw(SpriteBatch spriteBatch);
-        public abstract void HandleInput(PlayerIndex playerIndex);
+        public abstract void HandleInput();
 
         #endregion
 

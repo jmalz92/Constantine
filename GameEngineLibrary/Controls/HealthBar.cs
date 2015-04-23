@@ -61,7 +61,7 @@ namespace GameEngineLibrary.Controls
         {
         }
 
-        public override void HandleInput(PlayerIndex playerIndex)
+        public override void HandleInput()
         {
         }
 

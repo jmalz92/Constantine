@@ -54,7 +54,7 @@ namespace GameEngineLibrary.Controls
 
         #region Methods
 
-        public void Update(GameTime gameTime, PlayerIndex playerIndex)
+        public void Update(GameTime gameTime)
         {
             if (Count == 0)
                 return;
@@ -65,16 +65,16 @@ namespace GameEngineLibrary.Controls
                     c.Update(gameTime);
 
                 if (c.HasFocus)
-                    c.HandleInput(playerIndex);
+                    c.HandleInput();
             }
 
-            if (InputHandler.ButtonPressed(Buttons.LeftThumbstickUp, playerIndex) ||
-                InputHandler.ButtonPressed(Buttons.DPadUp, playerIndex) ||
+            if (InputHandler.ButtonPressed(Buttons.LeftThumbstickUp) ||
+                InputHandler.ButtonPressed(Buttons.DPadUp) ||
                 InputHandler.KeyPressed(Keys.Up))
                 PreviousControl();
 
-            if (InputHandler.ButtonPressed(Buttons.LeftThumbstickDown, playerIndex) ||
-                InputHandler.ButtonPressed(Buttons.DPadDown, playerIndex) ||
+            if (InputHandler.ButtonPressed(Buttons.LeftThumbstickDown) ||
+                InputHandler.ButtonPressed(Buttons.DPadDown) ||
                 InputHandler.KeyPressed(Keys.Down))
                 NextControl();
         }

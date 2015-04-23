@@ -11,7 +11,7 @@ namespace Constantine.Screens
 {
     public class SplashScreen : GameStateBase
     {
-        Texture2D _backgroundImage;
+        
 
         public SplashScreen(Game game, GameStateHandler handler)
             : base(game, handler)
@@ -25,8 +25,7 @@ namespace Constantine.Screens
 
         protected override void LoadContent()
         {
-            ContentManager Content = GameRef.Content;
-            _backgroundImage = Content.Load<Texture2D>(@"Images/splash");
+            
             base.LoadContent();
         }
         public override void Update(GameTime gameTime)
@@ -42,7 +41,7 @@ namespace Constantine.Screens
         {
             GameRef.SpriteBatch.Begin();
             base.Draw(gameTime);
-            GameRef.SpriteBatch.Draw(_backgroundImage, GameRef.ScreenBounds, Color.White);
+            GameRef.SpriteBatch.Draw(Assets.Splash, GameRef.ScreenBounds, Color.White);
             GameRef.SpriteBatch.End();
         }
     }
