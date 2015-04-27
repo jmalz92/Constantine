@@ -68,9 +68,7 @@
     <Compile Include="Controls\HealthBar.cs" />
     <Compile Include="Controls\Label.cs" />
     <Compile Include="Controls\LinkLabel.cs" />
-    <Compile Include="Controls\PowerUpBar.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Controls\PowerUpBar.cs" />
     <Compile Include="Controls\ProgressBar.cs" />
     <Compile Include="Controls\ScoreLabel.cs" />
     <Compile Include="GameState.cs" />
@@ -83,8 +81,10 @@
     <Compile Include="Sprites\Animation.cs" />
     <Compile Include="Sprites\EasyEnemy.cs" />
     <Compile Include="Sprites\PowerUpSprite.cs" />
+    <Compile Include="Sprites\SpeedPowerUp.cs" />
     <Compile Include="Sprites\Sprite.cs" />
     <Compile Include="Sprites\SpriteManager.cs" />
+    <Compile Include="Sprites\UltimatePowerUp.cs" />
     <Compile Include="TileEngine\MapLayer.cs" />
     <Compile Include="TileEngine\Tile.cs" />
     <Compile Include="TileEngine\TileEngine.cs" />

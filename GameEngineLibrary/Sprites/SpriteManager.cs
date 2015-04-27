@@ -25,7 +25,6 @@ namespace GameEngineLibrary.Sprites
 
         public SpriteManager()
         {
-
         }
 
         public void Add(Sprite sprite)
@@ -101,8 +100,8 @@ namespace GameEngineLibrary.Sprites
             {
                 if (IsColliding(player, powerups[i]))
                 {
+                    player.PickupPowerUp(powerups[i]);
                     powerups[i].IsExpired = true;
-                    player.ItemCount += 1;
                 }
             }
 

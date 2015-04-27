@@ -17,22 +17,27 @@ namespace GameEngineLibrary.Sprites
         #region Field Region
 
         Dictionary<AnimationKey, Animation> animations;
+        Dictionary<AnimationKey, Animation> ultimateAnimations;
         AnimationKey currentAnimation;
         bool isAnimating;
 
         Texture2D texture;
         Texture2D _bullet;
+        Texture2D _ultimate;
         SoundEffect _bulletSound;
         Vector2 position;
         Vector2 velocity;
         float speed = 3.0f;
         int collisionOffset = 10;
         const int cooldownFrames = 6;
-        int cooldowmRemaining = 0;
+        int cooldownRemaining = 0;
         int accumulatedPoints = 0;
+
+        bool hasSpeedUp = false;
         bool isTransformed = false;
         int itemCount = 0;
         int elapsedUltimateTime = 0;
+        int elapsedSpeedTime = 0;
         #endregion
 
         #region Property Region
@@ -54,12 +59,22 @@ namespace GameEngineLibrary.Sprites
 
         public int Width
         {
-            get { return animations[currentAnimation].FrameWidth; }
+            get {
+                if (isTransformed)
+                    return ultimateAnimations[currentAnimation].FrameWidth;
+                else
+                    return animations[currentAnimation].FrameWidth; 
+            }
         }
 
         public int Height
         {
-            get { return animations[currentAnimation].FrameHeight; }
+            get {
+                if (isTransformed)
+                    return ultimateAnimations[currentAnimation].FrameHeight;
+                else
+                    return animations[currentAnimation].FrameHeight; 
+            }
         }
 
         public float Speed
@@ -122,15 +137,20 @@ namespace GameEngineLibrary.Sprites
 
         #region Constructor Region
 
-        public PlayerSprite(Texture2D sprite, Texture2D bullet, SoundEffect bulletSound, Dictionary<AnimationKey, Animation> animation)
+        public PlayerSprite(Texture2D sprite, Texture2D ultimate, Texture2D bullet, SoundEffect bulletSound, Dictionary<AnimationKey, Animation> animation, Dictionary<AnimationKey, Animation> ultimateAnimation)
         {
             texture = sprite;
             _bullet = bullet;
+            _ultimate = ultimate;
             _bulletSound = bulletSound;
             animations = new Dictionary<AnimationKey, Animation>();
+            ultimateAnimations = new Dictionary<AnimationKey, Animation>();
 
             foreach (AnimationKey key in animation.Keys)
                 animations.Add(key, (Animation)animation[key].Clone());
+
+            foreach (AnimationKey key in ultimateAnimation.Keys)
+                ultimateAnimations.Add(key, (Animation)ultimateAnimation[key].Clone());
         }
 
         #endregion
@@ -140,15 +160,17 @@ namespace GameEngineLibrary.Sprites
         //this isnt the best place to do bullet logic
         public void Update(GameTime gameTime, SpriteManager manager)
         {
-            if (isAnimating)
+            if (isAnimating && isTransformed)
+                ultimateAnimations[currentAnimation].Update(gameTime);
+            else if(isAnimating)
                 animations[currentAnimation].Update(gameTime);
 
             Vector2 aim = InputHandler.GetAimDirection(Position);
 
-            if (aim.LengthSquared() > 0 && cooldowmRemaining <= 0 && 
+            if (aim.LengthSquared() > 0 && cooldownRemaining <= 0 && 
                 (InputHandler.MouseDown(InputHandler.MouseState.RightButton) || InputHandler.ButtonDown(Buttons.RightTrigger)))
             {
-                cooldowmRemaining = cooldownFrames;
+                cooldownRemaining = cooldownFrames;
                 float aimAngle = (float)Math.Atan2(aim.Y, aim.X);
                 Quaternion aimQuat = Quaternion.CreateFromYawPitchRoll(0, 0, aimAngle);
 
@@ -164,13 +186,27 @@ namespace GameEngineLibrary.Sprites
                 _bulletSound.Play(.2f, 0, 0);
             }
 
-            if (cooldowmRemaining > 0)
-                cooldowmRemaining--;
+            if (cooldownRemaining > 0)
+                cooldownRemaining--;
 
+            UpdatePlayerStatus(gameTime);
+
+        }
+
+        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Camera camera)
+        {
+            if(isTransformed)
+                spriteBatch.Draw(_ultimate, position - camera.Position, ultimateAnimations[currentAnimation].CurrentFrameRect,  Color.White);
+            else
+                spriteBatch.Draw(texture, position - camera.Position, animations[currentAnimation].CurrentFrameRect, Color.White);
+        }
+
+        public void UpdatePlayerStatus(GameTime gameTime)
+        {
             if (isTransformed)
             {
                 elapsedUltimateTime += gameTime.ElapsedGameTime.Milliseconds;
-                if( elapsedUltimateTime >= 10000)
+                if (elapsedUltimateTime >= 10000)
                 {
                     isTransformed = false;
                     elapsedUltimateTime = 0;
@@ -178,16 +214,31 @@ namespace GameEngineLibrary.Sprites
                 }
             }
 
+            if (hasSpeedUp)
+            {
+                elapsedSpeedTime += gameTime.ElapsedGameTime.Milliseconds;
+                if (elapsedSpeedTime >= 5000)
+                {
+                    hasSpeedUp = false;
+                    elapsedSpeedTime = 0;
+                    speed = 3.0f;
+                }
+            }
+
             if (itemCount >= 3)
                 isTransformed = true;
-
-
         }
 
-        public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Camera camera)
+        public void PickupPowerUp(PowerUpSprite sprite)
         {
-            spriteBatch.Draw(texture, position - camera.Position, animations[currentAnimation].CurrentFrameRect,  Color.White);
-
+            if (sprite is UltimatePowerUp)
+                itemCount++;
+            if (sprite is SpeedPowerUp)
+            {
+                speed = 6.0f;
+                hasSpeedUp = true;
+            }
+                
         }
 
         public void LockToMap()

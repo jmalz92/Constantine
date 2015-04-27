@@ -14,6 +14,7 @@ namespace Constantine
     static class Assets
     {
         public static Texture2D Player { get; private set; }
+        public static Texture2D Ultimate { get; private set; }
         public static Texture2D Skeleton { get; private set; }
         public static Texture2D Zombie { get; private set; }
         public static Texture2D Bullet { get; private set; }
@@ -28,6 +29,7 @@ namespace Constantine
         public static void Load(ContentManager content)
         {
             Player = content.Load<Texture2D>("Images/player_placeholder");
+            Ultimate = content.Load<Texture2D>("Images/angel_placeholder");
             Skeleton = content.Load<Texture2D>("Images/skeleton");
             Zombie = content.Load<Texture2D>("Images/zombie");
             Bullet = content.Load<Texture2D>("Images/bullet");

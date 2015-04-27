@@ -58,7 +58,18 @@ namespace Constantine.Screens
             animations.Add(AnimationKey.Right, animation);
             animation = new Animation(4, 32, 48, 0, 144);
             animations.Add(AnimationKey.Up, animation);
-            _sprite = new PlayerSprite(Assets.Player, Assets.Bullet, Audio.Bullet, animations);
+
+            Dictionary<AnimationKey, Animation> ultimateAnimations = new Dictionary<AnimationKey, Animation>();
+            Animation ultimateAnimation = new Animation(4, 48, 48, 0, 0);
+            ultimateAnimations.Add(AnimationKey.Down, ultimateAnimation);
+            ultimateAnimation = new Animation(4, 48, 48, 0, 48);
+            ultimateAnimations.Add(AnimationKey.Left, ultimateAnimation);
+            ultimateAnimation = new Animation(4, 48, 48, 0, 96);
+            ultimateAnimations.Add(AnimationKey.Right, ultimateAnimation);
+            ultimateAnimation = new Animation(4, 48, 48, 0, 144);
+            ultimateAnimations.Add(AnimationKey.Up, ultimateAnimation);
+
+            _sprite = new PlayerSprite(Assets.Player, Assets.Ultimate, Assets.Bullet, Audio.Bullet, animations, ultimateAnimations);
             _sprite.Position = new Vector2(250, 250);
 
             _spriteManager = new SpriteManager();
@@ -147,6 +158,7 @@ namespace Constantine.Screens
         }
 
 
+        //possibly remove player sprite from here
         public override void Update(GameTime gameTime)
         {
             _player.Update(gameTime);

@@ -23,13 +23,13 @@ namespace Constantine
 
             if (ultimatePowerTimer >= 20000)
             {
-                manager.Add(new PowerUpSprite(Assets.Tablet));
+                manager.Add(new UltimatePowerUp(Assets.Tablet));
                 ultimatePowerTimer = 0;
             }
 
             if (speedPowerTimer >= 30000)
             {
-                manager.Add(new PowerUpSprite(Assets.Bolt));
+                manager.Add(new SpeedPowerUp(Assets.Bolt));
                 speedPowerTimer = 0;
             }
             // slowly increase the spawn rate as time progresses
