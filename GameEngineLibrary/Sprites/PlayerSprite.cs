@@ -25,6 +25,7 @@ namespace GameEngineLibrary.Sprites
         Texture2D _bullet;
         Texture2D _ultimate;
         SoundEffect _bulletSound;
+        SoundEffect _pickupSound;
         Vector2 position;
         Vector2 velocity;
         float speed = 3.0f;
@@ -137,12 +138,13 @@ namespace GameEngineLibrary.Sprites
 
         #region Constructor Region
 
-        public PlayerSprite(Texture2D sprite, Texture2D ultimate, Texture2D bullet, SoundEffect bulletSound, Dictionary<AnimationKey, Animation> animation, Dictionary<AnimationKey, Animation> ultimateAnimation)
+        public PlayerSprite(Texture2D sprite, Texture2D ultimate, Texture2D bullet, SoundEffect bulletSound, SoundEffect pickupSound, Dictionary<AnimationKey, Animation> animation, Dictionary<AnimationKey, Animation> ultimateAnimation)
         {
             texture = sprite;
             _bullet = bullet;
             _ultimate = ultimate;
             _bulletSound = bulletSound;
+            _pickupSound = pickupSound;
             animations = new Dictionary<AnimationKey, Animation>();
             ultimateAnimations = new Dictionary<AnimationKey, Animation>();
 
@@ -197,7 +199,7 @@ namespace GameEngineLibrary.Sprites
         {
             if(isTransformed)
                 spriteBatch.Draw(_ultimate, position - camera.Position, ultimateAnimations[currentAnimation].CurrentFrameRect,  Color.White);
-            else
+            else 
                 spriteBatch.Draw(texture, position - camera.Position, animations[currentAnimation].CurrentFrameRect, Color.White);
         }
 
@@ -231,6 +233,7 @@ namespace GameEngineLibrary.Sprites
 
         public void PickupPowerUp(PowerUpSprite sprite)
         {
+            _pickupSound.Play();
             if (sprite is UltimatePowerUp)
                 itemCount++;
             if (sprite is SpeedPowerUp)

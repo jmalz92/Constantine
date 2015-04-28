@@ -69,7 +69,7 @@ namespace Constantine.Screens
             ultimateAnimation = new Animation(4, 48, 48, 0, 144);
             ultimateAnimations.Add(AnimationKey.Up, ultimateAnimation);
 
-            _sprite = new PlayerSprite(Assets.Player, Assets.Ultimate, Assets.Bullet, Audio.Bullet, animations, ultimateAnimations);
+            _sprite = new PlayerSprite(Assets.Player, Assets.Ultimate, Assets.Bullet, Audio.Bullet, Audio.Pickup, animations, ultimateAnimations);
             _sprite.Position = new Vector2(250, 250);
 
             _spriteManager = new SpriteManager();
