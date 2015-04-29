@@ -19,7 +19,9 @@ namespace GameEngineLibrary.Sprites
         List<EnemySprite> enemies = new List<EnemySprite>();
         List<BulletSprite> bullets = new List<BulletSprite>();
         List<PowerUpSprite> powerups = new List<PowerUpSprite>();
-       
+        List<EffectsSprite> sfx = new List<EffectsSprite>();
+
+
         bool isUpdating = false;
         List<Sprite> addedSprites = new List<Sprite>();
 
@@ -44,6 +46,8 @@ namespace GameEngineLibrary.Sprites
                 enemies.Add(sprite as EnemySprite);
             else if (sprite is PowerUpSprite)
                 powerups.Add(sprite as PowerUpSprite);
+            else if (sprite is EffectsSprite)
+                sfx.Add(sprite as EffectsSprite);
             
         }
 
@@ -66,6 +70,7 @@ namespace GameEngineLibrary.Sprites
             bullets = bullets.Where(x => !x.IsExpired).ToList();
             enemies = enemies.Where(x => !x.IsExpired).ToList();
             powerups = powerups.Where(x => !x.IsExpired).ToList();
+            sfx = sfx.Where(x => !x.IsExpired).ToList();
         }
 
         private void HandleCollisions(PlayerSprite player)
@@ -77,7 +82,7 @@ namespace GameEngineLibrary.Sprites
                 {
                     if (IsColliding(enemies[i], bullets[j]))
                     {
-                        enemies[i].WasShot(player);
+                        enemies[i].WasShot(player, this);
                         bullets[j].IsExpired = true;
                     }
                 }
@@ -88,7 +93,7 @@ namespace GameEngineLibrary.Sprites
                 if (IsColliding(player, enemies[i]))
                 {
                     if (player.IsTransformed)
-                        enemies[i].WasShot(player);
+                        enemies[i].WasShot(player, this);
                     
                     else
                         player.IsColliding = true;

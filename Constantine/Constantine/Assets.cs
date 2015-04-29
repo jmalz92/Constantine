@@ -5,6 +5,7 @@ using System.Text;
 
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Media;
 
 namespace Constantine
 {
@@ -20,11 +21,12 @@ namespace Constantine
         public static Texture2D Bullet { get; private set; }
         public static Texture2D Pause { get; private set; }
         public static Texture2D Menu { get; private set; }
-        public static Texture2D Splash { get; private set; }
         public static Texture2D GameOver { get; private set; }
         public static Texture2D Tablet { get; private set; }
         public static Texture2D Bolt { get; private set; }
+        public static Texture2D Blood { get; private set; }
 
+        public static Video Splash { get; private set; }
 
         public static void Load(ContentManager content)
         {
@@ -35,10 +37,12 @@ namespace Constantine
             Bullet = content.Load<Texture2D>("Images/bullet");
             Pause = content.Load<Texture2D>("Images/Pause");
             Menu = content.Load<Texture2D>("Images/menu");
-            Splash = content.Load<Texture2D>("Images/splash");
             GameOver = content.Load<Texture2D>("Images/GameOver");
             Tablet = content.Load<Texture2D>("Images/tablet");
             Bolt = content.Load<Texture2D>("Images/bolt");
+            Blood = content.Load<Texture2D>("Images/blood");
+
+            Splash = content.Load<Video>("Video/splash");
         }
     }
 }

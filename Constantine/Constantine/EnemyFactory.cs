@@ -26,16 +26,16 @@ namespace Constantine
 
                 if (spawnSideFlag)
                 {
-                    manager.Add(EasyEnemy.CreateEnemy(Assets.Zombie, Audio.Splat, new Vector2(0, rng.Next(1280)), new Point(32, 64), 10, new Point(0, 0),new Point(3, 4), 2.0f, ""));
+                    manager.Add(EasyEnemy.CreateEnemy(Assets.Zombie, Assets.Blood, Audio.Splat, new Vector2(0, rng.Next(1280)), new Point(32, 64), 10, new Point(0, 0),new Point(3, 4), 2.0f, ""));
 
-                    manager.Add(EasyEnemy.CreateEnemy(Assets.Skeleton, Audio.Splat, new Vector2(1280, rng.Next(1280)), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 2.0f, ""));
+                    manager.Add(EasyEnemy.CreateEnemy(Assets.Skeleton, Assets.Blood, Audio.Splat, new Vector2(1280, rng.Next(1280)), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 2.0f, ""));
                 }
                 else
                 {
 
-                    manager.Add(EasyEnemy.CreateEnemy(Assets.Zombie, Audio.Splat, new Vector2(rng.Next(1280), 0), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 1.0f, ""));
+                    manager.Add(EasyEnemy.CreateEnemy(Assets.Zombie, Assets.Blood, Audio.Splat, new Vector2(rng.Next(1280), 0), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 1.0f, ""));
 
-                    manager.Add(EasyEnemy.CreateEnemy(Assets.Skeleton, Audio.Splat, new Vector2(rng.Next(1280), 1280), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 2.0f, ""));
+                    manager.Add(EasyEnemy.CreateEnemy(Assets.Skeleton, Assets.Blood, Audio.Splat, new Vector2(rng.Next(1280), 1280), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 2.0f, ""));
                 }
 
 

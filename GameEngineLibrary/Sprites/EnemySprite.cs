@@ -13,6 +13,7 @@ namespace GameEngineLibrary.Sprites
     {
          // Stuff needed to draw the sprite
         Texture2D textureImage;
+        Texture2D _deathImage;
         SoundEffect _deathSound;
         protected Point frameSize;
         Point currentFrame;
@@ -30,23 +31,24 @@ namespace GameEngineLibrary.Sprites
 
         // Movement data
         protected float speed;
-        protected Vector2 position;
+        protected Vector2 position; //redundant
         
         public string collisionCueName { get; private set; }
 
-        public EnemySprite(Texture2D textureImage, SoundEffect deathSound,  Vector2 position, Point frameSize,
+        public EnemySprite(Texture2D textureImage, Texture2D deathImage, SoundEffect deathSound,  Vector2 position, Point frameSize,
         int collisionOffset, Point currentFrame, Point sheetSize, float speed, string collisionCueName)
-            : this(textureImage, deathSound, position, frameSize, collisionOffset, currentFrame,
+            : this(textureImage, deathImage, deathSound, position, frameSize, collisionOffset, currentFrame,
             sheetSize, speed, defaultMillisecondsPerFrame, collisionCueName)
         {
         }
 
-        public EnemySprite(Texture2D textureImage, SoundEffect deathSound, Vector2 position, Point frameSize,
+        public EnemySprite(Texture2D textureImage, Texture2D deathImage, SoundEffect deathSound, Vector2 position, Point frameSize,
             int collisionOffset, Point currentFrame, Point sheetSize, float speed,
             int millisecondsPerFrame, string collisionCueName)
         {
             this.textureImage = textureImage;
             this._deathSound = deathSound;
+            this._deathImage = deathImage;
             this.position = position;
             this.frameSize = frameSize;
             this.collisionOffset = collisionOffset;
@@ -57,11 +59,13 @@ namespace GameEngineLibrary.Sprites
             this.millisecondsPerFrame = millisecondsPerFrame;
         }
 
-        public void WasShot(PlayerSprite player)
+        public void WasShot(PlayerSprite player, SpriteManager manager)
         {
+            manager.Add(new EffectsSprite(_deathImage, position, 10000));
             IsExpired = true;
             _deathSound.Play();
             player.AccumulatedPoints += POINT_AWARD;
+            
         }
 
         public virtual void Update(GameTime gameTime)

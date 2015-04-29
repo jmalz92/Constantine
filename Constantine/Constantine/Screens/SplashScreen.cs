@@ -5,13 +5,17 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Media;
 using GameEngineLibrary;
 
 namespace Constantine.Screens
 {
     public class SplashScreen : GameStateBase
     {
-        
+
+        VideoPlayer player;
+        Texture2D videoTexture;
+        bool videoLoaded = false;
 
         public SplashScreen(Game game, GameStateHandler handler)
             : base(game, handler)
@@ -20,6 +24,8 @@ namespace Constantine.Screens
 
         public override void Initialize()
         {
+            player = new VideoPlayer();
+            player.IsLooped = false;
             base.Initialize();
         }
 
@@ -32,17 +38,48 @@ namespace Constantine.Screens
         {
             base.Update(gameTime);
 
-            if (gameTime.TotalGameTime.TotalSeconds > 2)
+            if (Assets.Splash != null && !videoLoaded)
             {
-                _stateHandler.PushState(GameRef._menuScreen);
+                videoLoaded = true;
+                player.Play(Assets.Splash);
             }
+
+            if (videoLoaded)
+            {
+                if (player.State == MediaState.Stopped)
+                {
+                    player.Dispose();
+                    _stateHandler.PushState(GameRef._menuScreen);
+
+                }
+            }
+
+            
+                
+            
         }
         public override void Draw(GameTime gameTime)
         {
-            GameRef.SpriteBatch.Begin();
+            // Only call GetTexture if a video is playing or paused
+            if (player.State != MediaState.Stopped)
+                videoTexture = player.GetTexture();
+
+            // Drawing to the rectangle will stretch the 
+            // video to fill the screen
+            Rectangle screen = new Rectangle(GraphicsDevice.Viewport.X,
+                GraphicsDevice.Viewport.Y,
+                GraphicsDevice.Viewport.Width,
+                GraphicsDevice.Viewport.Height);
+
+            // Draw the video, if we have a texture to draw.
+            if (videoTexture != null)
+            {
+                GameRef.SpriteBatch.Begin();
+                GameRef.SpriteBatch.Draw(videoTexture, screen, Color.White);
+                GameRef.SpriteBatch.End();
+            }
             base.Draw(gameTime);
-            GameRef.SpriteBatch.Draw(Assets.Splash, GameRef.ScreenBounds, Color.White);
-            GameRef.SpriteBatch.End();
+            
         }
     }
 }
