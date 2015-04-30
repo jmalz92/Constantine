@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using Microsoft.Xna.Framework.Media;
 using GameEngineLibrary;
 using GameEngineLibrary.Controls;
 
@@ -84,6 +84,8 @@ namespace Constantine.Screens
 
         private void difficulty_Selected(object sender, EventArgs e)
         {
+            MediaPlayer.Stop();
+            
             //Todo: clean up this logic
             string difficulty = ((LinkLabel)sender).Text; 
             if(difficulty.Contains("Easy")){

@@ -26,6 +26,7 @@ namespace Constantine.Screens
         {
             player = new VideoPlayer();
             player.IsLooped = false;
+            player.Volume = .5f;
             base.Initialize();
         }
 

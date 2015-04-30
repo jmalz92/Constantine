@@ -27,6 +27,7 @@ namespace Constantine
         public static Texture2D Blood { get; private set; }
 
         public static Video Splash { get; private set; }
+        public static Video Intro { get; private set; }
 
         public static void Load(ContentManager content)
         {
@@ -43,6 +44,7 @@ namespace Constantine
             Blood = content.Load<Texture2D>("Images/blood");
 
             Splash = content.Load<Video>("Video/splash");
+            Intro = content.Load<Video>("Video/intro");
         }
     }
 }
