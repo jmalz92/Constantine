@@ -14,6 +14,14 @@ using GameEngineLibrary.Controls;
 
 namespace Constantine.Screens
 {
+
+    public enum Difficulty
+    {
+        Easy, 
+        Normal, 
+        Hard
+    }
+
     public class DifficultyScreen : GameStateBase
     {
         LinkLabel _easyLabel;
@@ -89,13 +97,13 @@ namespace Constantine.Screens
             //Todo: clean up this logic
             string difficulty = ((LinkLabel)sender).Text; 
             if(difficulty.Contains("Easy")){
-                GameRef._gameScreen.Difficulty = 0;
+                GameRef._gameScreen.CurrentDifficulty = Difficulty.Easy;
             }
             if(difficulty.Contains("Normal")){
-                GameRef._gameScreen.Difficulty = 1;
+                GameRef._gameScreen.CurrentDifficulty = Difficulty.Normal;
             }
             if(difficulty.Contains("Hard")){
-                GameRef._gameScreen.Difficulty = 2;
+                GameRef._gameScreen.CurrentDifficulty = Difficulty.Hard;
             }
             _stateHandler.PushState(GameRef._cutScreen);
         }

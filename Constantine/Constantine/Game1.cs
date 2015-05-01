@@ -38,9 +38,12 @@ namespace Constantine
 
         public readonly Rectangle ScreenBounds;
 
+        public SaveData SaveData;
+
         public Game1()
         {
-            //This is a jonathan comment
+            SaveData = SaveData.Load("save.dat");
+
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
             graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
@@ -125,6 +128,12 @@ namespace Constantine
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             base.Draw(gameTime);
+        }
+
+        protected override void OnExiting(object sender, EventArgs args)
+        {
+            SaveData.Save(SaveData, "save.dat");
+            base.OnExiting(sender, args);
         }
     }
 }

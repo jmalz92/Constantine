@@ -91,9 +91,9 @@ namespace Constantine.Screens
             string gameOverLabelText = ((LinkLabel)sender).Text; 
             if(gameOverLabelText.Contains("Play"))
             {
-                int difficulty = GameRef._gameScreen.Difficulty;
+                Difficulty difficulty = GameRef._gameScreen.CurrentDifficulty;
                 GameRef._gameScreen = new GameScreen(GameRef, _stateHandler);
-                GameRef._gameScreen.Difficulty = difficulty;
+                GameRef._gameScreen.CurrentDifficulty = difficulty;
 
                 _stateHandler.PopState();
                 _stateHandler.PushState(GameRef._gameScreen);

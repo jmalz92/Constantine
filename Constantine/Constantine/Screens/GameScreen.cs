@@ -30,7 +30,7 @@ namespace Constantine.Screens
 
         int _scoreTimer;
 
-        public int Difficulty { get; set; }
+        public Difficulty CurrentDifficulty { get; set; }
         
         public GameScreen(Game game, GameStateHandler handler)
             : base(game, handler)
@@ -87,9 +87,10 @@ namespace Constantine.Screens
              
         }
 
+        //messy
         private void SetMap() 
         { 
-            if (Difficulty == 0)
+            if (CurrentDifficulty == Difficulty.Easy)
             {
                 Texture2D tilesetTexture = Game.Content.Load<Texture2D>(@"Tiles\tileset1");
                 _tileSet = new TileSet(tilesetTexture, 8, 8, 32, 32);
@@ -119,7 +120,7 @@ namespace Constantine.Screens
                 }
                 _map.AddLayer(splatter);
             }
-            else if (Difficulty == 1)
+            else if (CurrentDifficulty == Difficulty.Normal)
             {
                 Texture2D tilesetTexture = Game.Content.Load<Texture2D>(@"Tiles\cavetiles");
                 _tileSet = new TileSet(tilesetTexture, 5, 5, 32, 32);
@@ -197,10 +198,8 @@ namespace Constantine.Screens
                 _powersBar.IncreasePowerUpBar();
             }
 
-            if (_healthBar.IsEmpty)
-            {
-                GameRef._stateHandler.PushState(GameRef._gameOverScreen);
-            }
+            CheckGameOver();
+           
 
             base.Update(gameTime);
         }
@@ -262,6 +261,28 @@ namespace Constantine.Screens
                 _sprite.IsAnimating = false;
             }
 
+        }
+
+        private void CheckGameOver()
+        {
+            if (_healthBar.IsEmpty) 
+            {
+
+                switch (CurrentDifficulty)
+                {
+                    case Difficulty.Easy:
+                        GameRef.SaveData.EasyScore = _scoreLabel.Score;
+                        break;
+                    case Difficulty.Normal:
+                        GameRef.SaveData.NormalScore = _scoreLabel.Score;
+                        break;
+                    case Difficulty.Hard:
+                        GameRef.SaveData.HardScore = _scoreLabel.Score;
+                        break;
+                }
+
+                GameRef._stateHandler.PushState(GameRef._gameOverScreen);
+            }
         }
 
         //Do not supply the graphics device as a parameter, any other alternatives for health bars?

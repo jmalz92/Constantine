@@ -42,13 +42,14 @@ namespace Constantine.Screens
         {
             base.Update(gameTime);
 
-            if(previouslyViewed)
+            if(GameRef.SaveData.CinematicViewed)
                 _stateHandler.PushState(GameRef._gameScreen);
 
             if (Assets.Intro != null && !videoLoaded)
             {
                 videoLoaded = true;
                 player.Play(Assets.Intro);
+                GameRef.SaveData.CinematicViewed = true;
             }
 
             if (videoLoaded)
@@ -60,7 +61,6 @@ namespace Constantine.Screens
 
                 }
             }
-
         }
         public override void Draw(GameTime gameTime)
         {

@@ -10,6 +10,10 @@ namespace GameEngineLibrary.Controls
     public class ScoreLabel : Label
     {
         private int score;
+        public int Score
+        {
+            get { return score; }
+        }
 
         #region Constructors
         public ScoreLabel()
