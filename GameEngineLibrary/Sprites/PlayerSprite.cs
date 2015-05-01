@@ -160,14 +160,14 @@ namespace GameEngineLibrary.Sprites
         #region Method Region
 
         //this isnt the best place to do bullet logic
-        public void Update(GameTime gameTime, SpriteManager manager)
+        public void Update(GameTime gameTime, SpriteManager manager, Camera camera)
         {
             if (isAnimating && isTransformed)
                 ultimateAnimations[currentAnimation].Update(gameTime);
             else if(isAnimating)
                 animations[currentAnimation].Update(gameTime);
 
-            Vector2 aim = InputHandler.GetAimDirection(Position);
+            Vector2 aim = InputHandler.GetAimDirection(Position - camera.Position);
 
             if (aim.LengthSquared() > 0 && cooldownRemaining <= 0 && 
                 (InputHandler.MouseDown(InputHandler.MouseState.RightButton) || InputHandler.ButtonDown(Buttons.RightTrigger)))

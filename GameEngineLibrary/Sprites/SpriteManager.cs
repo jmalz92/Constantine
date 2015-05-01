@@ -94,7 +94,7 @@ namespace GameEngineLibrary.Sprites
                 {
                     if (player.IsTransformed)
                         enemies[i].WasShot(player, this);
-                    
+
                     else
                         player.IsColliding = true;
                 }

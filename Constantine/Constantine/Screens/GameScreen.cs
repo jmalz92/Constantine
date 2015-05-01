@@ -163,7 +163,7 @@ namespace Constantine.Screens
         public override void Update(GameTime gameTime)
         {
             _player.Update(gameTime);
-            _sprite.Update(gameTime, _spriteManager);
+            _sprite.Update(gameTime, _spriteManager, _player.Camera);
             EnemyFactory.Update(gameTime, _spriteManager);
             PowerUpFactory.Update(gameTime, _spriteManager);
             _spriteManager.Update(gameTime, _sprite);
