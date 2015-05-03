@@ -29,6 +29,9 @@ namespace Constantine
         public static Texture2D Tablet { get; private set; }
         public static Texture2D Bolt { get; private set; }
         public static Texture2D Blood { get; private set; }
+        public static Texture2D DemonBlood { get; private set; }
+        public static Texture2D Bone { get; private set; }
+        public static Texture2D Log { get; private set; }
 
         public static Video Splash { get; private set; }
         public static Video Intro { get; private set; }
@@ -50,6 +53,10 @@ namespace Constantine
             Tablet = content.Load<Texture2D>("Images/tablet");
             Bolt = content.Load<Texture2D>("Images/bolt");
             Blood = content.Load<Texture2D>("Images/blood");
+            DemonBlood = content.Load<Texture2D>("IMages/demonblood");
+            Bone = content.Load<Texture2D>("Images/bone");
+            Log = content.Load<Texture2D>("Images/log");
+
 
             Splash = content.Load<Video>("Video/splash");
             Intro = content.Load<Video>("Video/intro");

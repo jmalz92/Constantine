@@ -48,16 +48,16 @@ namespace Constantine
                 switch (difficulty)
                 {
                     case Difficulty.Easy:
-                        manager.Add(EnemySprite.CreateEnemy(Assets.TreeMutant, Assets.Blood, Audio.Splat, new Vector2(0, rng.Next(1280)), new Point(50, 50), 10, new Point(0, 0), new Point(4, 4), 2.0f, 5));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.TreeMutant, Assets.Log, Audio.Splat, new Vector2(0, rng.Next(1280)), new Point(50, 50), 10, new Point(0, 0), new Point(4, 4), 2.0f, 5));
                         manager.Add(EnemySprite.CreateEnemy(Assets.Rabbit, Assets.Blood, Audio.Splat, new Vector2(1280, rng.Next(1280)), new Point(32, 32), 10, new Point(0, 0), new Point(3, 4), 2.0f, 5));
                         break;
                     case Difficulty.Normal:
                         manager.Add(EnemySprite.CreateEnemy(Assets.Zombie, Assets.Blood, Audio.Splat, new Vector2(0, rng.Next(1280)), new Point(32, 64), 10, new Point(0, 0),new Point(3, 4), 2.5f, 10));
-                        manager.Add(EnemySprite.CreateEnemy(Assets.Skeleton, Assets.Blood, Audio.Splat, new Vector2(1280, rng.Next(1280)), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 2.5f, 10));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.Skeleton, Assets.Bone, Audio.Splat, new Vector2(1280, rng.Next(1280)), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 2.5f, 10));
                         break;
                     case Difficulty.Hard:
-                        manager.Add(EnemySprite.CreateEnemy(Assets.Devil, Assets.Blood, Audio.Splat, new Vector2(0, rng.Next(1280)), new Point(96, 48), 10, new Point(0, 0), new Point(3, 4), 3.0f, 25));
-                        manager.Add(EnemySprite.CreateEnemy(Assets.LavaMonster, Assets.Blood, Audio.Splat, new Vector2(1280, rng.Next(1280)), new Point(96, 48), 10, new Point(0, 0), new Point(3, 4), 3.0f, 25));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.Devil, Assets.DemonBlood, Audio.Splat, new Vector2(0, rng.Next(1280)), new Point(96, 48), 10, new Point(0, 0), new Point(3, 4), 3.0f, 25));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.LavaMonster, Assets.DemonBlood, Audio.Splat, new Vector2(1280, rng.Next(1280)), new Point(96, 48), 10, new Point(0, 0), new Point(3, 4), 3.0f, 25));
                         break;
                 }
             }
@@ -67,16 +67,16 @@ namespace Constantine
                 switch (difficulty)
                 {
                     case Difficulty.Easy:
-                        manager.Add(EnemySprite.CreateEnemy(Assets.TreeMutant, Assets.Blood, Audio.Splat, new Vector2(rng.Next(1280), 0), new Point(50, 50), 10, new Point(0, 0), new Point(4, 4), 2.0f, 5));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.TreeMutant, Assets.Log, Audio.Splat, new Vector2(rng.Next(1280), 0), new Point(50, 50), 10, new Point(0, 0), new Point(4, 4), 2.0f, 5));
                         manager.Add(EnemySprite.CreateEnemy(Assets.Rabbit, Assets.Blood, Audio.Splat, new Vector2(rng.Next(1280), 1280), new Point(32, 32), 10, new Point(0, 0), new Point(3, 4), 2.0f, 5));
                         break;
                     case Difficulty.Normal:
                         manager.Add(EnemySprite.CreateEnemy(Assets.Zombie, Assets.Blood, Audio.Splat, new Vector2(rng.Next(1280), 0), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 2.0f, 10));
-                        manager.Add(EnemySprite.CreateEnemy(Assets.Skeleton, Assets.Blood, Audio.Splat, new Vector2(rng.Next(1280), 1280), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 2.0f, 10));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.Skeleton, Assets.Bone, Audio.Splat, new Vector2(rng.Next(1280), 1280), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 2.0f, 10));
                         break;
                     case Difficulty.Hard:
-                        manager.Add(EnemySprite.CreateEnemy(Assets.Devil, Assets.Blood, Audio.Splat, new Vector2(rng.Next(1280), 0), new Point(96, 48), 10, new Point(0, 0), new Point(3, 4), 2.0f, 25));
-                        manager.Add(EnemySprite.CreateEnemy(Assets.LavaMonster, Assets.Blood, Audio.Splat, new Vector2(rng.Next(1280), 1280), new Point(96, 48), 10, new Point(0, 0), new Point(3, 4), 2.0f, 25));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.Devil, Assets.DemonBlood, Audio.Splat, new Vector2(rng.Next(1280), 0), new Point(96, 48), 10, new Point(0, 0), new Point(3, 4), 2.0f, 25));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.LavaMonster, Assets.DemonBlood, Audio.Splat, new Vector2(rng.Next(1280), 1280), new Point(96, 48), 10, new Point(0, 0), new Point(3, 4), 2.0f, 25));
                         break;
                 }
             }
