@@ -38,8 +38,8 @@ namespace Constantine
 
         public static void Load(ContentManager content)
         {
-            Player = content.Load<Texture2D>("Images/player_placeholder");
-            Ultimate = content.Load<Texture2D>("Images/angel_placeholder");
+            Player = content.Load<Texture2D>("Images/player");
+            Ultimate = content.Load<Texture2D>("Images/angel");
             Skeleton = content.Load<Texture2D>("Images/skeleton");
             Zombie = content.Load<Texture2D>("Images/zombie");
             Rabbit = content.Load<Texture2D>("Images/rabbit");

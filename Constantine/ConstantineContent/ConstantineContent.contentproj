@@ -44,15 +44,8 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Images\angel_placeholder.png">
-      <Name>angel_placeholder</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Images\player_placeholder.png">
-      <Name>player_placeholder</Name>
+    <Compile Include="Images\player.png">
+      <Name>player</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -236,6 +229,13 @@
   <ItemGroup>
     <Compile Include="Images\log.png">
       <Name>log</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Images\angel.png">
+      <Name>angel</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
