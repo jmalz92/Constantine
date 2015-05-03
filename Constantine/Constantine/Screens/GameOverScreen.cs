@@ -15,10 +15,15 @@ namespace Constantine.Screens
 {
     public class GameOverScreen : GameStateBase
     {
-        
         LinkLabel _playLabel;
         LinkLabel _mainMenuLabel;
         LinkLabel _exitLabel;
+
+        Label _scoreLabel;
+        Label _highScoreLabel;
+        Label _messageLabel;
+
+        public int Score { get; set; }
 
         public GameOverScreen(Game game, GameStateHandler handler)
             : base(game, handler)

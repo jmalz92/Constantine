@@ -66,8 +66,6 @@ namespace GameEngineLibrary.Sprites
             return new EnemySprite(textureImage, deathImage, deathSound, position, frameSize, collisionOffset, currentFrame, sheetSize, speed, damage);
         }
 
-        
-
         public override void Update(GameTime gameTime, Vector2 playerPos)
         {
             
