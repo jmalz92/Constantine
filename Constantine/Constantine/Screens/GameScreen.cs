@@ -60,13 +60,13 @@ namespace Constantine.Screens
             animations.Add(AnimationKey.Up, animation);
 
             Dictionary<AnimationKey, Animation> ultimateAnimations = new Dictionary<AnimationKey, Animation>();
-            Animation ultimateAnimation = new Animation(4, 48, 48, 0, 0);
+            Animation ultimateAnimation = new Animation(4, 80, 64, 0, 0);
             ultimateAnimations.Add(AnimationKey.Down, ultimateAnimation);
-            ultimateAnimation = new Animation(4, 48, 48, 0, 48);
+            ultimateAnimation = new Animation(4, 80, 64, 0, 64);
             ultimateAnimations.Add(AnimationKey.Left, ultimateAnimation);
-            ultimateAnimation = new Animation(4, 48, 48, 0, 96);
+            ultimateAnimation = new Animation(4, 80, 64, 0, 128);
             ultimateAnimations.Add(AnimationKey.Right, ultimateAnimation);
-            ultimateAnimation = new Animation(4, 48, 48, 0, 144);
+            ultimateAnimation = new Animation(4, 80, 64, 0, 192);
             ultimateAnimations.Add(AnimationKey.Up, ultimateAnimation);
 
             _sprite = new PlayerSprite(Assets.Player, Assets.Ultimate, Assets.Bullet, Audio.Bullet, Audio.Pickup, animations, ultimateAnimations);
@@ -272,7 +272,7 @@ namespace Constantine.Screens
                         GameRef.SaveData.HardScore = _scoreLabel.Score;
                         break;
                 }
-
+                MediaPlayer.Stop();
                 GameRef._stateHandler.PushState(GameRef._gameOverScreen);
             }
         }

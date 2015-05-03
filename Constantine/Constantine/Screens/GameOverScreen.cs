@@ -70,7 +70,7 @@ namespace Constantine.Screens
         public override void Update(GameTime gameTime)
         {
             ControlManager.Update(gameTime);
-
+            
             base.Update(gameTime);
         }
 
@@ -100,6 +100,7 @@ namespace Constantine.Screens
             }
             if(gameOverLabelText.Contains("Menu")){
                  GameRef._gameScreen = new GameScreen(GameRef, _stateHandler);
+                _stateHandler.PopState();
                 _stateHandler.PopState();
                 _stateHandler.PopState();
                 _stateHandler.PopState();

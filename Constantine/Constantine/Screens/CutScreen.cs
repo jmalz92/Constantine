@@ -14,11 +14,10 @@ namespace Constantine.Screens
 {
     public class CutScreen : GameStateBase
     {
-       
+
         VideoPlayer player;
         Texture2D videoTexture;
         bool videoLoaded = false;
-        bool previouslyViewed = false; //do something else with this once serializer is plugged in
 
         public CutScreen(Game game, GameStateHandler handler)
             : base(game, handler)
@@ -27,23 +26,24 @@ namespace Constantine.Screens
 
         public override void Initialize()
         {
+
+            if (GameRef.SaveData.CinematicViewed)
+                _stateHandler.PushState(GameRef._gameScreen);
+
             player = new VideoPlayer();
             player.IsLooped = false;
             player.Volume = .5f;
             base.Initialize();
+
         }
 
         protected override void LoadContent()
         {
-            
             base.LoadContent();
         }
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
-            if(GameRef.SaveData.CinematicViewed)
-                _stateHandler.PushState(GameRef._gameScreen);
 
             if (Assets.Intro != null && !videoLoaded)
             {
@@ -58,9 +58,9 @@ namespace Constantine.Screens
                 {
                     player.Dispose();
                     _stateHandler.PushState(GameRef._gameScreen);
-
                 }
             }
+
         }
         public override void Draw(GameTime gameTime)
         {
@@ -83,7 +83,7 @@ namespace Constantine.Screens
                 GameRef.SpriteBatch.End();
             }
             base.Draw(gameTime);
-            
+
         }
 
     }

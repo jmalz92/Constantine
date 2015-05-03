@@ -70,8 +70,8 @@ namespace GameEngineLibrary.Sprites
 
         public override void Update(GameTime gameTime, Vector2 playerPos)
         {
-
-            MoveSprite(playerPos);
+            
+            Vector2 movement = MoveSprite(playerPos);
 
             //TODO: Change to animation class implementation
             // Update frame if time to do so based on framerate
@@ -82,12 +82,22 @@ namespace GameEngineLibrary.Sprites
                 timeSinceLastFrame = 0;
                 ++currentFrame.X;
                 if (currentFrame.X >= sheetSize.X)
-                {
                     currentFrame.X = 0;
-                    ++currentFrame.Y;
-                    if (currentFrame.Y >= sheetSize.Y)
-                        currentFrame.Y = 0;
-                }
+
+                //move up
+                if (movement.Y > .5)
+                    currentFrame.Y = 0;
+
+                //move down
+                else if (movement.Y < -.5)
+                    currentFrame.Y = 3;
+                //move left
+                else if (movement.X <= 0)
+                    currentFrame.Y = 1;
+
+                else
+                    currentFrame.Y = 2;
+               
             }
         }
 
@@ -107,7 +117,7 @@ namespace GameEngineLibrary.Sprites
                 1f, SpriteEffects.None, 0);
         }
 
-        protected void MoveSprite(Vector2 playerPos)
+        protected Vector2 MoveSprite(Vector2 playerPos)
         {
             Vector2 movement = new Vector2();
 
@@ -116,6 +126,8 @@ namespace GameEngineLibrary.Sprites
 
             movement.Normalize();
             Position += movement * speed;
+
+            return movement;
         } 
        
         // Gets the collision rect based on position, framesize and collision offset
