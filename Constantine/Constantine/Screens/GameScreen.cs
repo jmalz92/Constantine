@@ -164,7 +164,7 @@ namespace Constantine.Screens
         {
             _player.Update(gameTime);
             _sprite.Update(gameTime, _spriteManager, _player.Camera);
-            EnemyFactory.Update(gameTime, _spriteManager);
+            EnemyFactory.Update(gameTime, CurrentDifficulty, _spriteManager);
             PowerUpFactory.Update(gameTime, _spriteManager);
             _spriteManager.Update(gameTime, _sprite);
             AnimateSprite();

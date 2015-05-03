@@ -30,7 +30,7 @@ namespace Constantine
 
             if (!File.Exists(fileName))
                 return new SaveData();
-
+            
             FileStream stream = File.Open(fileName, FileMode.OpenOrCreate, FileAccess.Read);
             try
             {

@@ -19,7 +19,8 @@ namespace GameEngineLibrary.Sprites
         Point currentFrame;
         Point sheetSize;
 
-        const int POINT_AWARD = 5;
+        const int POINT_AWARD = 10;
+        int damage;
         
         // Collision data
         int collisionOffset;
@@ -31,45 +32,46 @@ namespace GameEngineLibrary.Sprites
 
         // Movement data
         protected float speed;
-        protected Vector2 position; //redundant
         
-        public string collisionCueName { get; private set; }
-
-        public EnemySprite(Texture2D textureImage, Texture2D deathImage, SoundEffect deathSound,  Vector2 position, Point frameSize,
-        int collisionOffset, Point currentFrame, Point sheetSize, float speed, string collisionCueName)
-            : this(textureImage, deathImage, deathSound, position, frameSize, collisionOffset, currentFrame,
-            sheetSize, speed, defaultMillisecondsPerFrame, collisionCueName)
-        {
-        }
 
         public EnemySprite(Texture2D textureImage, Texture2D deathImage, SoundEffect deathSound, Vector2 position, Point frameSize,
-            int collisionOffset, Point currentFrame, Point sheetSize, float speed,
-            int millisecondsPerFrame, string collisionCueName)
+            int collisionOffset, Point currentFrame, Point sheetSize, float speed, int damage)
         {
             this.textureImage = textureImage;
             this._deathSound = deathSound;
             this._deathImage = deathImage;
-            this.position = position;
+            this.Position = position;
             this.frameSize = frameSize;
             this.collisionOffset = collisionOffset;
             this.currentFrame = currentFrame;
             this.sheetSize = sheetSize;
             this.speed = speed;
-            this.collisionCueName = collisionCueName;
-            this.millisecondsPerFrame = millisecondsPerFrame;
+            this.damage = damage;
+            this.millisecondsPerFrame = defaultMillisecondsPerFrame;
         }
 
         public void WasShot(PlayerSprite player, SpriteManager manager)
         {
-            manager.Add(new EffectsSprite(_deathImage, position, 10000));
+            manager.Add(new EffectsSprite(_deathImage, Position, 10000));
             IsExpired = true;
             _deathSound.Play();
             player.AccumulatedPoints += POINT_AWARD;
             
         }
 
-        public virtual void Update(GameTime gameTime)
+        public static EnemySprite CreateEnemy(Texture2D textureImage, Texture2D deathImage, SoundEffect deathSound, Vector2 position, Point frameSize,
+            int collisionOffset, Point currentFrame, Point sheetSize, float speed, int damage)
         {
+            return new EnemySprite(textureImage, deathImage, deathSound, position, frameSize, collisionOffset, currentFrame, sheetSize, speed, damage);
+        }
+
+        
+
+        public override void Update(GameTime gameTime, Vector2 playerPos)
+        {
+
+            MoveSprite(playerPos);
+
             //TODO: Change to animation class implementation
             // Update frame if time to do so based on framerate
             timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
@@ -90,7 +92,7 @@ namespace GameEngineLibrary.Sprites
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Camera camera)
         {
-            Vector2 destination = position;
+            Vector2 destination = Position;
             destination.X -= (int)camera.Position.X;
             destination.Y -= (int)camera.Position.Y;
 
@@ -104,8 +106,15 @@ namespace GameEngineLibrary.Sprites
                 1f, SpriteEffects.None, 0);
         }
 
-        protected virtual void MoveSprite(Vector2 playerPos)
+        protected void MoveSprite(Vector2 playerPos)
         {
+            Vector2 movement = new Vector2();
+
+            movement.X = playerPos.X - Position.X;
+            movement.Y = playerPos.Y - Position.Y;
+
+            movement.Normalize();
+            Position += movement * speed;
         } 
        
         // Gets the collision rect based on position, framesize and collision offset
@@ -114,8 +123,8 @@ namespace GameEngineLibrary.Sprites
             get
             {
                 return new Rectangle(
-                    (int)position.X + collisionOffset,
-                    (int)position.Y + collisionOffset,
+                    (int)Position.X + collisionOffset,
+                    (int)Position.Y + collisionOffset,
                     frameSize.X - (collisionOffset * 2),
                     frameSize.Y - (collisionOffset * 2));
             }

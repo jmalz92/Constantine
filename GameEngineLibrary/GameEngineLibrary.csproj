@@ -80,7 +80,6 @@
     <Compile Include="Sprites\EnemySprite.cs" />
     <Compile Include="Sprites\PlayerSprite.cs" />
     <Compile Include="Sprites\Animation.cs" />
-    <Compile Include="Sprites\EasyEnemy.cs" />
     <Compile Include="Sprites\PowerUpSprite.cs" />
     <Compile Include="Sprites\SpeedPowerUp.cs" />
     <Compile Include="Sprites\Sprite.cs" />

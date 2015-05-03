@@ -18,6 +18,10 @@ namespace Constantine
         public static Texture2D Ultimate { get; private set; }
         public static Texture2D Skeleton { get; private set; }
         public static Texture2D Zombie { get; private set; }
+        public static Texture2D Rabbit { get; private set; }
+        public static Texture2D TreeMutant { get; private set; }
+        public static Texture2D Devil { get; private set; }
+        public static Texture2D LavaMonster { get; private set; }
         public static Texture2D Bullet { get; private set; }
         public static Texture2D Pause { get; private set; }
         public static Texture2D Menu { get; private set; }
@@ -35,6 +39,10 @@ namespace Constantine
             Ultimate = content.Load<Texture2D>("Images/angel_placeholder");
             Skeleton = content.Load<Texture2D>("Images/skeleton");
             Zombie = content.Load<Texture2D>("Images/zombie");
+            Rabbit = content.Load<Texture2D>("Images/rabbit");
+            TreeMutant = content.Load<Texture2D>("Images/treemutant");
+            Devil = content.Load<Texture2D>("Images/devil");
+            LavaMonster = content.Load<Texture2D>("Images/lavamonster");
             Bullet = content.Load<Texture2D>("Images/bullet");
             Pause = content.Load<Texture2D>("Images/Pause");
             Menu = content.Load<Texture2D>("Images/menu");
