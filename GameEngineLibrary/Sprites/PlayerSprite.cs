@@ -14,6 +14,7 @@ namespace GameEngineLibrary.Sprites
 {
     public class PlayerSprite : Sprite
     {
+        //too many fields, clean this up
         #region Field Region
 
         Dictionary<AnimationKey, Animation> animations;
@@ -33,7 +34,8 @@ namespace GameEngineLibrary.Sprites
         const int cooldownFrames = 6;
         int cooldownRemaining = 0;
         int accumulatedPoints = 0;
-
+        int health;
+        int healthTimer = 1000;
         bool hasSpeedUp = false;
         bool isTransformed = false;
         int itemCount = 0;
@@ -82,6 +84,15 @@ namespace GameEngineLibrary.Sprites
         {
             get { return speed; }
             set { speed = MathHelper.Clamp(speed, 1.0f, 400.0f); }
+        }
+
+        public int Health
+        {
+            get { return health; }
+            set
+            {
+                health = (int)MathHelper.Clamp(value, 0, 100);
+            }
         }
 
         public int AccumulatedPoints
@@ -147,6 +158,7 @@ namespace GameEngineLibrary.Sprites
             _pickupSound = pickupSound;
             animations = new Dictionary<AnimationKey, Animation>();
             ultimateAnimations = new Dictionary<AnimationKey, Animation>();
+            health = 100;
 
             foreach (AnimationKey key in animation.Keys)
                 animations.Add(key, (Animation)animation[key].Clone());
@@ -162,6 +174,8 @@ namespace GameEngineLibrary.Sprites
         //this isnt the best place to do bullet logic
         public void Update(GameTime gameTime, SpriteManager manager, Camera camera)
         {
+            
+
             if (isAnimating && isTransformed)
                 ultimateAnimations[currentAnimation].Update(gameTime);
             else if(isAnimating)
@@ -205,6 +219,13 @@ namespace GameEngineLibrary.Sprites
 
         public void UpdatePlayerStatus(GameTime gameTime)
         {
+            healthTimer--;
+            if (healthTimer <= 0)
+            {
+                healthTimer = 1000;
+                Health += 1;
+            }
+
             if (isTransformed)
             {
                 elapsedUltimateTime += gameTime.ElapsedGameTime.Milliseconds;
@@ -229,6 +250,11 @@ namespace GameEngineLibrary.Sprites
 
             if (itemCount >= 3)
                 isTransformed = true;
+        }
+
+        public void TakeDamage(EnemySprite enemy)
+        {
+            Health -= enemy.Damage;
         }
 
         public void PickupPowerUp(PowerUpSprite sprite)

@@ -15,6 +15,7 @@ namespace GameEngineLibrary.Controls
         int height;
         Texture2D healthTexture;
         Texture2D borderTexture;
+        Label label;
         int maxHealth;
         int playerHealth;
 
@@ -47,6 +48,11 @@ namespace GameEngineLibrary.Controls
             position.X = posX;
             position.Y = posY;
             tabStop = false;
+
+            label = new Label();
+            label.Text = "Health";
+            label.Color = Color.White;
+            label.Position = new Vector2(this.position.X + 60, this.Position.Y);
         }
         #endregion
 
@@ -74,7 +80,8 @@ namespace GameEngineLibrary.Controls
             Rectangle srect = new Rectangle((int)position.X + 5, (int)position.Y + 5, (int)(((double)playerHealth / maxHealth) * 200), 30);
             Rectangle drect = new Rectangle((int)position.X + 5, (int)position.Y + 5, 200, 30);
             spriteBatch.Draw(healthTexture, srect, drect, Color.White);
-            
+
+            label.Draw(spriteBatch);
         }        
         #endregion
     }

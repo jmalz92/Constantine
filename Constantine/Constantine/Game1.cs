@@ -42,7 +42,7 @@ namespace Constantine
 
         public Game1()
         {
-            SaveData = SaveData.Load("save.dat");
+            SaveData = SaveData.Load("SaveData.xml");
 
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
@@ -132,7 +132,7 @@ namespace Constantine
 
         protected override void OnExiting(object sender, EventArgs args)
         {
-            SaveData.Save(SaveData, "save.dat");
+            SaveData.Save(SaveData, "SaveData.xml");
             base.OnExiting(sender, args);
         }
     }

@@ -20,7 +20,7 @@ namespace GameEngineLibrary.Sprites
         Point sheetSize;
 
         const int POINT_AWARD = 10;
-        int damage;
+        int _damage;
         
         // Collision data
         int collisionOffset;
@@ -32,7 +32,8 @@ namespace GameEngineLibrary.Sprites
 
         // Movement data
         protected float speed;
-        
+
+        public int Damage { get { return _damage; } }
 
         public EnemySprite(Texture2D textureImage, Texture2D deathImage, SoundEffect deathSound, Vector2 position, Point frameSize,
             int collisionOffset, Point currentFrame, Point sheetSize, float speed, int damage)
@@ -46,7 +47,7 @@ namespace GameEngineLibrary.Sprites
             this.currentFrame = currentFrame;
             this.sheetSize = sheetSize;
             this.speed = speed;
-            this.damage = damage;
+            this._damage = damage;
             this.millisecondsPerFrame = defaultMillisecondsPerFrame;
         }
 

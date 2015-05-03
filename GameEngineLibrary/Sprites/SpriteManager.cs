@@ -96,7 +96,7 @@ namespace GameEngineLibrary.Sprites
                         enemies[i].WasShot(player, this);
 
                     else
-                        player.IsColliding = true;
+                        player.TakeDamage(enemies[i]);
                 }
             }
 

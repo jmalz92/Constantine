@@ -169,15 +169,8 @@ namespace Constantine.Screens
             _spriteManager.Update(gameTime, _sprite);
             AnimateSprite();
             ControlManager.Update(gameTime);
-            _healthBar.UpdatePlayerHealth(_player.Health);
-            
-
-            if (_sprite.IsColliding)
-            {
-                _player.Health -= 5;
-                _sprite.IsColliding = false;
-            }
-
+            _healthBar.UpdatePlayerHealth(_sprite.Health);
+            _powersBar.IncreasePowerUpBar(_sprite.ItemCount);
 
             _scoreTimer += gameTime.ElapsedGameTime.Milliseconds;
             if (_scoreTimer >= 1000)
@@ -193,10 +186,9 @@ namespace Constantine.Screens
             {
                 GameRef._stateHandler.PushState(GameRef._pauseScreen);
             }
-            if (InputHandler.KeyPressed(Keys.OemOpenBrackets) && !InputHandler.LastKeyboardState.IsKeyDown(Keys.OemOpenBrackets))
-            {
-                _powersBar.IncreasePowerUpBar();
-            }
+            
+           
+            
 
             CheckGameOver();
            
@@ -293,7 +285,7 @@ namespace Constantine.Screens
             int innerWidth = 200;
             int innerHeight = 30;
 
-            HealthBar healthBar = new HealthBar(_player.Health, 0, 0);
+            HealthBar healthBar = new HealthBar(_sprite.Health, 0, 0);
 
             //create the textures
             Texture2D healthTexture = new Texture2D(gd, innerWidth, innerHeight, false, SurfaceFormat.Color);
@@ -303,7 +295,7 @@ namespace Constantine.Screens
             Color[] backColor = new Color[width * height];
             for (int i = 0; i < backColor.Length; i++)
             {
-                backColor[i] = new Color(200, 100, 50);
+                backColor[i] = new Color(0, 0, 0);
             }
             borderTexture.SetData(backColor);
 
@@ -339,7 +331,7 @@ namespace Constantine.Screens
             Color[] backColor = new Color[width * height];
             for (int i = 0; i < backColor.Length; i++)
             {
-                backColor[i] = new Color(200, 0, 150);
+                backColor[i] = new Color(0, 0, 0);
             }
             borderTexture.SetData(backColor);
 

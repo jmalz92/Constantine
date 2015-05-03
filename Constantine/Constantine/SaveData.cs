@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace Constantine
 {
-    [Serializable]
+    [Serializable, XmlRoot("SaveData")]
     public class SaveData
     {
 
