@@ -8,6 +8,9 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngineLibrary.Sprites
 {
+    /// <summary>
+    /// Sprite base class
+    /// </summary>
     public abstract class Sprite
     {
         // The tint of the image. This will also allow us to change the transparency.
@@ -20,19 +23,6 @@ namespace GameEngineLibrary.Sprites
 
         public virtual Rectangle CollisionRect { get; set; }
 
-        // Gets the collision rect based on position, framesize and collision offset
-        //public Rectangle collisionRect
-        //{
-        //    get
-        //    {
-        //        return new Rectangle(
-        //            (int)Position.X + CollisionOffset,
-        //            (int)Position.Y + CollisionOffset,
-        //            frameSize.X - (CollisionOffset * 2),
-        //            frameSize.Y - (CollisionOffset * 2));
-        //    }
-        //}
-        
         public virtual void Update(GameTime gameTime, Vector2 playerPos)
         {
 

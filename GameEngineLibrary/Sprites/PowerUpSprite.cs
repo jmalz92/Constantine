@@ -10,9 +10,12 @@ using GameEngineLibrary.TileEngine;
 
 namespace GameEngineLibrary.Sprites
 {
+    /// <summary>
+    /// Defines a power up sprite
+    /// </summary>
     public class PowerUpSprite : Sprite
     {
-        private static Random rand = new Random();
+        private static Random _rand = new Random();
         private Texture2D Image;
 
         public override Rectangle CollisionRect
@@ -33,12 +36,16 @@ namespace GameEngineLibrary.Sprites
             Position = GetSpawnPosition();
         }
 
+        /// <summary>
+        /// Gets the sprites position
+        /// </summary>
+        /// <returns></returns>
         private Vector2 GetSpawnPosition()
         {
             Vector2 pos = Vector2.Zero;
 
-            pos.X = (float)(TileMap.WidthInPixels * rand.NextDouble());
-            pos.Y = (float)(TileMap.HeightInPixels * rand.NextDouble());
+            pos.X = (float)(TileMap.WidthInPixels * _rand.NextDouble());
+            pos.Y = (float)(TileMap.HeightInPixels * _rand.NextDouble());
 
             return pos;
         }

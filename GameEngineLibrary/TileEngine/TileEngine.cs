@@ -7,6 +7,11 @@ using Microsoft.Xna.Framework.Content;
 
 namespace GameEngineLibrary.TileEngine
 {
+    /// <summary>
+    /// Tile Engine
+    /// Logic found at: http://xnagpa.net/xna4rpg.php
+    /// Original Author: Jamie McMahon
+    /// </summary>
     public class TileEngine
     {
         private static int  _tileWidth;

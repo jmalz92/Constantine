@@ -13,6 +13,9 @@ using GameEngineLibrary.TileEngine;
 
 namespace GameEngineLibrary.Sprites
 {
+    /// <summary>
+    /// Defines the main player
+    /// </summary>
     public class PlayerSprite : Sprite
     {
         //too many fields, clean this up
@@ -29,20 +32,20 @@ namespace GameEngineLibrary.Sprites
         SoundEffect _bulletSound;
         SoundEffect _pickupSound;
         SoundEffect _ultimateSound;
-        Vector2 position;
-        Vector2 velocity;
-        float speed = 3.0f;
-        int collisionOffset = 10;
-        const int cooldownFrames = 6;
-        int cooldownRemaining = 0;
-        int accumulatedPoints = 0;
-        int health;
-        int healthTimer = 1000;
-        bool hasSpeedUp = false;
-        bool isTransformed = false;
-        int itemCount = 0;
-        int elapsedUltimateTime = 0;
-        int elapsedSpeedTime = 0;
+        Vector2 _position;
+        Vector2 _velocity;
+        float _speed = 3.0f;
+        int _collisionOffset = 10;
+        const int _cooldownFrames = 6;
+        int _cooldownRemaining = 0;
+        int _accumulatedPoints = 0;
+        int _health;
+        int _healthTimer = 1000;
+        bool _hasSpeedUp = false;
+        bool _isTransformed = false;
+        int _itemCount = 0;
+        int _elapsedUltimateTime = 0;
+        int _elapsedSpeedTime = 0;
         #endregion
 
         #region Property Region
@@ -65,7 +68,7 @@ namespace GameEngineLibrary.Sprites
         public int Width
         {
             get {
-                if (isTransformed)
+                if (_isTransformed)
                     return ultimateAnimations[currentAnimation].FrameWidth;
                 else
                     return animations[currentAnimation].FrameWidth; 
@@ -75,7 +78,7 @@ namespace GameEngineLibrary.Sprites
         public int Height
         {
             get {
-                if (isTransformed)
+                if (_isTransformed)
                     return ultimateAnimations[currentAnimation].FrameHeight;
                 else
                     return animations[currentAnimation].FrameHeight; 
@@ -84,43 +87,43 @@ namespace GameEngineLibrary.Sprites
 
         public float Speed
         {
-            get { return speed; }
-            set { speed = MathHelper.Clamp(speed, 1.0f, 400.0f); }
+            get { return _speed; }
+            set { _speed = MathHelper.Clamp(_speed, 1.0f, 400.0f); }
         }
 
         public int Health
         {
-            get { return health; }
+            get { return _health; }
             set
             {
-                health = (int)MathHelper.Clamp(value, 0, 100);
+                _health = (int)MathHelper.Clamp(value, 0, 100);
             }
         }
 
         public int AccumulatedPoints
         {
-            get { return accumulatedPoints; }
-            set { accumulatedPoints = value; }
+            get { return _accumulatedPoints; }
+            set { _accumulatedPoints = value; }
         }
 
         public int ItemCount
         {
-            get { return itemCount; }
-            set { itemCount = value; }
+            get { return _itemCount; }
+            set { _itemCount = value; }
         }
 
         public bool IsTransformed
         {
-            get { return isTransformed; }
-            set { isTransformed = value; }
+            get { return _isTransformed; }
+            set { _isTransformed = value; }
         }
 
         public Vector2 Position
         {
-            get { return position; }
+            get { return _position; }
             set
             {
-                position = value;
+                _position = value;
             }
         }
 
@@ -129,21 +132,21 @@ namespace GameEngineLibrary.Sprites
             get
             {
                 return new Rectangle(
-                    (int)position.X + collisionOffset,
-                    (int)position.Y + collisionOffset,
-                    Width - (collisionOffset * 2),
-                    Height - (collisionOffset * 2));
+                    (int)_position.X + _collisionOffset,
+                    (int)_position.Y + _collisionOffset,
+                    Width - (_collisionOffset * 2),
+                    Height - (_collisionOffset * 2));
             }
         }
 
         public Vector2 Velocity
         {
-            get { return velocity; }
+            get { return _velocity; }
             set
             {
-                velocity = value;
-                if (velocity != Vector2.Zero)
-                    velocity.Normalize();
+                _velocity = value;
+                if (_velocity != Vector2.Zero)
+                    _velocity.Normalize();
             }
         }
 
@@ -162,7 +165,7 @@ namespace GameEngineLibrary.Sprites
             _pickupSound = pickupSound;
             animations = new Dictionary<AnimationKey, Animation>();
             ultimateAnimations = new Dictionary<AnimationKey, Animation>();
-            health = 100;
+            _health = 100;
 
             foreach (AnimationKey key in animation.Keys)
                 animations.Add(key, (Animation)animation[key].Clone());
@@ -180,17 +183,17 @@ namespace GameEngineLibrary.Sprites
         {
             
 
-            if (isAnimating && isTransformed)
+            if (isAnimating && _isTransformed)
                 ultimateAnimations[currentAnimation].Update(gameTime);
             else if(isAnimating)
                 animations[currentAnimation].Update(gameTime);
 
             Vector2 aim = InputHandler.GetAimDirection(Position - camera.Position);
 
-            if (aim.LengthSquared() > 0 && cooldownRemaining <= 0 && 
+            if (aim.LengthSquared() > 0 && _cooldownRemaining <= 0 && 
                 (InputHandler.MouseDown(InputHandler.MouseState.RightButton) || InputHandler.ButtonDown(Buttons.RightTrigger)))
             {
-                cooldownRemaining = cooldownFrames;
+                _cooldownRemaining = _cooldownFrames;
                 float aimAngle = (float)Math.Atan2(aim.Y, aim.X);
                 Quaternion aimQuat = Quaternion.CreateFromYawPitchRoll(0, 0, aimAngle);
 
@@ -206,8 +209,8 @@ namespace GameEngineLibrary.Sprites
                 _bulletSound.Play(.2f, 0, 0);
             }
 
-            if (cooldownRemaining > 0)
-                cooldownRemaining--;
+            if (_cooldownRemaining > 0)
+                _cooldownRemaining--;
 
             UpdatePlayerStatus(gameTime);
 
@@ -215,75 +218,90 @@ namespace GameEngineLibrary.Sprites
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Camera camera)
         {
-            if(isTransformed)
-                spriteBatch.Draw(_ultimate, position - camera.Position, ultimateAnimations[currentAnimation].CurrentFrameRect,  Color.White);
+            if(_isTransformed)
+                spriteBatch.Draw(_ultimate, _position - camera.Position, ultimateAnimations[currentAnimation].CurrentFrameRect,  Color.White);
             else 
-                spriteBatch.Draw(texture, position - camera.Position, animations[currentAnimation].CurrentFrameRect, Color.White);
+                spriteBatch.Draw(texture, _position - camera.Position, animations[currentAnimation].CurrentFrameRect, Color.White);
         }
 
+        /// <summary>
+        /// Updates all player attributes such as ultimate, speed, health, etc.
+        /// </summary>
+        /// <param name="gameTime"></param>
         public void UpdatePlayerStatus(GameTime gameTime)
         {
-            healthTimer--;
-            if (healthTimer <= 0)
+            _healthTimer--;
+            if (_healthTimer <= 0)
             {
-                healthTimer = 1000;
+                _healthTimer = 1000;
                 Health += 1;
             }
 
-            if (isTransformed)
+            if (_isTransformed)
             {
-                elapsedUltimateTime += gameTime.ElapsedGameTime.Milliseconds;
-                if (elapsedUltimateTime >= 10000)
+                _elapsedUltimateTime += gameTime.ElapsedGameTime.Milliseconds;
+                if (_elapsedUltimateTime >= 10000)
                 {
                     MediaPlayer.Resume();
-                    isTransformed = false;
-                    elapsedUltimateTime = 0;
+                    _isTransformed = false;
+                    _elapsedUltimateTime = 0;
                 }
             }
 
-            if (hasSpeedUp)
+            if (_hasSpeedUp)
             {
-                elapsedSpeedTime += gameTime.ElapsedGameTime.Milliseconds;
-                if (elapsedSpeedTime >= 5000)
+                _elapsedSpeedTime += gameTime.ElapsedGameTime.Milliseconds;
+                if (_elapsedSpeedTime >= 5000)
                 {
-                    hasSpeedUp = false;
-                    elapsedSpeedTime = 0;
-                    speed = 3.0f;
+                    _hasSpeedUp = false;
+                    _elapsedSpeedTime = 0;
+                    _speed = 3.0f;
                 }
             }
 
-            if (itemCount >= 3)
+            if (_itemCount >= 3)
             {
-                isTransformed = true;
-                itemCount = 0;
+                _isTransformed = true;
+                _itemCount = 0;
                 MediaPlayer.Pause();
                 _ultimateSound.Play();
                 
             }
         }
 
+        /// <summary>
+        /// Takes damage based on the enemy
+        /// </summary>
+        /// <param name="enemy">the attacking enemy</param>
         public void TakeDamage(EnemySprite enemy)
         {
             Health -= enemy.Damage;
         }
 
+        /// <summary>
+        /// Logic to pick up power up
+        /// </summary>
+        /// <param name="sprite">the power up sprite to pick up</param>
         public void PickupPowerUp(PowerUpSprite sprite)
         {
             _pickupSound.Play();
             if (sprite is UltimatePowerUp)
-                itemCount++;
+                _itemCount++;
             if (sprite is SpeedPowerUp)
             {
-                speed = 6.0f;
-                hasSpeedUp = true;
+                _speed = 6.0f;
+                _hasSpeedUp = true;
             }
                 
         }
 
+        /// <summary>
+        /// Locks the sprite within the screen bounds
+        /// </summary>
         public void LockToMap()
         {
-            position.X = MathHelper.Clamp(position.X, 0, TileMap.WidthInPixels - Width);
-            position.Y = MathHelper.Clamp(position.Y, 0, TileMap.HeightInPixels - Height);
+            _position.X = MathHelper.Clamp(_position.X, 0, TileMap.WidthInPixels - Width);
+            _position.Y = MathHelper.Clamp(_position.Y, 0, TileMap.HeightInPixels - Height);
         }
 
         #endregion

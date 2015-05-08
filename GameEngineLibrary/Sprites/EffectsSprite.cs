@@ -8,6 +8,9 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngineLibrary.Sprites
 {
+    /// <summary>
+    /// Sprite used for special effects
+    /// </summary>
     public class EffectsSprite : Sprite
     {
         private Texture2D Image;

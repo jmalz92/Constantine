@@ -14,6 +14,8 @@ namespace GameEngineLibrary
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.
+    /// Game state logic found at: http://xnagpa.net/xna4rpg.php
+    /// Original Author: Jamie McMahon
     /// </summary>
     public class GameState : Microsoft.Xna.Framework.DrawableGameComponent
     {

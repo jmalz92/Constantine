@@ -8,6 +8,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngineLibrary.TileEngine
 {
+    /// <summary>
+    /// Defines the entire tilemap to be drawn
+    /// Map logic found at: http://xnagpa.net/xna4rpg.php
+    /// Original Author: Jamie McMahon
+    /// </summary>
     public class TileMap
     {
         #region Field/Property Region

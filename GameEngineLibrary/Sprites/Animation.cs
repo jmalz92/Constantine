@@ -10,6 +10,11 @@ namespace GameEngineLibrary.Sprites
 {
     public enum AnimationKey { Down, Left, Right, Up }
 
+    /// <summary>
+    /// Defines animations to use when moving the player
+    /// Animation logic found at: http://xnagpa.net/xna4rpg.php
+    /// Original Author: Jamie McMahon
+    /// </summary>
     public class Animation : ICloneable
     {
         #region Field Region

@@ -8,12 +8,15 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngineLibrary.Sprites
 {
+    /// <summary>
+    /// Projectile sprite
+    /// </summary>
     class BulletSprite : Sprite
     {
-        private static Random rand = new Random();
+        private static Random _rand = new Random();
         private Texture2D Image;
-        private float distance = 0;
-        private const int maxDistance = 400;
+        private float _distance = 0;
+        private const int _maxDistance = 400;
 
         public Vector2 Size
         {
@@ -50,15 +53,14 @@ namespace GameEngineLibrary.Sprites
                 Orientation = (float)Math.Atan2(Velocity.Y, Velocity.X);;
 
             Position += Velocity;
-            distance += Velocity.Length();
+            _distance += Velocity.Length();
 
-            if (distance > maxDistance)
+            if (_distance > _maxDistance)
                 IsExpired = true;
 		}
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Camera camera)
         {
-            //spriteBatch.Draw(texture, position - camera.Position, animations[currentAnimation].CurrentFrameRect, Color.White);
             spriteBatch.Draw(Image, Position - camera.Position, null, color, Orientation, Size / 2f, 1f, 0, 0);
         }
 

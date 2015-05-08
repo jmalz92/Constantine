@@ -8,6 +8,9 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngineLibrary.Sprites
 {
+    /// <summary>
+    /// Defines a speed powerup
+    /// </summary>
     public class SpeedPowerUp : PowerUpSprite
     {
 

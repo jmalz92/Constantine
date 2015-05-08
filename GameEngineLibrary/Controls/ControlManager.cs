@@ -9,6 +9,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameEngineLibrary.Controls
 {
+    /// <summary>
+    /// Class to handle and update all controls
+    /// Control manager logic found at: http://xnagpa.net/xna4rpg.php
+    /// Original Author: Jamie McMahon
+    /// </summary>
     public class ControlManager : List<Control>
     {
         #region Fields and Properties

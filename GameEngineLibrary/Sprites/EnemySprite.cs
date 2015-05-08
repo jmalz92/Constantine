@@ -9,29 +9,32 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace GameEngineLibrary.Sprites
 {
+    /// <summary>
+    /// Sprite used to define an enemy
+    /// </summary>
     public class EnemySprite : Sprite
     {
          // Stuff needed to draw the sprite
         Texture2D textureImage;
         Texture2D _deathImage;
         SoundEffect _deathSound;
-        protected Point frameSize;
-        Point currentFrame;
-        Point sheetSize;
+        protected Point _frameSize;
+        Point _currentFrame;
+        Point _sheetSize;
 
         const int POINT_AWARD = 10;
         int _damage;
         
         // Collision data
-        int collisionOffset;
+        int _collisionOffset;
         
         // Framerate stuff
-        int timeSinceLastFrame = 0;
-        int millisecondsPerFrame;
-        const int defaultMillisecondsPerFrame = 100;
+        int _timeSinceLastFrame = 0;
+        int _millisecondsPerFrame;
+        const int _defaultMillisecondsPerFrame = 100;
 
         // Movement data
-        protected float speed;
+        protected float _speed;
 
         public int Damage { get { return _damage; } }
 
@@ -42,15 +45,20 @@ namespace GameEngineLibrary.Sprites
             this._deathSound = deathSound;
             this._deathImage = deathImage;
             this.Position = position;
-            this.frameSize = frameSize;
-            this.collisionOffset = collisionOffset;
-            this.currentFrame = currentFrame;
-            this.sheetSize = sheetSize;
-            this.speed = speed;
+            this._frameSize = frameSize;
+            this._collisionOffset = collisionOffset;
+            this._currentFrame = currentFrame;
+            this._sheetSize = sheetSize;
+            this._speed = speed;
             this._damage = damage;
-            this.millisecondsPerFrame = defaultMillisecondsPerFrame;
+            this._millisecondsPerFrame = _defaultMillisecondsPerFrame;
         }
 
+        /// <summary>
+        /// Logic for when an enemy is shot
+        /// </summary>
+        /// <param name="player">the player that shot the enemy</param>
+        /// <param name="manager">sprite manager</param>
         public void WasShot(PlayerSprite player, SpriteManager manager)
         {
             manager.Add(new EffectsSprite(_deathImage, Position, 6000));
@@ -60,6 +68,9 @@ namespace GameEngineLibrary.Sprites
             
         }
 
+        /// <summary>
+        /// Returns a new enemy sprite
+        /// </summary>
         public static EnemySprite CreateEnemy(Texture2D textureImage, Texture2D deathImage, SoundEffect deathSound, Vector2 position, Point frameSize,
             int collisionOffset, Point currentFrame, Point sheetSize, float speed, int damage)
         {
@@ -73,28 +84,28 @@ namespace GameEngineLibrary.Sprites
 
             //TODO: Change to animation class implementation
             // Update frame if time to do so based on framerate
-            timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
-            if (timeSinceLastFrame > millisecondsPerFrame)
+            _timeSinceLastFrame += gameTime.ElapsedGameTime.Milliseconds;
+            if (_timeSinceLastFrame > _millisecondsPerFrame)
             {
                 // Increment to next frame
-                timeSinceLastFrame = 0;
-                ++currentFrame.X;
-                if (currentFrame.X >= sheetSize.X)
-                    currentFrame.X = 0;
+                _timeSinceLastFrame = 0;
+                ++_currentFrame.X;
+                if (_currentFrame.X >= _sheetSize.X)
+                    _currentFrame.X = 0;
 
                 //move up
                 if (movement.Y > .5)
-                    currentFrame.Y = 0;
+                    _currentFrame.Y = 0;
 
                 //move down
                 else if (movement.Y < -.5)
-                    currentFrame.Y = 3;
+                    _currentFrame.Y = 3;
                 //move left
                 else if (movement.X <= 0)
-                    currentFrame.Y = 1;
+                    _currentFrame.Y = 1;
 
                 else
-                    currentFrame.Y = 2;
+                    _currentFrame.Y = 2;
                
             }
         }
@@ -108,13 +119,18 @@ namespace GameEngineLibrary.Sprites
             // Draw the sprite
             spriteBatch.Draw(textureImage,
                 destination,
-                new Rectangle(currentFrame.X * frameSize.X,
-                    currentFrame.Y * frameSize.Y,
-                    frameSize.X, frameSize.Y),
+                new Rectangle(_currentFrame.X * _frameSize.X,
+                    _currentFrame.Y * _frameSize.Y,
+                    _frameSize.X, _frameSize.Y),
                 Color.White, 0, Vector2.Zero,
                 1f, SpriteEffects.None, 0);
         }
 
+        /// <summary>
+        /// Enemy Sprite movement logic
+        /// </summary>
+        /// <param name="playerPos"></param>
+        /// <returns></returns>
         protected Vector2 MoveSprite(Vector2 playerPos)
         {
             Vector2 movement = new Vector2();
@@ -123,7 +139,7 @@ namespace GameEngineLibrary.Sprites
             movement.Y = playerPos.Y - Position.Y;
 
             movement.Normalize();
-            Position += movement * speed;
+            Position += movement * _speed;
 
             return movement;
         } 
@@ -134,10 +150,10 @@ namespace GameEngineLibrary.Sprites
             get
             {
                 return new Rectangle(
-                    (int)Position.X + collisionOffset,
-                    (int)Position.Y + collisionOffset,
-                    frameSize.X - (collisionOffset * 2),
-                    frameSize.Y - (collisionOffset * 2));
+                    (int)Position.X + _collisionOffset,
+                    (int)Position.Y + _collisionOffset,
+                    _frameSize.X - (_collisionOffset * 2),
+                    _frameSize.Y - (_collisionOffset * 2));
             }
         }
     }

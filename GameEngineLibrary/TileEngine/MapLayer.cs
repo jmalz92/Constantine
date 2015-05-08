@@ -5,6 +5,11 @@ using System.Text;
 
 namespace GameEngineLibrary.TileEngine
 {
+    /// <summary>
+    /// A single layer on the tilemap
+    /// Map Layer logic found at: http://xnagpa.net/xna4rpg.php
+    /// Original Author: Jamie McMahon
+    /// </summary>
     public class MapLayer
     {
         #region Field Region

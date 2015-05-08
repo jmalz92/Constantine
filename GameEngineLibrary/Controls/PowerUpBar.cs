@@ -8,33 +8,36 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameEngineLibrary.Controls
 {
+    /// <summary>
+    /// Power up bar control
+    /// </summary>
     public class PowerUpBar : Control
     {
 
         #region Fields and Properties
-        Texture2D powerUpTexture;
-        Texture2D borderTexture;
-        Label label;
-        float currentPower = 0;
-        float maxPower = 100;
-        float powerStep = (100.0f / 3.0f);
-        bool powerUpComplete = false;
-        int elapsedGameTime = 0;
+        Texture2D _powerUpTexture;
+        Texture2D _borderTexture;
+        Label _label;
+        float _currentPower = 0;
+        float _maxPower = 100;
+        float _powerStep = (100.0f / 3.0f);
+        bool _powerUpComplete = false;
+        int _elapsedGameTime = 0;
         
 
         public Texture2D PowerUpTexture
         {
-            get { return powerUpTexture; }
-            set { powerUpTexture = value; }
+            get { return _powerUpTexture; }
+            set { _powerUpTexture = value; }
         }
         public Texture2D BorderTexture
         {
-            get { return borderTexture; }
-            set { borderTexture = value; }
+            get { return _borderTexture; }
+            set { _borderTexture = value; }
         }
         public bool IsPowerUpComplete
         {
-            get { return powerUpComplete; }
+            get { return _powerUpComplete; }
         }
         #endregion
 
@@ -44,49 +47,59 @@ namespace GameEngineLibrary.Controls
             position.X = positionX;
             position.Y = positionY;
             tabStop = false;
-            label = new Label();
-            label.Text = "Power";
-            label.Color = Color.White;
-            label.Position = new Vector2(this.position.X + 70, this.Position.Y);
+            _label = new Label();
+            _label.Text = "Power";
+            _label.Color = Color.White;
+            _label.Position = new Vector2(this.position.X + 70, this.Position.Y);
             
         }
         #endregion
 
         #region Methods
+
+        /// <summary>
+        /// Increases the power up bar based on number of ultimate items held
+        /// </summary>
+        /// <param name="ItemCount"></param>
         public void IncreasePowerUpBar(int ItemCount)
         {
-            if (!powerUpComplete)
+            if (!_powerUpComplete)
             {
-                currentPower = ItemCount * powerStep;
-                if (currentPower >= 100)
+                _currentPower = ItemCount * _powerStep;
+                if (_currentPower >= 100)
                 {
-                    powerUpComplete = true;
+                    _powerUpComplete = true;
                 }
             }
         }
+
+        /// <summary>
+        /// Slowly decreases the powerup bar over time when full
+        /// </summary>
         public void DecreasePowerUpBar()
         {
-            if (powerUpComplete)
+            if (_powerUpComplete)
             {
-                currentPower--;
-                if (currentPower <= 0)
+                _currentPower--;
+                if (_currentPower <= 0)
                 {
-                    powerUpComplete = false;
+                    _powerUpComplete = false;
                 }
             }
         }
         public override void Update(GameTime gameTime)
         {
-            elapsedGameTime += gameTime.ElapsedGameTime.Milliseconds;
-            if (elapsedGameTime >= 100)
+            _elapsedGameTime += gameTime.ElapsedGameTime.Milliseconds;
+            if (_elapsedGameTime >= 100)
             {
-                elapsedGameTime = 0;
-                if (powerUpComplete)
+                _elapsedGameTime = 0;
+                if (_powerUpComplete)
                 {
                     DecreasePowerUpBar();
                 }
             }
         }
+
         public override void HandleInput()
         {
         }
@@ -94,14 +107,14 @@ namespace GameEngineLibrary.Controls
         public override void Draw(SpriteBatch spriteBatch)
         {
             
-            spriteBatch.Draw(borderTexture, position, Color.White);
+            spriteBatch.Draw(_borderTexture, position, Color.White);
             int innerX = (((int)position.X + 210) / 2) - (200 / 2);
             int innerY = (((int)position.Y + 30) / 2) - (30 / 2);
-            Rectangle srect = new Rectangle((int)position.X + 5, (int)position.Y + 5, (int)((currentPower / maxPower) * 200), 30);
+            Rectangle srect = new Rectangle((int)position.X + 5, (int)position.Y + 5, (int)((_currentPower / _maxPower) * 200), 30);
             Rectangle drect = new Rectangle((int)position.X + 5, (int)position.Y + 5, 200, 30);
-            spriteBatch.Draw(powerUpTexture, srect, drect, Color.White);
+            spriteBatch.Draw(_powerUpTexture, srect, drect, Color.White);
 
-            label.Draw(spriteBatch);
+            _label.Draw(spriteBatch);
         }
         #endregion
 

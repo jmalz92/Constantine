@@ -14,6 +14,9 @@ namespace GameEngineLibrary
 {
     /// <summary>
     /// This is a game component that implements IUpdateable.
+    /// Input Handler logic found at: http://xnagpa.net/xna4rpg.php
+    /// Original Author: Jamie McMahon
+    /// Edited to included computer mouse states and game controller aim directions
     /// </summary>
     public class InputHandler : Microsoft.Xna.Framework.GameComponent
     {

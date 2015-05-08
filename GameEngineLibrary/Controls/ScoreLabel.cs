@@ -7,18 +7,21 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngineLibrary.Controls
 {
+    /// <summary>
+    /// Score label control
+    /// </summary>
     public class ScoreLabel : Label
     {
-        private int score;
+        private int _score;
         public int Score
         {
-            get { return score; }
+            get { return _score; }
         }
 
         #region Constructors
         public ScoreLabel()
         {
-            score = 0;
+            _score = 0;
             this.Text = "Score: 0";
         }
 
@@ -36,10 +39,14 @@ namespace GameEngineLibrary.Controls
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Add points to the score label
+        /// </summary>
+        /// <param name="points">the points to add</param>
         public void UpdateScore(int points)
         {
-            this.score += points;
-            this.Text = "Score: " + score;
+            this._score += points;
+            this.Text = "Score: " + _score;
         }
         #endregion
 

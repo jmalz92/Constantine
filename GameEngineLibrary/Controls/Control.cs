@@ -9,6 +9,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameEngineLibrary.Controls
 {
+    /// <summary>
+    /// Control base class
+    /// Control logic found at: http://xnagpa.net/xna4rpg.php
+    /// Original Author: Jamie McMahon
+    /// </summary>
     public abstract class Control
     {
         #region Field Region

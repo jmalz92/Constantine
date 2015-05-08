@@ -8,59 +8,66 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameEngineLibrary.Controls
 {
+    /// <summary>
+    /// Health bar control
+    /// </summary>
     public class HealthBar : Control
     {
         #region Fields and Properties
-        int width;
-        int height;
-        Texture2D healthTexture;
-        Texture2D borderTexture;
-        Label label;
-        int maxHealth;
-        int playerHealth;
+        int _width;
+        int _height;
+        Texture2D _healthTexture;
+        Texture2D _borderTexture;
+        Label _label;
+        int _maxHealth;
+        int _playerHealth;
 
         public int ChangeUpperHealth
         {
-            set { maxHealth = value; }
+            set { _maxHealth = value; }
         }
 
         public Texture2D HealthTexture
         {
-            get { return healthTexture; }
-            set { healthTexture = value; }
+            get { return _healthTexture; }
+            set { _healthTexture = value; }
         }
         public Texture2D BorderTexture
         {
-            get { return borderTexture; }
-            set { borderTexture = value; }
+            get { return _borderTexture; }
+            set { _borderTexture = value; }
         }
 
         public bool IsEmpty
         {
-            get { return playerHealth <= 0; }
+            get { return _playerHealth <= 0; }
         }
         #endregion
 
         #region Constructor Region
         public HealthBar(int initialHealth, int posX, int posY)
         {
-            maxHealth = initialHealth;
+            _maxHealth = initialHealth;
             position.X = posX;
             position.Y = posY;
             tabStop = false;
 
-            label = new Label();
-            label.Text = "Health";
-            label.Color = Color.White;
-            label.Position = new Vector2(this.position.X + 60, this.Position.Y);
+            _label = new Label();
+            _label.Text = "Health";
+            _label.Color = Color.White;
+            _label.Position = new Vector2(this.position.X + 60, this.Position.Y);
         }
         #endregion
 
         #region Method Region
         
-        public void UpdatePlayerHealth(int pHealth)
+        /// <summary>
+        /// Updates the players health
+        /// </summary>
+        /// <param name="health">the new health value</param>
+        public void UpdatePlayerHealth(int health)
         {
-            playerHealth = pHealth;
+            _playerHealth = health;
         }
         
         public override void Update(GameTime gameTime)
@@ -73,15 +80,15 @@ namespace GameEngineLibrary.Controls
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(borderTexture, position, Color.White);
+            spriteBatch.Draw(_borderTexture, position, Color.White);
 
             int innerX = (((int)position.X + 210) / 2) - (200 / 2);
             int innerY = (((int)position.Y + 30) / 2) - (30 / 2);
-            Rectangle srect = new Rectangle((int)position.X + 5, (int)position.Y + 5, (int)(((double)playerHealth / maxHealth) * 200), 30);
+            Rectangle srect = new Rectangle((int)position.X + 5, (int)position.Y + 5, (int)(((double)_playerHealth / _maxHealth) * 200), 30);
             Rectangle drect = new Rectangle((int)position.X + 5, (int)position.Y + 5, 200, 30);
-            spriteBatch.Draw(healthTexture, srect, drect, Color.White);
+            spriteBatch.Draw(_healthTexture, srect, drect, Color.White);
 
-            label.Draw(spriteBatch);
+            _label.Draw(spriteBatch);
         }        
         #endregion
     }

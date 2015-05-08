@@ -8,6 +8,9 @@ using Microsoft.Xna.Framework;
 
 namespace GameEngineLibrary.Sprites
 {
+    /// <summary>
+    /// Defines an ultimate powerup
+    /// </summary>
     public class UltimatePowerUp : PowerUpSprite
     {
 

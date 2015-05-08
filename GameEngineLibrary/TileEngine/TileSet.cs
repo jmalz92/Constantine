@@ -8,6 +8,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GameEngineLibrary.TileEngine
 {
+    /// <summary>
+    /// Defines an entire tileset to be used to draw the tile map
+    /// Tileset logic found at: http://xnagpa.net/xna4rpg.php
+    /// Original Author: Jamie McMahon
+    /// </summary>
     public class TileSet
     {
         #region Fields and Properties

@@ -5,6 +5,11 @@ using System.Text;
 
 namespace GameEngineLibrary.TileEngine
 {
+    /// <summary>
+    /// Defines a single tile on the tile map
+    /// Tile logic found at: http://xnagpa.net/xna4rpg.php
+    /// Original Author: Jamie McMahon
+    /// </summary>
     public class Tile
     {
         #region Field Region

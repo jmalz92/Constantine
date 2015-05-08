@@ -9,6 +9,11 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameEngineLibrary.Controls
 {
+    /// <summary>
+    /// Selectable label control
+    /// Link Label logic found at: http://xnagpa.net/xna4rpg.php
+    /// Original Author: Jamie McMahon
+    /// </summary>
     public class LinkLabel : Control
     {
         #region Fields and Properties
