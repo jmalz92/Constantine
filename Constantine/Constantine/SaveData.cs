@@ -54,6 +54,9 @@ namespace Constantine
                 XmlSerializer serializer = new XmlSerializer(typeof(SaveData));
                 serializer.Serialize(stream, data);
             }
+            catch (Exception ex) 
+            { 
+            }
             finally
             {
                 // Close the file

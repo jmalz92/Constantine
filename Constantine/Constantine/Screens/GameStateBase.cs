@@ -23,6 +23,17 @@ namespace Constantine.Screens
             GameRef = (Game1)game;
         }
 
+        protected virtual void OnStateDisplayed(EventArgs e)
+        {
+            EventHandler handler = StateDisplayed;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
+
+        public event EventHandler StateDisplayed;
+
         protected override void LoadContent()
         {
             ContentManager Content = Game.Content;

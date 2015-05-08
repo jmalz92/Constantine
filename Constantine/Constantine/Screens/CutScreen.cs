@@ -12,12 +12,12 @@ using GameEngineLibrary;
 
 namespace Constantine.Screens
 {
+    //Game state to display a cut scene video
     public class CutScreen : GameStateBase
     {
-
-        VideoPlayer player;
-        Texture2D videoTexture;
-        bool videoLoaded = false;
+        VideoPlayer _player;
+        Texture2D _videoTexture;
+        bool _videoLoaded = false;
 
         public CutScreen(Game game, GameStateHandler handler)
             : base(game, handler)
@@ -30,9 +30,9 @@ namespace Constantine.Screens
             if (GameRef.SaveData.CinematicViewed)
                 _stateHandler.PushState(GameRef._gameScreen);
 
-            player = new VideoPlayer();
-            player.IsLooped = false;
-            player.Volume = .5f;
+            _player = new VideoPlayer();
+            _player.IsLooped = false;
+            _player.Volume = .5f;
             base.Initialize();
 
         }
@@ -45,18 +45,18 @@ namespace Constantine.Screens
         {
             base.Update(gameTime);
 
-            if (Assets.Intro != null && !videoLoaded)
+            if (Assets.Intro != null && !_videoLoaded)
             {
-                videoLoaded = true;
-                player.Play(Assets.Intro);
+                _videoLoaded = true;
+                _player.Play(Assets.Intro);
                 GameRef.SaveData.CinematicViewed = true;
             }
 
-            if (videoLoaded)
+            if (_videoLoaded)
             {
-                if (player.State == MediaState.Stopped)
+                if (_player.State == MediaState.Stopped)
                 {
-                    player.Dispose();
+                    _player.Dispose();
                     _stateHandler.PushState(GameRef._gameScreen);
                 }
             }
@@ -65,8 +65,8 @@ namespace Constantine.Screens
         public override void Draw(GameTime gameTime)
         {
             // Only call GetTexture if a video is playing or paused
-            if (player.State != MediaState.Stopped)
-                videoTexture = player.GetTexture();
+            if (_player.State != MediaState.Stopped)
+                _videoTexture = _player.GetTexture();
 
             // Drawing to the rectangle will stretch the 
             // video to fill the screen
@@ -76,10 +76,10 @@ namespace Constantine.Screens
                 GraphicsDevice.Viewport.Height);
 
             // Draw the video, if we have a texture to draw.
-            if (videoTexture != null)
+            if (_videoTexture != null)
             {
                 GameRef.SpriteBatch.Begin();
-                GameRef.SpriteBatch.Draw(videoTexture, screen, Color.White);
+                GameRef.SpriteBatch.Draw(_videoTexture, screen, Color.White);
                 GameRef.SpriteBatch.End();
             }
             base.Draw(gameTime);

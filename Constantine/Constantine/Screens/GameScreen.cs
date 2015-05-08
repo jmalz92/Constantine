@@ -42,7 +42,20 @@ namespace Constantine.Screens
         public override void Initialize()
         {
             MediaPlayer.Stop();
-            MediaPlayer.Play(Audio.HardTrack); 
+
+            switch (CurrentDifficulty)
+            {
+                case Difficulty.Easy:
+                    MediaPlayer.Play(Audio.EasyTrack); 
+                    break;
+                case Difficulty.Normal:
+                    MediaPlayer.Play(Audio.NormalTrack); 
+                    break;
+                case Difficulty.Hard:
+                    MediaPlayer.Play(Audio.HardTrack); 
+                    break;
+            }
+            
             base.Initialize();
         }
 
@@ -69,7 +82,7 @@ namespace Constantine.Screens
             ultimateAnimation = new Animation(4, 80, 64, 0, 192);
             ultimateAnimations.Add(AnimationKey.Up, ultimateAnimation);
 
-            _sprite = new PlayerSprite(Assets.Player, Assets.Ultimate, Assets.Bullet, Audio.Bullet, Audio.Pickup, animations, ultimateAnimations);
+            _sprite = new PlayerSprite(Assets.Player, Assets.Ultimate, Assets.Bullet, Audio.Ultimate, Audio.Bullet, Audio.Pickup, animations, ultimateAnimations);
             _sprite.Position = new Vector2(250, 250);
 
             _spriteManager = new SpriteManager();
@@ -110,7 +123,7 @@ namespace Constantine.Screens
 
                 MapLayer splatter = new MapLayer(40, 40);
                 Random random = new Random();
-                for (int i = 0; i < 80; i++)
+                for (int i = 0; i < 60; i++)
                 {
                     int x = random.Next(0, 40);
                     int y = random.Next(0, 40);
@@ -123,7 +136,7 @@ namespace Constantine.Screens
             else if (CurrentDifficulty == Difficulty.Normal)
             {
                 Texture2D tilesetTexture = Game.Content.Load<Texture2D>(@"Tiles\cavetiles");
-                _tileSet = new TileSet(tilesetTexture, 5, 5, 32, 32);
+                _tileSet = new TileSet(tilesetTexture, 4, 1, 32, 32);
 
                 MapLayer layer = new MapLayer(40, 40);
 
@@ -137,11 +150,23 @@ namespace Constantine.Screens
                 }
 
                 _map = new TileMap(_tileSet, layer);
+
+                MapLayer splatter = new MapLayer(40, 40);
+                Random random = new Random();
+                for (int i = 0; i < 100; i++)
+                {
+                    int x = random.Next(0, 40);
+                    int y = random.Next(0, 40);
+                    int index = random.Next(1, 4);
+                    Tile tile = new Tile(index, 0);
+                    splatter.SetTile(x, y, tile);
+                }
+                _map.AddLayer(splatter);
             }
             else
             {
                 Texture2D tilesetTexture = Game.Content.Load<Texture2D>(@"Tiles\scorchedtiles");
-                _tileSet = new TileSet(tilesetTexture, 1, 1, 32, 32);
+                _tileSet = new TileSet(tilesetTexture, 3, 1, 32, 32);
 
                 MapLayer layer = new MapLayer(40, 40);
 
@@ -155,6 +180,18 @@ namespace Constantine.Screens
                 }
 
                 _map = new TileMap(_tileSet, layer);
+
+                MapLayer splatter = new MapLayer(40, 40);
+                Random random = new Random();
+                for (int i = 0; i < 60; i++)
+                {
+                    int x = random.Next(0, 40);
+                    int y = random.Next(0, 40);
+                    int index = random.Next(1, 3);
+                    Tile tile = new Tile(index, 0);
+                    splatter.SetTile(x, y, tile);
+                }
+                _map.AddLayer(splatter);
             }
         }
 
@@ -263,16 +300,20 @@ namespace Constantine.Screens
                 switch (CurrentDifficulty)
                 {
                     case Difficulty.Easy:
-                        GameRef.SaveData.EasyScore = _scoreLabel.Score;
+                        if (_scoreLabel.Score > GameRef.SaveData.EasyScore)
+                            GameRef.SaveData.EasyScore = _scoreLabel.Score;
                         break;
                     case Difficulty.Normal:
-                        GameRef.SaveData.NormalScore = _scoreLabel.Score;
+                        if (_scoreLabel.Score > GameRef.SaveData.NormalScore)
+                            GameRef.SaveData.NormalScore = _scoreLabel.Score;
                         break;
                     case Difficulty.Hard:
-                        GameRef.SaveData.HardScore = _scoreLabel.Score;
+                        if (_scoreLabel.Score > GameRef.SaveData.HardScore)
+                            GameRef.SaveData.HardScore = _scoreLabel.Score;
                         break;
                 }
                 MediaPlayer.Stop();
+                GameRef._gameOverScreen.Score = _scoreLabel.Score;
                 GameRef._stateHandler.PushState(GameRef._gameOverScreen);
             }
         }

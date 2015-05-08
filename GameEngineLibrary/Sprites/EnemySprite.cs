@@ -53,7 +53,7 @@ namespace GameEngineLibrary.Sprites
 
         public void WasShot(PlayerSprite player, SpriteManager manager)
         {
-            manager.Add(new EffectsSprite(_deathImage, Position, 10000));
+            manager.Add(new EffectsSprite(_deathImage, Position, 6000));
             IsExpired = true;
             _deathSound.Play();
             player.AccumulatedPoints += POINT_AWARD;

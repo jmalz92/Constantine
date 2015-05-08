@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 using GameEngineLibrary.TileEngine;
 
@@ -27,6 +28,7 @@ namespace GameEngineLibrary.Sprites
         Texture2D _ultimate;
         SoundEffect _bulletSound;
         SoundEffect _pickupSound;
+        SoundEffect _ultimateSound;
         Vector2 position;
         Vector2 velocity;
         float speed = 3.0f;
@@ -149,11 +151,13 @@ namespace GameEngineLibrary.Sprites
 
         #region Constructor Region
 
-        public PlayerSprite(Texture2D sprite, Texture2D ultimate, Texture2D bullet, SoundEffect bulletSound, SoundEffect pickupSound, Dictionary<AnimationKey, Animation> animation, Dictionary<AnimationKey, Animation> ultimateAnimation)
+        public PlayerSprite(Texture2D sprite, Texture2D ultimate, Texture2D bullet, SoundEffect ultimateSound, SoundEffect bulletSound, SoundEffect pickupSound, 
+            Dictionary<AnimationKey, Animation> animation, Dictionary<AnimationKey, Animation> ultimateAnimation)
         {
             texture = sprite;
             _bullet = bullet;
             _ultimate = ultimate;
+            _ultimateSound = ultimateSound;
             _bulletSound = bulletSound;
             _pickupSound = pickupSound;
             animations = new Dictionary<AnimationKey, Animation>();
@@ -231,9 +235,9 @@ namespace GameEngineLibrary.Sprites
                 elapsedUltimateTime += gameTime.ElapsedGameTime.Milliseconds;
                 if (elapsedUltimateTime >= 10000)
                 {
+                    MediaPlayer.Resume();
                     isTransformed = false;
                     elapsedUltimateTime = 0;
-                    itemCount = 0;
                 }
             }
 
@@ -249,7 +253,13 @@ namespace GameEngineLibrary.Sprites
             }
 
             if (itemCount >= 3)
+            {
                 isTransformed = true;
+                itemCount = 0;
+                MediaPlayer.Pause();
+                _ultimateSound.Play();
+                
+            }
         }
 
         public void TakeDamage(EnemySprite enemy)
