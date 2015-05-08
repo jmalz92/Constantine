@@ -10,12 +10,16 @@ using GameEngineLibrary;
 
 namespace Constantine.Screens
 {
+
+    /// <summary>
+    /// Game state to display a splash screen video before the game begins
+    /// </summary>
     public class SplashScreen : GameStateBase
     {
 
-        VideoPlayer player;
-        Texture2D videoTexture;
-        bool videoLoaded = false;
+        VideoPlayer _player;
+        Texture2D _videoTexture;
+        bool _videoLoaded = false;
 
         public SplashScreen(Game game, GameStateHandler handler)
             : base(game, handler)
@@ -24,9 +28,9 @@ namespace Constantine.Screens
 
         public override void Initialize()
         {
-            player = new VideoPlayer();
-            player.IsLooped = false;
-            player.Volume = .5f;
+            _player = new VideoPlayer();
+            _player.IsLooped = false;
+            _player.Volume = .5f;
             base.Initialize();
         }
 
@@ -39,17 +43,17 @@ namespace Constantine.Screens
         {
             base.Update(gameTime);
 
-            if (Assets.Splash != null && !videoLoaded)
+            if (Assets.Splash != null && !_videoLoaded)
             {
-                videoLoaded = true;
-                player.Play(Assets.Splash);
+                _videoLoaded = true;
+                _player.Play(Assets.Splash);
             }
 
-            if (videoLoaded)
+            if (_videoLoaded)
             {
-                if (player.State == MediaState.Stopped)
+                if (_player.State == MediaState.Stopped)
                 {
-                    player.Dispose();
+                    _player.Dispose();
                     _stateHandler.PushState(GameRef._menuScreen);
 
                 }
@@ -62,8 +66,8 @@ namespace Constantine.Screens
         public override void Draw(GameTime gameTime)
         {
             // Only call GetTexture if a video is playing or paused
-            if (player.State != MediaState.Stopped)
-                videoTexture = player.GetTexture();
+            if (_player.State != MediaState.Stopped)
+                _videoTexture = _player.GetTexture();
 
             // Drawing to the rectangle will stretch the 
             // video to fill the screen
@@ -73,10 +77,10 @@ namespace Constantine.Screens
                 GraphicsDevice.Viewport.Height);
 
             // Draw the video, if we have a texture to draw.
-            if (videoTexture != null)
+            if (_videoTexture != null)
             {
                 GameRef.SpriteBatch.Begin();
-                GameRef.SpriteBatch.Draw(videoTexture, screen, Color.White);
+                GameRef.SpriteBatch.Draw(_videoTexture, screen, Color.White);
                 GameRef.SpriteBatch.End();
             }
             base.Draw(gameTime);

@@ -23,7 +23,7 @@ namespace Constantine
         const int SCREEN_WIDTH = 1024;
         const int SCREEN_HEIGHT = 768;
 
-        GraphicsDeviceManager graphics;
+        GraphicsDeviceManager _graphics;
         public SpriteBatch SpriteBatch;
 
         public SplashScreen _splashScreen;
@@ -44,9 +44,9 @@ namespace Constantine
         {
             SaveData = SaveData.Load("SaveData.xml");
 
-            graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
-            graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
+            _graphics = new GraphicsDeviceManager(this);
+            _graphics.PreferredBackBufferHeight = SCREEN_HEIGHT;
+            _graphics.PreferredBackBufferWidth = SCREEN_WIDTH;
 
             ScreenBounds = new Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
             Content.RootDirectory = "Content";
@@ -130,6 +130,12 @@ namespace Constantine
             base.Draw(gameTime);
         }
 
+
+        /// <summary>
+        /// Handles the exit event, makes sure to serialize save data for future retrieval
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="args"></param>
         protected override void OnExiting(object sender, EventArgs args)
         {
             SaveData.Save(SaveData, "SaveData.xml");

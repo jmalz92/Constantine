@@ -12,76 +12,75 @@ using GameEngineLibrary.Sprites;
 
 namespace Constantine
 {
+    /// <summary>
+    /// Factor class to spawn enemies on to the map
+    /// </summary>
     static class EnemyFactory
     {
-        static Random rng = new Random();
-        static float inverseSpawnChance = 90;
-        static int elapsedMilliseconds = 0;
-        static bool spawnSideFlag = false;
+        static Random _rng = new Random();
+        static int _elapsedMilliseconds = 0;
+        static bool _spawnSideFlag = false;
 
         public static void Update(GameTime gameTime, Difficulty difficulty, SpriteManager manager)
         {
-            elapsedMilliseconds += gameTime.ElapsedGameTime.Milliseconds;
+            _elapsedMilliseconds += gameTime.ElapsedGameTime.Milliseconds;
 
-            if (elapsedMilliseconds >= 1000)
+            if (_elapsedMilliseconds >= 1000)
             {
                 SpawnEnemies(difficulty, manager);
                 
-                elapsedMilliseconds = 0;
+                _elapsedMilliseconds = 0;
             }
-            // slowly increase the spawn rate as time progresses
-            //if (inverseSpawnChance > 30)
-            //    inverseSpawnChance -= 0.005f;
+           
         }
 
-
-        public static void Reset()
-        {
-            inverseSpawnChance = 90;
-        }
-
-        //TODO: too many switch cases
+        //TODO: too many switch cases, refactor
+        /// <summary>
+        /// Spawns enemies based on difficulty
+        /// </summary>
+        /// <param name="difficulty"></param>
+        /// <param name="manager"></param>
         private static void SpawnEnemies(Difficulty difficulty, SpriteManager manager)
         {
-            if (spawnSideFlag)
+            if (_spawnSideFlag) //spawn enemies from sides
             {
                 switch (difficulty)
                 {
                     case Difficulty.Easy:
-                        manager.Add(EnemySprite.CreateEnemy(Assets.TreeMutant, Assets.Log, Audio.Splat, new Vector2(0, rng.Next(1280)), new Point(50, 50), 10, new Point(0, 0), new Point(4, 4), 2.0f, 5));
-                        manager.Add(EnemySprite.CreateEnemy(Assets.Rabbit, Assets.Blood, Audio.Splat, new Vector2(1280, rng.Next(1280)), new Point(32, 32), 10, new Point(0, 0), new Point(3, 4), 2.0f, 5));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.TreeMutant, Assets.Log, Audio.Splat, new Vector2(0, _rng.Next(1280)), new Point(50, 50), 10, new Point(0, 0), new Point(4, 4), 2.0f, 5));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.Rabbit, Assets.Blood, Audio.Splat, new Vector2(1280, _rng.Next(1280)), new Point(32, 32), 10, new Point(0, 0), new Point(3, 4), 2.0f, 5));
                         break;
                     case Difficulty.Normal:
-                        manager.Add(EnemySprite.CreateEnemy(Assets.Zombie, Assets.Blood, Audio.Splat, new Vector2(0, rng.Next(1280)), new Point(32, 64), 10, new Point(0, 0),new Point(3, 4), 2.5f, 10));
-                        manager.Add(EnemySprite.CreateEnemy(Assets.Skeleton, Assets.Bone, Audio.Splat, new Vector2(1280, rng.Next(1280)), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 2.5f, 10));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.Zombie, Assets.Blood, Audio.Splat, new Vector2(0, _rng.Next(1280)), new Point(32, 64), 10, new Point(0, 0),new Point(3, 4), 2.5f, 10));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.Skeleton, Assets.Bone, Audio.Splat, new Vector2(1280, _rng.Next(1280)), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 2.5f, 10));
                         break;
                     case Difficulty.Hard:
-                        manager.Add(EnemySprite.CreateEnemy(Assets.Devil, Assets.DemonBlood, Audio.Splat, new Vector2(0, rng.Next(1280)), new Point(96, 48), 10, new Point(0, 0), new Point(3, 4), 3.0f, 25));
-                        manager.Add(EnemySprite.CreateEnemy(Assets.LavaMonster, Assets.DemonBlood, Audio.Splat, new Vector2(1280, rng.Next(1280)), new Point(96, 48), 10, new Point(0, 0), new Point(3, 4), 3.0f, 25));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.Devil, Assets.DemonBlood, Audio.Splat, new Vector2(0, _rng.Next(1280)), new Point(96, 48), 10, new Point(0, 0), new Point(3, 4), 3.0f, 25));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.LavaMonster, Assets.DemonBlood, Audio.Splat, new Vector2(1280, _rng.Next(1280)), new Point(96, 48), 10, new Point(0, 0), new Point(3, 4), 3.0f, 25));
                         break;
                 }
             }
-            else
+            else //spawn enemies from top/bottom
             {
 
                 switch (difficulty)
                 {
                     case Difficulty.Easy:
-                        manager.Add(EnemySprite.CreateEnemy(Assets.TreeMutant, Assets.Log, Audio.Splat, new Vector2(rng.Next(1280), 0), new Point(50, 50), 10, new Point(0, 0), new Point(4, 4), 2.0f, 5));
-                        manager.Add(EnemySprite.CreateEnemy(Assets.Rabbit, Assets.Blood, Audio.Splat, new Vector2(rng.Next(1280), 1280), new Point(32, 32), 10, new Point(0, 0), new Point(3, 4), 2.0f, 5));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.TreeMutant, Assets.Log, Audio.Splat, new Vector2(_rng.Next(1280), 0), new Point(50, 50), 10, new Point(0, 0), new Point(4, 4), 2.0f, 5));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.Rabbit, Assets.Blood, Audio.Splat, new Vector2(_rng.Next(1280), 1280), new Point(32, 32), 10, new Point(0, 0), new Point(3, 4), 2.0f, 5));
                         break;
                     case Difficulty.Normal:
-                        manager.Add(EnemySprite.CreateEnemy(Assets.Zombie, Assets.Blood, Audio.Splat, new Vector2(rng.Next(1280), 0), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 2.0f, 10));
-                        manager.Add(EnemySprite.CreateEnemy(Assets.Skeleton, Assets.Bone, Audio.Splat, new Vector2(rng.Next(1280), 1280), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 2.0f, 10));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.Zombie, Assets.Blood, Audio.Splat, new Vector2(_rng.Next(1280), 0), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 2.0f, 10));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.Skeleton, Assets.Bone, Audio.Splat, new Vector2(_rng.Next(1280), 1280), new Point(32, 64), 10, new Point(0, 0), new Point(3, 4), 2.0f, 10));
                         break;
                     case Difficulty.Hard:
-                        manager.Add(EnemySprite.CreateEnemy(Assets.Devil, Assets.DemonBlood, Audio.Splat, new Vector2(rng.Next(1280), 0), new Point(96, 48), 10, new Point(0, 0), new Point(3, 4), 2.0f, 25));
-                        manager.Add(EnemySprite.CreateEnemy(Assets.LavaMonster, Assets.DemonBlood, Audio.Splat, new Vector2(rng.Next(1280), 1280), new Point(96, 48), 10, new Point(0, 0), new Point(3, 4), 2.0f, 25));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.Devil, Assets.DemonBlood, Audio.Splat, new Vector2(_rng.Next(1280), 0), new Point(96, 48), 10, new Point(0, 0), new Point(3, 4), 2.0f, 25));
+                        manager.Add(EnemySprite.CreateEnemy(Assets.LavaMonster, Assets.DemonBlood, Audio.Splat, new Vector2(_rng.Next(1280), 1280), new Point(96, 48), 10, new Point(0, 0), new Point(3, 4), 2.0f, 25));
                         break;
                 }
             }
 
-            spawnSideFlag = !spawnSideFlag;
+            _spawnSideFlag = !_spawnSideFlag;
             
         }
     }

@@ -11,32 +11,35 @@ using GameEngineLibrary;
 
 namespace Constantine
 {
-    public class Player
+    /// <summary>
+    /// Holds and updates the player locked camera
+    /// </summary>
+    public class PlayerCamera
     {
 
-        Camera camera;
+        Camera _camera;
         Game1 gameRef;
         int elapsedTimed = 0;
        
 
         public Camera Camera
         {
-            get { return camera; }
-            set { camera = value; }
+            get { return _camera; }
+            set { _camera = value; }
         }
        
 
-        public Player(Game game)
+        public PlayerCamera(Game game)
         {
             gameRef = (Game1)game;
-            camera = new Camera(gameRef.ScreenBounds);
+            _camera = new Camera(gameRef.ScreenBounds);
         }
 
         public void Update(GameTime gameTime)
         {
             elapsedTimed += gameTime.ElapsedGameTime.Milliseconds;
             
-            camera.Update(gameTime);
+            _camera.Update(gameTime);
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

@@ -12,6 +12,9 @@ using GameEngineLibrary.Controls;
 
 namespace Constantine.Screens
 {
+    /// <summary>
+    /// Logic shared between all game states
+    /// </summary>
     public abstract partial class GameStateBase : GameState
     {
         protected Game1 GameRef;

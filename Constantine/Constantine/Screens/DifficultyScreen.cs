@@ -14,7 +14,7 @@ using GameEngineLibrary.Controls;
 
 namespace Constantine.Screens
 {
-
+    //Defines game difficulty 
     public enum Difficulty
     {
         Easy, 
@@ -22,6 +22,7 @@ namespace Constantine.Screens
         Hard
     }
 
+    //Game state for selecting the game difficulty
     public class DifficultyScreen : GameStateBase
     {
         LinkLabel _easyLabel;
@@ -118,6 +119,7 @@ namespace Constantine.Screens
         }
 
         //TODO: If time allows use databinding instead of this method
+        //Updates high score labels next to the difficulty
         public void UpdateHighScores()
         {
             this._easyScoreLabel.Text = GameRef.SaveData.EasyScore.ToString();
@@ -135,6 +137,7 @@ namespace Constantine.Screens
             GameRef.SpriteBatch.End();
         }
 
+        //Event handler to determine the selected difficulty
         private void difficulty_Selected(object sender, EventArgs e)
         {
             MediaPlayer.Stop();

@@ -11,6 +11,9 @@ using Microsoft.Xna.Framework.Content;
 
 namespace Constantine
 {
+    /// <summary>
+    /// Loads all audio for easy retrieval
+    /// </summary>
     static class Audio
     {
 

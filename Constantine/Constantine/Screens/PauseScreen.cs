@@ -13,6 +13,9 @@ using GameEngineLibrary.Controls;
 
 namespace Constantine.Screens
 {
+    /// <summary>
+    /// Game state for displaying a pause screen
+    /// </summary>
     public class PauseScreen : GameStateBase
     {
         LinkLabel _returnLabel;
@@ -83,6 +86,11 @@ namespace Constantine.Screens
             GameRef.SpriteBatch.End();
         }
 
+        /// <summary>
+        /// handles event when a pause menu option is selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void menuItem_Selected(object sender, EventArgs e)
         {
             LinkLabel selectedLabel = sender as LinkLabel;

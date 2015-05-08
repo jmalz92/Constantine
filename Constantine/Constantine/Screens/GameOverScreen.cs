@@ -13,6 +13,7 @@ using GameEngineLibrary.Controls;
 
 namespace Constantine.Screens
 {
+    //Game state to display when a game over occurs
     public class GameOverScreen : GameStateBase
     {
 
@@ -111,9 +112,14 @@ namespace Constantine.Screens
             GameRef.SpriteBatch.End();
         }
 
+        /// <summary>
+        /// Event, occurs when user selects a game over menu option
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gameOverItem_Selected(object sender, EventArgs e)
         {
-            //Todo: clean up this logic
+            
             string gameOverLabelText = ((LinkLabel)sender).Text;
             if (gameOverLabelText.Contains("Play"))
             {
@@ -144,8 +150,10 @@ namespace Constantine.Screens
         public GameOverScreen(Game game, GameStateHandler handler)
             : base(game, handler)
         {
-            this.ScoreChanged += GameOverScreen_ScoreChanged;
+            this.ScoreChanged += GameOverScreen_ScoreChanged; //create event handler
         }
+
+
 
         protected virtual void OnScoreChanged(EventArgs e)
         {
@@ -156,12 +164,18 @@ namespace Constantine.Screens
             }
         }
 
+        /// <summary>
+        /// Handle Score changed event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void GameOverScreen_ScoreChanged(object sender, EventArgs e)
         {
             _scoreLabel.Text = "Score: " + Score;
             UpdateHighScore();
         }
 
+        //updates game over screen high score
         private void UpdateHighScore()
         {
             int highScore = 0;

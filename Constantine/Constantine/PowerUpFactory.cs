@@ -10,31 +10,31 @@ using GameEngineLibrary.Sprites;
 
 namespace Constantine
 {
-
+    /// <summary>
+    /// Factory class to spawn power ups on to the map
+    /// </summary>
     static class PowerUpFactory
     {
-        static int ultimatePowerTimer = 0;
-        static int speedPowerTimer = 0;
+        static int _ultimatePowerTimer = 0;
+        static int _speedPowerTimer = 0;
 
         public static void Update(GameTime gameTime, SpriteManager manager)
         {
-            ultimatePowerTimer += gameTime.ElapsedGameTime.Milliseconds;
-            speedPowerTimer += gameTime.ElapsedGameTime.Milliseconds;
+            _ultimatePowerTimer += gameTime.ElapsedGameTime.Milliseconds;
+            _speedPowerTimer += gameTime.ElapsedGameTime.Milliseconds;
 
-            if (ultimatePowerTimer >= 20000)
+            if (_ultimatePowerTimer >= 20000)
             {
                 manager.Add(new UltimatePowerUp(Assets.Tablet));
-                ultimatePowerTimer = 0;
+                _ultimatePowerTimer = 0;
             }
 
-            if (speedPowerTimer >= 30000)
+            if (_speedPowerTimer >= 30000)
             {
                 manager.Add(new SpeedPowerUp(Assets.Bolt));
-                speedPowerTimer = 0;
+                _speedPowerTimer = 0;
             }
-            // slowly increase the spawn rate as time progresses
-            //if (inverseSpawnChance > 30)
-            //    inverseSpawnChance -= 0.005f;
+            
         }
     }
 }

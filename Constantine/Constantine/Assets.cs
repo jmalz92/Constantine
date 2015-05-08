@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Media;
 namespace Constantine
 {
     /// <summary>
-    /// Loads all images and artwork for retrieval
+    /// Loads all images and video for easy retrieveal
     /// </summary>
     static class Assets
     {

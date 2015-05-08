@@ -14,12 +14,16 @@ using GameEngineLibrary.Controls;
 
 namespace Constantine.Screens
 {
+
+    /// <summary>
+    /// Main Game screen to display
+    /// </summary>
     public class GameScreen : GameStateBase
     {
         TileEngine _tileEngine = new TileEngine(32, 32);
         TileSet _tileSet;
         TileMap _map;
-        Player _player;
+        PlayerCamera _playerCamera;
         PlayerSprite _sprite;
         
         SpriteManager _spriteManager;
@@ -35,7 +39,7 @@ namespace Constantine.Screens
         public GameScreen(Game game, GameStateHandler handler)
             : base(game, handler)
         {
-            _player = new Player(game);
+            _playerCamera = new PlayerCamera(game);
             _scoreTimer = 0;
         }
 
@@ -100,7 +104,9 @@ namespace Constantine.Screens
              
         }
 
-        //messy
+        /// <summary>
+        /// Loads a map based on the selected difficulty
+        /// </summary>
         private void SetMap() 
         { 
             if (CurrentDifficulty == Difficulty.Easy)
@@ -199,8 +205,8 @@ namespace Constantine.Screens
         //possibly remove player sprite from here
         public override void Update(GameTime gameTime)
         {
-            _player.Update(gameTime);
-            _sprite.Update(gameTime, _spriteManager, _player.Camera);
+            _playerCamera.Update(gameTime);
+            _sprite.Update(gameTime, _spriteManager, _playerCamera.Camera);
             EnemyFactory.Update(gameTime, CurrentDifficulty, _spriteManager);
             PowerUpFactory.Update(gameTime, _spriteManager);
             _spriteManager.Update(gameTime, _sprite);
@@ -244,9 +250,9 @@ namespace Constantine.Screens
                 null,
                 Matrix.Identity);
 
-            _map.Draw(GameRef.SpriteBatch, _player.Camera);
-            _sprite.Draw(gameTime, GameRef.SpriteBatch, _player.Camera);
-            _spriteManager.Draw(gameTime, GameRef.SpriteBatch, _player.Camera);
+            _map.Draw(GameRef.SpriteBatch, _playerCamera.Camera);
+            _sprite.Draw(gameTime, GameRef.SpriteBatch, _playerCamera.Camera);
+            _spriteManager.Draw(gameTime, GameRef.SpriteBatch, _playerCamera.Camera);
             
 
             base.Draw(gameTime);
@@ -254,6 +260,9 @@ namespace Constantine.Screens
             GameRef.SpriteBatch.End();
         }
 
+        /// <summary>
+        /// Animates the main character sprite
+        /// </summary>
         private void AnimateSprite()
         {
             Vector2 motion = new Vector2();
@@ -283,7 +292,7 @@ namespace Constantine.Screens
                 motion.Normalize();
                 _sprite.Position += motion * _sprite.Speed;
                 _sprite.LockToMap();
-                _player.Camera.LockToSprite(_sprite);
+                _playerCamera.Camera.LockToSprite(_sprite);
             }
             else
             {
@@ -292,6 +301,9 @@ namespace Constantine.Screens
 
         }
 
+        /// <summary>
+        /// Logic to check if a game over has occurred
+        /// </summary>
         private void CheckGameOver()
         {
             if (_healthBar.IsEmpty) 
@@ -318,7 +330,11 @@ namespace Constantine.Screens
             }
         }
 
-        //Do not supply the graphics device as a parameter, any other alternatives for health bars?
+        /// <summary>
+        /// Creates and displays a health bar
+        /// </summary>
+        /// <param name="gd"></param>
+        /// <returns></returns>
         public HealthBar CreateHealthBar(GraphicsDevice gd)
         {
             int width = 210;
@@ -355,6 +371,11 @@ namespace Constantine.Screens
             return healthBar;
         }
 
+        /// <summary>
+        /// Creates and displays a power up bar
+        /// </summary>
+        /// <param name="gd"></param>
+        /// <returns></returns>
         private PowerUpBar CreatePowerUpBar(GraphicsDevice gd)
         {
             int width = 210;

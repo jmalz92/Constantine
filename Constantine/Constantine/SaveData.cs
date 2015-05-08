@@ -7,6 +7,9 @@ using System.Xml.Serialization;
 
 namespace Constantine
 {
+    /// <summary>
+    /// Class to load/serialize/update the game's save data
+    /// </summary>
     [Serializable, XmlRoot("SaveData")]
     public class SaveData
     {
@@ -24,6 +27,11 @@ namespace Constantine
             CinematicViewed = false;
         }
 
+        /// <summary>
+        /// Loads the save file
+        /// </summary>
+        /// <param name="fileName">the name of the save file</param>
+        /// <returns></returns>
         public static SaveData Load(string fileName)
         {
             SaveData data = null;
@@ -45,6 +53,11 @@ namespace Constantine
             return data;
         }
 
+        /// <summary>
+        /// Saves the data back to a save file
+        /// </summary>
+        /// <param name="data">the data to save</param>
+        /// <param name="fileName">the name of the file</param>
         public static void Save(SaveData data, string fileName)
         {
             FileStream stream = File.Open(fileName, FileMode.OpenOrCreate);

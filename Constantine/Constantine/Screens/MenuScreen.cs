@@ -11,15 +11,18 @@ using GameEngineLibrary.Controls;
 
 namespace Constantine.Screens
 {
+    /// <summary>
+    /// Game state to display the main menu
+    /// </summary>
     public class MenuScreen : GameStateBase
     {
         LinkLabel _startLabel;
-        bool isMusicPlaying;
+        bool _isMusicPlaying;
 
         public MenuScreen(Game game, GameStateHandler handler)
             : base(game, handler)
         {
-            isMusicPlaying = false;
+            _isMusicPlaying = false;
         }
 
         public override void Initialize()
@@ -48,9 +51,9 @@ namespace Constantine.Screens
             ControlManager.Update(gameTime);
 
             base.Update(gameTime);
-            if (!isMusicPlaying)
+            if (!_isMusicPlaying)
             {
-                isMusicPlaying = true;
+                _isMusicPlaying = true;
                 MediaPlayer.Play(Audio.MenuTrack);
             }
             
@@ -67,6 +70,11 @@ namespace Constantine.Screens
             GameRef.SpriteBatch.End();
         }
 
+        /// <summary>
+        /// Handles event for when the menu item is selected
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void startLabel_Selected(object sender, EventArgs e)
         {
             _stateHandler.PushState(GameRef._difficultyScreen);
